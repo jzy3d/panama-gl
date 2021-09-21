@@ -27,7 +27,7 @@
 
 	<dependencies>
 
-		<!-- PUBLIC JZY3D MODULES -->
+		<!-- PUBLIC JZY3D MODULES
 
 		<dependency>
 			<groupId>org.jzy3d</groupId>
@@ -48,10 +48,10 @@
 			<groupId>org.jzy3d</groupId>
 			<artifactId>jzy3d-tests-java9</artifactId>
 			<version>${project.version}</version>
-		</dependency>
+		</dependency> -->
 
 
-		<!-- OTHER MODULES -->
+		<!-- OTHER MODULES 
 
 		<dependency>
 			<groupId>log4j</groupId>
@@ -81,7 +81,7 @@
 			<version>4.9</version>
 			<type>jar</type>
 			<scope>test</scope>
-		</dependency>
+		</dependency>-->
 	</dependencies>
 
 	<build>
@@ -109,11 +109,8 @@
 					<compilerArgs>
 						<arg>--add-modules</arg>
 						<arg>jdk.incubator.foreign</arg>
-
 						<arg>--add-exports</arg>
 						<arg>jdk.incubator.foreign</arg>
-
-
 					</compilerArgs>
 				</configuration>
 			</plugin>

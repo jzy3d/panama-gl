@@ -34,8 +34,13 @@ cp *.java /Users/martin/Dev/jzy3d/public/panama-gl/src/main/java/
 
 This one build a fat jar with all dependencies
 ```
-mvn install -D--add-modules jdk.incubator.foreign
+mvn install -D--add-modules=jdk.incubator.foreign
 ```
+
+```
+mvn install -D--add-modules=jdk.incubator.foreign -D--add-exports=jdk.incubator.foreign
+```
+
 
 ## Run
 
@@ -55,8 +60,18 @@ java -jar target/panama-gl-2.0.1-SNAPSHOT.jar \
 ```
 
 
+Lead to
+```
+Error: Unable to initialize main class Teapot
+Caused by: java.lang.NoClassDefFoundError: jdk/incubator/foreign/Addressable
+```
+
+
 Add to IDE VM args
 ```
 -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign \
     -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 ```
+
+
+
