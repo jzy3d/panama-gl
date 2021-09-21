@@ -65,6 +65,7 @@ public class Teapot {
         glutSolidTeapot(0.5d);
         glPopMatrix();
         glutSwapBuffers();
+        
     }
 
     void onIdle() {

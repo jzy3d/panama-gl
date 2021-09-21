@@ -1,5 +1,11 @@
 # panama-gl
 
+This project explore Native OpenGL capabilities of Panama Early Release. 
+JDK 17 incubation comes with [JEP-412 : Foreign Function & Memory API](https://openjdk.java.net/jeps/412) 
+which offers a brand new way of accessing native libraries. 
+
+We will here try to use Panama as a rendering backup for Jzy3D as a prototype.
+
 
 ## Get
 
