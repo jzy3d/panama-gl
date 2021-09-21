@@ -34,11 +34,7 @@ cp *.java /Users/martin/Dev/jzy3d/public/panama-gl/src/main/java/
 
 This one build a fat jar with all dependencies
 ```
-mvn install -D--add-modules=jdk.incubator.foreign
-```
-
-```
-mvn install -D--add-modules=jdk.incubator.foreign -D--add-exports=jdk.incubator.foreign
+mvn clean install package
 ```
 
 
@@ -52,11 +48,12 @@ openjdk version "17-panama" 2021-09-14
 
 Run from command line
 ```
-java -jar target/panama-gl-2.0.1-SNAPSHOT.jar \
-    -XstartOnFirstThread \
+java -XstartOnFirstThread \
     --enable-native-access=ALL-UNNAMED \
     --add-modules jdk.incubator.foreign \
-    -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/ Teapot
+    -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/ \
+    -jar target/panama-gl-2.0.1-SNAPSHOT.jar \
+    Teapot
 ```
 
 
@@ -73,5 +70,7 @@ Add to IDE VM args
     -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 ```
 
+## Help
 
+* Modules https://openjdk.java.net/projects/jigsaw/quick-start
 
