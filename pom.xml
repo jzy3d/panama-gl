@@ -125,7 +125,8 @@
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<manifestEntries>
-										<Main-Class>Teapot</Main-Class>
+										<Main-Class>org.jzy3d.demos.surface.SurfaceDemoEmulGLP
+</Main-Class>
 									</manifestEntries>
 								</transformer>
 							</transformers>

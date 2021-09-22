@@ -24,7 +24,7 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
  * @author martin
  *
  */
-public class SurfaceDemoEmulGL {
+public class SurfaceDemoEmulGLP {
 
   static final float ALPHA_FACTOR = 0.55f;// .61f;
 
@@ -47,7 +47,7 @@ public class SurfaceDemoEmulGL {
     chart.addMouseCameraController();
 
     try {
-      chart.screenshot(new File("target/" + SurfaceDemoEmulGL.class.getSimpleName() + ".png"));
+      chart.screenshot(new File("target/" + SurfaceDemoEmulGLP.class.getSimpleName() + ".png"));
     } catch (IOException e) {
       e.printStackTrace();
     }
