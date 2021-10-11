@@ -17,11 +17,9 @@ public class TeapotDemo {
   public static void main(String[] args) {
     LoggerUtils.maximal();
     
-    Transform transform = new Transform();
-    transform.add(new Rotate(90, new Coord3d(1,0,0)));
+    
     
     Teapot teapot = new Teapot();
-    teapot.setTransformBefore(transform);
     
     teapot.setFaceDisplayed(true);
     //teapot.setColor(new Color(0.3f, 0.3f, 0.9f));
@@ -37,9 +35,9 @@ public class TeapotDemo {
     
     
     // ---------------------------------------------
-    ChartFactory factory = new PanamaGLChartFactory();
+    //ChartFactory factory = new PanamaGLChartFactory();
     
-    //ChartFactory factory = new EmulGLChartFactory();
+    ChartFactory factory = new EmulGLChartFactory();
     
     // Emulgl will show limitations
     // 1-wireframe and face do not mix cleanly (polygon offset fill)
@@ -52,6 +50,8 @@ public class TeapotDemo {
     q.setHiDPIEnabled(true); 
     
     Chart chart = factory.newChart(q);
+    chart.open(); // with panama pseudo frame, should be opened first
+
     chart.getView().setSquared(false);
     chart.getView().setBackgroundColor(Color.BLACK);
     chart.getView().getAxis().getLayout().setMainColor(Color.WHITE);
@@ -65,7 +65,6 @@ public class TeapotDemo {
     
     // ---------------------------------------------
 
-    chart.open();
     //chart.addMouseCameraController();
 
   }

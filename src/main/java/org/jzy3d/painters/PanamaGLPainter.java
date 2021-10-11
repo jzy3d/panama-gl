@@ -53,22 +53,34 @@ public class PanamaGLPainter extends AbstractPainter {
       System.err.println(e);
     }
   }
+  
+  /////////////////////////////////////////////
+  
+  public ResourceScope getScope() {
+    return scope;
+  }
 
-  protected MemorySegment alloc(double[] value) {
+  public SegmentAllocator getAllocator() {
+    return allocator;
+  }
+
+  public MemorySegment alloc(double[] value) {
     return allocator.allocateArray(C_DOUBLE, value);
   }
 
-  protected MemorySegment alloc(float[] value) {
+  public MemorySegment alloc(float[] value) {
     return allocator.allocateArray(C_FLOAT, value);
   }
 
-  protected MemorySegment alloc(int[] value) {
+  public MemorySegment alloc(int[] value) {
     return allocator.allocateArray(C_INT, value);
   }
 
-  protected MemorySegment alloc(String value) {
+  public MemorySegment alloc(String value) {
     return CLinker.toCString(value, scope);
   }
+  
+  /////////////////////////////////////////////
 
   @Override
   public Object acquireGL() {
