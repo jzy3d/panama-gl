@@ -1,31 +1,30 @@
-package org.jzy3d.factories;
+package org.jzy3d.chart.factories;
 
 import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
-import opengl.*;
 import static jdk.incubator.foreign.CLinker.*;
 import static opengl.glut_h.*;
 
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.IFrame;
 import org.jzy3d.maths.Rectangle;
-import jdk.incubator.foreign.CLinker;
-import jdk.incubator.foreign.ResourceScope;
-import jdk.incubator.foreign.SegmentAllocator;
 import opengl.glutDisplayFunc$func;
 import opengl.glutIdleFunc$func;
 
 public class PanamaGLFrame implements IFrame{
 
   public PanamaGLFrame(Chart chart) {
+    this(chart, new Rectangle(0,0,800,600), "");
   }
 
   public PanamaGLFrame(Chart chart, Rectangle bounds, String title) {
+    initialize(chart, bounds, title);
   }
 
   @Override
   public void initialize(Chart chart, Rectangle bounds, String title) {
+    initialize(chart, bounds, title, "");
   }
 
   @Override

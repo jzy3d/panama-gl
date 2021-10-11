@@ -52,7 +52,8 @@ java -version
 openjdk version "17-panama" 2021-09-14
 ```
 
-Run from command line
+Run from command line with these VM args (see below the appropriate VM args for an IDE)
+
 ```
 java -XstartOnFirstThread \
     --enable-native-access=ALL-UNNAMED \
@@ -64,16 +65,17 @@ java -XstartOnFirstThread \
 
 
 Lead to
+
 ```
 Error: Unable to initialize main class Teapot
 Caused by: java.lang.NoClassDefFoundError: jdk/incubator/foreign/Addressable
 ```
 
 
-Add to IDE VM args
+Add to IDE VM arguments the following (it must contain no backslash, at least for Eclipse)
+
 ```
--XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign \
-    -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+-XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 ```
 
 ## Help

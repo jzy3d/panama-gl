@@ -1,11 +1,13 @@
-package org.jzy3d.factories;
+package org.jzy3d.chart.factories;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 import org.jzy3d.chart.IAnimator;
-import org.jzy3d.chart.factories.IChartFactory;
 import org.jzy3d.maths.Coord2d;
+import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.plot3d.rendering.canvas.ICanvasListener;
 import org.jzy3d.plot3d.rendering.canvas.IScreenCanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
@@ -13,54 +15,52 @@ import org.jzy3d.plot3d.rendering.scene.Scene;
 import org.jzy3d.plot3d.rendering.view.View;
 
 public class PanamaGLCanvas implements IScreenCanvas{
-
-  public PanamaGLCanvas() {
-  }
+  static Logger logger = Logger.getLogger(PanamaGLCanvas.class);
+  
+  protected View view;
+  protected PanamaGLPainter painter;
+  protected IAnimator animator;
 
   public PanamaGLCanvas(IChartFactory factory, Scene scene, Quality quality) {
-    // TODO Auto-generated constructor stub
+    view = scene.newView(this, quality);
   }
 
   @Override
   public View getView() {
-    // TODO Auto-generated method stub
-    return null;
+    return view;
   }
 
   @Override
   public int getRendererWidth() {
-    // TODO Auto-generated method stub
-    return 0;
+    logger.warn("Return constant 800");
+    return 800;
   }
 
   @Override
   public int getRendererHeight() {
-    // TODO Auto-generated method stub
-    return 0;
+    logger.warn("Return constant 600");
+    return 600;
   }
 
   @Override
   public void screenshot(File file) throws IOException {
-    // TODO Auto-generated method stub
-    
+    logger.warn("not implemented");
   }
 
   @Override
   public Object screenshot() {
-    // TODO Auto-generated method stub
+    logger.warn("not implemented");
     return null;
   }
 
   @Override
   public void forceRepaint() {
-    // TODO Auto-generated method stub
-    
+    logger.warn("not implemented");
   }
 
   @Override
   public void dispose() {
-    // TODO Auto-generated method stub
-    
+    logger.warn("not implemented");
   }
 
   @Override

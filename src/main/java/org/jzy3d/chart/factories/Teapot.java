@@ -1,4 +1,4 @@
-package org.jzy3d.factories;
+package org.jzy3d.chart.factories;
 /*
  * Copyright (c) 2020, Oracle and/or its affiliates. All rights reserved.
  *

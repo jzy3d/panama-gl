@@ -1,4 +1,4 @@
-package org.jzy3d.factories;
+package org.jzy3d.chart.factories;
 
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.IAnimator;
@@ -12,6 +12,7 @@ import org.jzy3d.chart.factories.IPainterFactory;
 import org.jzy3d.maths.Dimension;
 import org.jzy3d.maths.Rectangle;
 import org.jzy3d.painters.IPainter;
+import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.plot3d.primitives.symbols.SymbolHandler;
 import org.jzy3d.plot3d.rendering.canvas.ICanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
@@ -21,15 +22,19 @@ import org.jzy3d.plot3d.rendering.view.IViewOverlay;
 import org.jzy3d.plot3d.rendering.view.layout.IViewportLayout;
 
 public class PanamaGLPainterFactory implements IPainterFactory{
+  protected IChartFactory chartFactory;
 
+  protected boolean offscreen = false;
+  protected int width;
+  protected int height;
+
+  
   public PanamaGLPainterFactory() {
-    // TODO Auto-generated constructor stub
   }
 
   @Override
   public IPainter newPainter() {
-    // TODO Auto-generated method stub
-    return null;
+    return new PanamaGLPainter();
   }
 
   @Override
@@ -86,7 +91,6 @@ public class PanamaGLPainterFactory implements IPainterFactory{
 
   @Override
   public IFrame newFrame(Chart chart) {
-    // TODO Auto-generated method stub
     return new PanamaGLFrame(chart);
   }
 
@@ -95,46 +99,43 @@ public class PanamaGLPainterFactory implements IPainterFactory{
     return new PanamaGLFrame(chart, bounds, title);
   }
 
-  @Override
-  public void setChartFactory(IChartFactory factory) {
-    // TODO Auto-generated method stub
-    
-  }
+  ///////////////////////
 
   @Override
   public IChartFactory getChartFactory() {
-    // TODO Auto-generated method stub
-    return null;
+    return chartFactory;
+  }
+
+  @Override
+  public void setChartFactory(IChartFactory chartFactory) {
+    this.chartFactory = chartFactory;
   }
 
   @Override
   public boolean isOffscreen() {
-    // TODO Auto-generated method stub
-    return false;
+    return offscreen;
   }
 
   @Override
   public void setOffscreenDisabled() {
-    // TODO Auto-generated method stub
-    
+    this.offscreen = false;
   }
 
   @Override
   public void setOffscreen(int width, int height) {
-    // TODO Auto-generated method stub
-    
+    this.offscreen = true;
+    this.width = width;
+    this.height = height;
   }
 
   @Override
   public void setOffscreen(Rectangle rectangle) {
-    // TODO Auto-generated method stub
-    
+    setOffscreen(rectangle.width, rectangle.height);
   }
 
   @Override
   public Dimension getOffscreenDimension() {
-    // TODO Auto-generated method stub
-    return null;
+    return new Dimension(width, height);
   }
 
 }
