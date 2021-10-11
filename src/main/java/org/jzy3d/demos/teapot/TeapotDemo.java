@@ -2,14 +2,10 @@ package org.jzy3d.demos.teapot;
 
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.ChartFactory;
-import org.jzy3d.chart.factories.EmulGLChartFactory;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
 import org.jzy3d.colors.Color;
-import org.jzy3d.maths.Coord3d;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.lights.Light;
-import org.jzy3d.plot3d.transform.Rotate;
-import org.jzy3d.plot3d.transform.Transform;
 import org.jzy3d.utils.LoggerUtils;
 
 public class TeapotDemo {
@@ -17,24 +13,13 @@ public class TeapotDemo {
   public static void main(String[] args) {
     LoggerUtils.maximal();
     
-    Transform transform = new Transform();
-    transform.add(new Rotate(90, new Coord3d(1,0,0)));
-    
     Teapot teapot = new Teapot();
-    teapot.setTransformBefore(transform);
-    
     teapot.setFaceDisplayed(true);
-    //teapot.setColor(new Color(0.3f, 0.3f, 0.9f));
-    //teapot.setColor(new Color(0.9f, 0.9f, 0.9f));
     teapot.setColor(Color.WHITE);
-    
     teapot.setWireframeColor(Color.CYAN);
     teapot.setWireframeDisplayed(false);
     teapot.setWireframeWidth(2);
-    
     teapot.setReflectLight(true);
-    
-    
     
     // ---------------------------------------------
     ChartFactory factory = new PanamaGLChartFactory();
