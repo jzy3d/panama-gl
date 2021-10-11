@@ -28,16 +28,16 @@ public class TeapotDemo {
     
     teapot.setWireframeColor(Color.CYAN);
     teapot.setWireframeDisplayed(false);
-    teapot.setWireframeWidth(2);
+    teapot.setWireframeWidth(3);
     
-    teapot.setReflectLight(true);
+    teapot.setReflectLight(false);
     
     
     
     // ---------------------------------------------
-    //ChartFactory factory = new PanamaGLChartFactory();
+    ChartFactory factory = new PanamaGLChartFactory();
     
-    ChartFactory factory = new EmulGLChartFactory();
+    //ChartFactory factory = new EmulGLChartFactory();
     
     // Emulgl will show limitations
     // 1-wireframe and face do not mix cleanly (polygon offset fill)
@@ -46,15 +46,15 @@ public class TeapotDemo {
     Quality q = Quality.Advanced(); 
     q.setDepthActivated(true);
     q.setAlphaActivated(false);
-    q.setAnimated(false); 
-    q.setHiDPIEnabled(true); 
+    q.setAnimated(true);
+    q.setHiDPIEnabled(false);
     
     Chart chart = factory.newChart(q);
-    chart.open(); // with panama pseudo frame, should be opened first
 
     chart.getView().setSquared(false);
     chart.getView().setBackgroundColor(Color.BLACK);
     chart.getView().getAxis().getLayout().setMainColor(Color.WHITE);
+    chart.getView().setAxisDisplayed(true);
     // ---------------------------------------------
 
     chart.add(teapot);
@@ -65,7 +65,13 @@ public class TeapotDemo {
     
     // ---------------------------------------------
 
-    //chart.addMouseCameraController();
+    // Manual HiDPI setting
+    float[] pixelScale = {2f,2f};
+    chart.getCanvas().setPixelScale(pixelScale);
+
+    chart.open(800,600); // with panama pseudo frame, should be opened first
+
+    chart.addMouseCameraController();
 
   }
 }
