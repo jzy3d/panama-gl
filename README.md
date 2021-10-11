@@ -81,4 +81,5 @@ Add to IDE VM arguments the following (it must contain no backslash, at least fo
 ## Help
 
 * Modules https://openjdk.java.net/projects/jigsaw/quick-start
+* Modules https://github.com/tfesenko/Java-Modules-JPMS-CheatSheet
 
