@@ -1,18 +1,18 @@
 package org.jzy3d.chart.factories;
 
+import static jdk.incubator.foreign.CLinker.C_INT;
+import static opengl.glut_h.*;
+
+import org.jzy3d.painters.PanamaGLPainter;
+import org.jzy3d.chart.Chart;
+import org.jzy3d.maths.Rectangle;
+import org.jzy3d.painters.PanamaGLPainter;
+import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
+
 import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
-import static jdk.incubator.foreign.CLinker.*;
-import static opengl.glut_h.*;
-
-import org.jzy3d.chart.Chart;
-import org.jzy3d.chart.factories.IFrame;
-import org.jzy3d.maths.Rectangle;
 import opengl.glutDisplayFunc$func;
-import opengl.glutIdleFunc$func;
-
-import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
 
 public class PanamaGLFrame implements IFrame{
 
@@ -32,27 +32,32 @@ public class PanamaGLFrame implements IFrame{
   @Override
   public void initialize(Chart chart, Rectangle bounds, String title, String message) {
     
+    PanamaGLPainter painter = (PanamaGLPainter)chart.getPainter();
+    PanamaGLCanvas canvas = (PanamaGLCanvas)chart.getCanvas();
     
-    try (var scope = ResourceScope.newConfinedScope()) {
-      var allocator = SegmentAllocator.ofScope(scope);
+    var renderer = canvas.getRenderer();
+
+    
+    //try (var scope = ResourceScope.newConfinedScope()) {
+      var allocator = SegmentAllocator.ofScope(painter.getScope());
       var argc = allocator.allocate(C_INT, 0);
       glutInit(argc, argc);
       glutInitDisplayMode(GLUT_DOUBLE() | GLUT_RGB() | GLUT_DEPTH());
       glutInitWindowSize(bounds.width, bounds.height);
-      glutCreateWindow(CLinker.toCString(title + "/" + message, scope));
+      glutCreateWindow(CLinker.toCString(title + "/" + message, painter.getScope()));
       
       
-      PanamaGLCanvas canvas = (PanamaGLCanvas)chart.getCanvas();
       
-      var renderer = canvas.getRenderer();
+      System.out.println(renderer);
       
-      var displayStub = glutDisplayFunc$func.allocate(renderer::display, scope);
-      //var idleStub = glutIdleFunc$func.allocate(renderer::onIdle, scope);
+      var displayStub = glutDisplayFunc$func.allocate(renderer::display, painter.getScope());
       
       glutDisplayFunc(displayStub);
-      //glutIdleFunc(idleStub);
-      glutMainLoop();
-  }
 
+      System.out.println("Glut main loop start");
+
+      glutMainLoop();
+  //}
+     System.out.println("Glut main loop done");
   }
 }

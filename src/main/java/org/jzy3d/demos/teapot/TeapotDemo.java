@@ -37,6 +37,8 @@ public class TeapotDemo {
     q.setHiDPIEnabled(true); 
     
     Chart chart = factory.newChart(q);
+    chart.open(); // with panama pseudo frame, should be opened first
+
     chart.getView().setSquared(false);
     chart.getView().setBackgroundColor(Color.BLACK);
     chart.getView().getAxis().getLayout().setMainColor(Color.WHITE);
@@ -50,7 +52,6 @@ public class TeapotDemo {
     
     // ---------------------------------------------
 
-    chart.open();
     //chart.addMouseCameraController();
 
   }
