@@ -6,20 +6,19 @@ import org.jzy3d.chart.controllers.keyboard.camera.ICameraKeyController;
 import org.jzy3d.chart.controllers.keyboard.screenshot.IScreenshotKeyController;
 import org.jzy3d.chart.controllers.mouse.camera.ICameraMouseController;
 import org.jzy3d.chart.controllers.mouse.picking.IMousePickingController;
-import org.jzy3d.chart.factories.IChartFactory;
-import org.jzy3d.chart.factories.IFrame;
-import org.jzy3d.chart.factories.IPainterFactory;
 import org.jzy3d.maths.Dimension;
 import org.jzy3d.maths.Rectangle;
 import org.jzy3d.painters.IPainter;
 import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.plot3d.primitives.symbols.SymbolHandler;
 import org.jzy3d.plot3d.rendering.canvas.ICanvas;
+import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.image.IImageWrapper;
 import org.jzy3d.plot3d.rendering.scene.Scene;
 import org.jzy3d.plot3d.rendering.view.IViewOverlay;
 import org.jzy3d.plot3d.rendering.view.layout.IViewportLayout;
+import org.jzy3d.plot3d.rendering.view.layout.PanamaGLViewAndColorbarsLayout;
 
 public class PanamaGLPainterFactory implements IPainterFactory{
   protected IChartFactory chartFactory;
@@ -45,8 +44,7 @@ public class PanamaGLPainterFactory implements IPainterFactory{
 
   @Override
   public IViewportLayout newViewportLayout() {
-    // TODO Auto-generated method stub
-    return null;
+    return new PanamaGLViewAndColorbarsLayout();
   }
 
   @Override

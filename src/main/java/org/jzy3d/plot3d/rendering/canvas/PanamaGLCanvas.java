@@ -1,4 +1,4 @@
-package org.jzy3d.chart.factories;
+package org.jzy3d.plot3d.rendering.canvas;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,12 +6,11 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.jzy3d.chart.IAnimator;
+import org.jzy3d.chart.factories.IChartFactory;
 import org.jzy3d.maths.Coord2d;
 import org.jzy3d.painters.PanamaGLPainter;
-import org.jzy3d.plot3d.rendering.canvas.ICanvasListener;
-import org.jzy3d.plot3d.rendering.canvas.IScreenCanvas;
-import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.scene.Scene;
+import org.jzy3d.plot3d.rendering.view.PanamaGLRenderer;
 import org.jzy3d.plot3d.rendering.view.View;
 
 public class PanamaGLCanvas implements IScreenCanvas{
@@ -20,9 +19,18 @@ public class PanamaGLCanvas implements IScreenCanvas{
   protected View view;
   protected PanamaGLPainter painter;
   protected IAnimator animator;
+  
+  protected PanamaGLRenderer renderer;
+
 
   public PanamaGLCanvas(IChartFactory factory, Scene scene, Quality quality) {
     view = scene.newView(this, quality);
+    
+    renderer = new PanamaGLRenderer(view);
+  }
+
+  public PanamaGLRenderer getRenderer() {
+    return renderer;
   }
 
   @Override

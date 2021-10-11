@@ -90,28 +90,10 @@ public class PanamaGLPainter extends AbstractPainter {
       opengl.glut_h.glDepthFunc(opengl.glut_h.GL_LESS());
     } else {
       opengl.glut_h.glDisable(opengl.glut_h.GL_DEPTH_TEST());
-      // opengl.glut_h.glDepthRangef(n, f);
     }
 
     // Blending : more beautifull with jGL without this
-    /** Default for SRC is 1 : {@link gl_colorbuffer.BlendSrc} */
-    /** Default for DST is 0 : {@link gl_colorbuffer.BlendDst} */
     opengl.glut_h.glBlendFunc(opengl.glut_h.GL_SRC_ALPHA(), opengl.glut_h.GL_ONE_MINUS_SRC_ALPHA());
-
-    // opengl.glut_h.glBlendFunc(opengl.glut_h.GL_DST_ALPHA, opengl.glut_h.GL_NONE);
-
-    /*
-     * opengl.glut_h.glBlendFunc(opengl.glut_h.GL_SRC_ALPHA,
-     * opengl.glut_h.GL_ONE_MINUS_DST_ALPHA);
-     * opengl.glut_h.glBlendFunc(opengl.glut_h.GL_SRC_ALPHA,
-     * opengl.glut_h.GL_ONE_MINUS_SRC_COLOR);
-     * opengl.glut_h.glBlendFunc(opengl.glut_h.GL_SRC_ALPHA,
-     * opengl.glut_h.GL_ONE_MINUS_DST_COLOR);
-     * opengl.glut_h.glBlendFunc(opengl.glut_h.GL_SRC_ALPHA,
-     * opengl.glut_h.GL_SRC_ALPHA_SATURATE);
-     * opengl.glut_h.glBlendFunc(opengl.glut_h.GL_DST_ALPHA,
-     * opengl.glut_h.GL_ONE_MINUS_SRC_ALPHA);
-     */
 
     // GL_SRC_ALPHA_SATURATE
     // on/off is handled by each viewport (camera or image)
@@ -153,6 +135,7 @@ public class PanamaGLPainter extends AbstractPainter {
       // opengl.glut_h.glHint(GL2ES1.GL_POINT_SMOOTH_HINT, opengl.glut_h.GL_NICEST);
     } else
       opengl.glut_h.glDisable(opengl.glut_h.GL_POINT_SMOOTH());
+    
   }
 
   @Override
@@ -613,6 +596,7 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public void glutSolidTeapot(float scale) {
     opengl.glut_h.glutSolidTeapot(scale);
+    System.out.println("teapot!");
   }
 
   @Override

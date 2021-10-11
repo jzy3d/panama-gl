@@ -12,6 +12,8 @@ import org.jzy3d.maths.Rectangle;
 import opengl.glutDisplayFunc$func;
 import opengl.glutIdleFunc$func;
 
+import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
+
 public class PanamaGLFrame implements IFrame{
 
   public PanamaGLFrame(Chart chart) {
@@ -24,7 +26,7 @@ public class PanamaGLFrame implements IFrame{
 
   @Override
   public void initialize(Chart chart, Rectangle bounds, String title) {
-    initialize(chart, bounds, title, "");
+    initialize(chart, bounds, title, "PanamaGL");
   }
 
   @Override
@@ -36,14 +38,19 @@ public class PanamaGLFrame implements IFrame{
       var argc = allocator.allocate(C_INT, 0);
       glutInit(argc, argc);
       glutInitDisplayMode(GLUT_DOUBLE() | GLUT_RGB() | GLUT_DEPTH());
-      glutInitWindowSize(500, 500);
-      glutCreateWindow(CLinker.toCString(title + message, scope));
+      glutInitWindowSize(bounds.width, bounds.height);
+      glutCreateWindow(CLinker.toCString(title + "/" + message, scope));
       
-      var teapot = new Teapot(allocator);
-      var displayStub = glutDisplayFunc$func.allocate(teapot::display, scope);
-      var idleStub = glutIdleFunc$func.allocate(teapot::onIdle, scope);
+      
+      PanamaGLCanvas canvas = (PanamaGLCanvas)chart.getCanvas();
+      
+      var renderer = canvas.getRenderer();
+      
+      var displayStub = glutDisplayFunc$func.allocate(renderer::display, scope);
+      //var idleStub = glutIdleFunc$func.allocate(renderer::onIdle, scope);
+      
       glutDisplayFunc(displayStub);
-      glutIdleFunc(idleStub);
+      //glutIdleFunc(idleStub);
       glutMainLoop();
   }
 

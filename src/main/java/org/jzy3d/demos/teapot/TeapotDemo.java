@@ -10,10 +10,12 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.lights.Light;
 import org.jzy3d.plot3d.transform.Rotate;
 import org.jzy3d.plot3d.transform.Transform;
+import org.jzy3d.utils.LoggerUtils;
 
 public class TeapotDemo {
 
   public static void main(String[] args) {
+    LoggerUtils.maximal();
     
     Transform transform = new Transform();
     transform.add(new Rotate(90, new Coord3d(1,0,0)));
@@ -64,7 +66,7 @@ public class TeapotDemo {
     // ---------------------------------------------
 
     chart.open();
-    chart.addMouseCameraController();
+    //chart.addMouseCameraController();
 
   }
 }
