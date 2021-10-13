@@ -27,3 +27,6 @@ dependency-reduced-pom.xml
 .classpath
 .settings
 target/
+
+.idea/
+*.iml

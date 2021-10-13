@@ -13,6 +13,8 @@ import org.jzy3d.plot3d.rendering.scene.Scene;
 import org.jzy3d.plot3d.rendering.view.PanamaGLRenderer;
 import org.jzy3d.plot3d.rendering.view.View;
 
+import static opengl.glut_h.*;
+
 public class PanamaGLCanvas implements IScreenCanvas{
   static Logger logger = Logger.getLogger(PanamaGLCanvas.class);
   
@@ -21,6 +23,8 @@ public class PanamaGLCanvas implements IScreenCanvas{
   protected IAnimator animator;
   
   protected PanamaGLRenderer renderer;
+
+  protected Coord2d pixelRatio = new Coord2d(1,1);
 
 
   public PanamaGLCanvas(IChartFactory factory, Scene scene, Quality quality) {
@@ -40,14 +44,12 @@ public class PanamaGLCanvas implements IScreenCanvas{
 
   @Override
   public int getRendererWidth() {
-    logger.warn("Return constant 800");
-    return 800;
+    return (int)(glutGet(GLUT_WINDOW_WIDTH()) * pixelRatio.x);
   }
 
   @Override
   public int getRendererHeight() {
-    logger.warn("Return constant 600");
-    return 600;
+    return (int)(glutGet(GLUT_WINDOW_HEIGHT()) * pixelRatio.y);
   }
 
   @Override
@@ -103,14 +105,12 @@ public class PanamaGLCanvas implements IScreenCanvas{
 
   @Override
   public void setPixelScale(float[] scale) {
-    // TODO Auto-generated method stub
-    
+    pixelRatio.set(scale[0], scale[1]);
   }
 
   @Override
   public Coord2d getPixelScale() {
-    // TODO Auto-generated method stub
-    return null;
+    return pixelRatio;
   }
 
   @Override

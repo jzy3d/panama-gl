@@ -97,6 +97,7 @@ public class PanamaGLPainter extends AbstractPainter {
 
   @Override
   public void configureGL(Quality quality) {
+
     // Activate Depth buffer
     if (quality.isDepthActivated()) {
       opengl.glut_h.glEnable(opengl.glut_h.GL_DEPTH_TEST());
@@ -132,20 +133,16 @@ public class PanamaGLPainter extends AbstractPainter {
     // Make smoothing setting
     if (quality.isSmoothPolygon()) {
       opengl.glut_h.glEnable(opengl.glut_h.GL_POLYGON_SMOOTH());
-      // opengl.glut_h.glHint(GL2.GL_POLYGON_SMOOTH_HINT, opengl.glut_h.GL_NICEST);
     } else
       opengl.glut_h.glDisable(opengl.glut_h.GL_POLYGON_SMOOTH());
 
     if (quality.isSmoothLine()) {
       opengl.glut_h.glEnable(opengl.glut_h.GL_LINE_SMOOTH());
-      // opengl.glut_h.glHint(opengl.glut_h.GL_LINE_SMOOTH_HINT,
-      // opengl.glut_h.GL_NICEST);
     } else
       opengl.glut_h.glDisable(opengl.glut_h.GL_LINE_SMOOTH());
 
     if (quality.isSmoothPoint()) {
       opengl.glut_h.glEnable(opengl.glut_h.GL_POINT_SMOOTH());
-      // opengl.glut_h.glHint(GL2ES1.GL_POINT_SMOOTH_HINT, opengl.glut_h.GL_NICEST);
     } else
       opengl.glut_h.glDisable(opengl.glut_h.GL_POINT_SMOOTH());
     
@@ -609,7 +606,6 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public void glutSolidTeapot(float scale) {
     opengl.glut_h.glutSolidTeapot(scale);
-    System.out.println("teapot!");
   }
 
   @Override

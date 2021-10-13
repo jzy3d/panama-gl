@@ -33,15 +33,15 @@ public class TeapotDemo {
     Quality q = Quality.Advanced(); 
     q.setDepthActivated(true);
     q.setAlphaActivated(false);
-    q.setAnimated(false); 
-    q.setHiDPIEnabled(true); 
+    q.setAnimated(true);
+    q.setHiDPIEnabled(false);
     
     Chart chart = factory.newChart(q);
-    chart.open(); // with panama pseudo frame, should be opened first
 
     chart.getView().setSquared(false);
     chart.getView().setBackgroundColor(Color.BLACK);
     chart.getView().getAxis().getLayout().setMainColor(Color.WHITE);
+    chart.getView().setAxisDisplayed(true);
     // ---------------------------------------------
 
     chart.add(teapot);
@@ -52,7 +52,13 @@ public class TeapotDemo {
     
     // ---------------------------------------------
 
-    //chart.addMouseCameraController();
+    // Manual HiDPI setting
+    float[] pixelScale = {2f,2f};
+    chart.getCanvas().setPixelScale(pixelScale);
+
+    chart.open(800,600); // with panama pseudo frame, should be opened first
+
+    chart.addMouseCameraController();
 
   }
 }
