@@ -37,6 +37,7 @@ import jdk.incubator.foreign.SegmentAllocator;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
+import com.jogamp.opengl.fixedfunc.GLLightingFunc;
 
 public class PanamaGLPainter extends AbstractPainter {
   static Logger logger = Logger.getLogger(PanamaGLPainter.class);
@@ -958,6 +959,11 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public void glLight_Specular(int lightId, Color specularColor) {
     glLightfv(lightId, opengl.glut_h.GL_SPECULAR(), specularColor.toArray(), 0);
+  }
+  
+  @Override
+  public void glLight_Shininess(int lightId, float value) {
+    glLightf(lightId, opengl.glut_h.GL_SHININESS(), value);    
   }
 
   @Override
