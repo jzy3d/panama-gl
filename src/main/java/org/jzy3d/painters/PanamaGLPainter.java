@@ -33,7 +33,7 @@ import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.MemorySegment;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
-
+import jgl.wt.awt.GL;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
@@ -1283,6 +1283,31 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public void glHint_PointSmooth_Nicest() {
     glHint(opengl.glut_h.GL_POINT_SMOOTH_HINT(), opengl.glut_h.GL_NICEST());
+  }
+
+  @Override
+  public void glDepthFunc(DepthFunc func) {
+    switch(func) {
+      case GL_ALWAYS: opengl.glut_h.glDepthFunc(opengl.glut_h.GL_ALWAYS()); break;
+      case GL_NEVER: opengl.glut_h.glDepthFunc(GL.GL_NEVER); break;
+      case GL_EQUAL: opengl.glut_h.glDepthFunc(GL.GL_EQUAL); break;
+      case GL_GEQUAL: opengl.glut_h.glDepthFunc(GL.GL_GEQUAL); break;
+      case GL_GREATER: opengl.glut_h.glDepthFunc(GL.GL_GREATER); break;
+      case GL_LEQUAL: opengl.glut_h.glDepthFunc(GL.GL_LEQUAL); break;
+      case GL_LESS: opengl.glut_h.glDepthFunc(GL.GL_LESS); break;
+      case GL_NOTEQUAL: opengl.glut_h.glDepthFunc(GL.GL_NOTEQUAL); break;
+      default: throw new RuntimeException("Enum value not supported : " + func);
+    }
+  }
+
+  @Override
+  public void glEnable_DepthTest() {
+    opengl.glut_h.glEnable(GL.GL_DEPTH_TEST);    
+  }
+
+  @Override
+  public void glDisable_DepthTest() {
+    opengl.glut_h.glDisable(GL.GL_DEPTH_TEST);    
   }
 
 }
