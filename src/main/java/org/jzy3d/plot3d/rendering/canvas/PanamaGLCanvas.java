@@ -31,6 +31,8 @@ public class PanamaGLCanvas implements IScreenCanvas{
     view = scene.newView(this, quality);
     
     renderer = new PanamaGLRenderer(view);
+
+    animator = factory.getPainterFactory().newAnimator(this);
   }
 
   public PanamaGLRenderer getRenderer() {
@@ -65,7 +67,8 @@ public class PanamaGLCanvas implements IScreenCanvas{
 
   @Override
   public void forceRepaint() {
-    logger.warn("not implemented");
+    logger.info("not forcing repaint since renderer.display() crashes JVM");
+    /*renderer.display();*/
   }
 
   @Override
@@ -146,6 +149,6 @@ public class PanamaGLCanvas implements IScreenCanvas{
   @Override
   public IAnimator getAnimation() {
     // TODO Auto-generated method stub
-    return null;
+    return animator;
   }
 }

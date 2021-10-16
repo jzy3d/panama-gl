@@ -2,8 +2,10 @@ package org.jzy3d.chart.factories;
 
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.IAnimator;
+import org.jzy3d.chart.PanamaGLAnimator;
 import org.jzy3d.chart.controllers.keyboard.camera.ICameraKeyController;
 import org.jzy3d.chart.controllers.keyboard.screenshot.IScreenshotKeyController;
+import org.jzy3d.chart.controllers.mouse.camera.AWTCameraMouseController;
 import org.jzy3d.chart.controllers.mouse.camera.ICameraMouseController;
 import org.jzy3d.chart.controllers.mouse.picking.IMousePickingController;
 import org.jzy3d.maths.Dimension;
@@ -60,13 +62,12 @@ public class PanamaGLPainterFactory implements IPainterFactory{
 
   @Override
   public IAnimator newAnimator(ICanvas canvas) {
-    // TODO Auto-generated method stub
-    return null;
+    return new PanamaGLAnimator((PanamaGLCanvas) canvas);
   }
 
   @Override
   public ICameraMouseController newMouseCameraController(Chart chart) {
-    return new PanamaGLMouse(chart);
+    return new AWTCameraMouseController(chart);
   }
 
   @Override
