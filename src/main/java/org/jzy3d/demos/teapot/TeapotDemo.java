@@ -56,9 +56,7 @@ public class TeapotDemo {
     float[] pixelScale = {2f,2f};
     chart.getCanvas().setPixelScale(pixelScale);
 
-    chart.open(800,600); // with panama pseudo frame, should be opened first
-
-    chart.addMouseCameraController();
-
+    chart.open(800,600);
+    // with GLUT, can't do anything after open until main loop ends
   }
 }

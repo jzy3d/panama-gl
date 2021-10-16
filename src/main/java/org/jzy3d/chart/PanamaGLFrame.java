@@ -1,4 +1,4 @@
-package org.jzy3d.chart.factories;
+package org.jzy3d.chart;
 
 import static jdk.incubator.foreign.CLinker.C_INT;
 import static opengl.glut_h.*;
@@ -7,6 +7,7 @@ import opengl.glutIdleFunc$func;
 import opengl.glutMotionFunc$func;
 import opengl.glutMouseFunc$func;
 import org.jzy3d.chart.controllers.mouse.camera.AWTCameraMouseController;
+import org.jzy3d.chart.factories.IFrame;
 import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.maths.Rectangle;
@@ -63,15 +64,26 @@ public class PanamaGLFrame implements IFrame {
 
         // Mouse click listener
         glutMouseFunc$func mouseClickCallback = new glutMouseFunc$func(){
+            long time;
+            long timePrev;
             @Override
             public void apply(int button, int state, int x, int y) {
-                // state 0 seams to be click
-                // state 1 seams to be release
-                // button 0 left
+                int clickCount = 1;
+                time = System.currentTimeMillis();
+                if(timePrev>0){
+                    long elapsed = time-timePrev;
+                    if(elapsed<200){
+                        clickCount++;
+                    }
+                }
+
                 if(state==0)
-                   mouse.mousePressed(mouseEvent(x, y, InputEvent.BUTTON1_DOWN_MASK));
+                   mouse.mousePressed(mouseEvent(x, y, InputEvent.BUTTON1_DOWN_MASK, clickCount));
                 else if(state==1)
-                    mouse.mouseReleased(mouseEvent(x, y, InputEvent.BUTTON1_DOWN_MASK));
+                    mouse.mouseReleased(mouseEvent(x, y, InputEvent.BUTTON1_DOWN_MASK, clickCount));
+
+                timePrev = time;
+
                 //System.out.println("mouse x:"+x+" y:"+y + " button:" + button + " state:" + state);
             }
         };
@@ -97,7 +109,10 @@ public class PanamaGLFrame implements IFrame {
     }
 
     protected static MouseEvent mouseEvent(int x, int y, int modifiers) {
-        return new MouseEvent(dummy, 0, 0, modifiers, x, y, 100, 100, 1, false, 0);
+        return mouseEvent(x,y,modifiers,1);
+    }
+    protected static MouseEvent mouseEvent(int x, int y, int modifiers, int clickCount) {
+        return new MouseEvent(dummy, 0, 0, modifiers, x, y, 100, 100, clickCount, false, 0);
     }
     static Component dummy = new JPanel();
 }

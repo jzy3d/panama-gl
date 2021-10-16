@@ -963,11 +963,6 @@ public class PanamaGLPainter extends AbstractPainter {
   }
 
   @Override
-  public void glLight_Shininess(int lightId, float value) {
-    glLightf(lightId, opengl.glut_h.GL_SHININESS(), value);
-  }
-
-  @Override
   public void glEnable_Light(int light) {
     glEnable(lightId(light));
   }

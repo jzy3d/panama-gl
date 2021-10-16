@@ -47,11 +47,7 @@ public class SurfaceDemoPanamaGL {
 
 
     chart.open(800,600);
-    //System.out.println("OPENED");
-
-    //chart.getMouse().getThread().start();
-    chart.render();
-
+    // with GLUT, can't do anything after open until main loop ends
   }
 
 

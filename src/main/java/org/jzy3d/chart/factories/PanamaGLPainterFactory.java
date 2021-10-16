@@ -3,6 +3,7 @@ package org.jzy3d.chart.factories;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.IAnimator;
 import org.jzy3d.chart.PanamaGLAnimator;
+import org.jzy3d.chart.PanamaGLFrame;
 import org.jzy3d.chart.controllers.keyboard.camera.ICameraKeyController;
 import org.jzy3d.chart.controllers.keyboard.screenshot.IScreenshotKeyController;
 import org.jzy3d.chart.controllers.mouse.camera.AWTCameraMouseController;
