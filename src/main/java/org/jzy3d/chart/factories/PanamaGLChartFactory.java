@@ -1,4 +1,4 @@
-package org.jzy3d.factories;
+package org.jzy3d.chart.factories;
 
 import org.jzy3d.chart.factories.ChartFactory;
 import org.jzy3d.chart.factories.IPainterFactory;

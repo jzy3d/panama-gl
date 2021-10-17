@@ -1,66 +1,76 @@
-package org.jzy3d.factories;
+package org.jzy3d.plot3d.rendering.canvas;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 import org.jzy3d.chart.IAnimator;
 import org.jzy3d.chart.factories.IChartFactory;
 import org.jzy3d.maths.Coord2d;
-import org.jzy3d.plot3d.rendering.canvas.ICanvasListener;
-import org.jzy3d.plot3d.rendering.canvas.IScreenCanvas;
-import org.jzy3d.plot3d.rendering.canvas.Quality;
+import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.plot3d.rendering.scene.Scene;
+import org.jzy3d.plot3d.rendering.view.PanamaGLRenderer;
 import org.jzy3d.plot3d.rendering.view.View;
 
-public class PanamaGLCanvas implements IScreenCanvas{
+import static opengl.glut_h.*;
 
-  public PanamaGLCanvas() {
-  }
+public class PanamaGLCanvas implements IScreenCanvas{
+  static Logger logger = Logger.getLogger(PanamaGLCanvas.class);
+  
+  protected View view;
+  protected IAnimator animator;
+  protected PanamaGLRenderer renderer;
+
+  protected Coord2d pixelRatio = new Coord2d(1,1);
+
 
   public PanamaGLCanvas(IChartFactory factory, Scene scene, Quality quality) {
-    // TODO Auto-generated constructor stub
+    view = scene.newView(this, quality);
+    
+    renderer = new PanamaGLRenderer(view);
+
+    animator = factory.getPainterFactory().newAnimator(this);
+  }
+
+  public PanamaGLRenderer getRenderer() {
+    return renderer;
   }
 
   @Override
   public View getView() {
-    // TODO Auto-generated method stub
-    return null;
+    return view;
   }
 
   @Override
   public int getRendererWidth() {
-    // TODO Auto-generated method stub
-    return 0;
+    return (int)(glutGet(GLUT_WINDOW_WIDTH()) * pixelRatio.x);
   }
 
   @Override
   public int getRendererHeight() {
-    // TODO Auto-generated method stub
-    return 0;
+    return (int)(glutGet(GLUT_WINDOW_HEIGHT()) * pixelRatio.y);
   }
 
   @Override
   public void screenshot(File file) throws IOException {
-    // TODO Auto-generated method stub
-    
+    throw new IOException("not implemented");
   }
 
   @Override
   public Object screenshot() {
-    // TODO Auto-generated method stub
-    return null;
+    throw new RuntimeException("not implemented");
   }
 
   @Override
   public void forceRepaint() {
-    // TODO Auto-generated method stub
-    
+    logger.info("not forcing repaint since renderer.display() crashes JVM");
+    /*renderer.display();*/
   }
 
   @Override
   public void dispose() {
-    // TODO Auto-generated method stub
-    
+    logger.warn("not implemented");
   }
 
   @Override
@@ -95,14 +105,12 @@ public class PanamaGLCanvas implements IScreenCanvas{
 
   @Override
   public void setPixelScale(float[] scale) {
-    // TODO Auto-generated method stub
-    
+    pixelRatio.set(scale[0], scale[1]);
   }
 
   @Override
   public Coord2d getPixelScale() {
-    // TODO Auto-generated method stub
-    return null;
+    return pixelRatio;
   }
 
   @Override
@@ -138,6 +146,6 @@ public class PanamaGLCanvas implements IScreenCanvas{
   @Override
   public IAnimator getAnimation() {
     // TODO Auto-generated method stub
-    return null;
+    return animator;
   }
 }

@@ -1,10 +1,10 @@
 package org.jzy3d.demos.surface;
 
-import java.io.File;
-import java.io.IOException;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.EmulGLSkin;
+import org.jzy3d.chart.factories.ChartFactory;
 import org.jzy3d.chart.factories.EmulGLChartFactory;
+import org.jzy3d.chart.factories.PanamaGLChartFactory;
 import org.jzy3d.colors.Color;
 import org.jzy3d.colors.ColorMapper;
 import org.jzy3d.colors.colormaps.ColorMapRainbow;
@@ -15,33 +15,37 @@ import org.jzy3d.plot3d.builder.concrete.OrthonormalGrid;
 import org.jzy3d.plot3d.primitives.Shape;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 
-public class TeapotDemo {
+import java.io.File;
+import java.io.IOException;
+
+
+/**
+ * Demo an surface chart made with Panama (JEP-412).
+ * 
+ * @author Martin Pernollet
+ *
+ */
+public class SurfaceDemoPanamaGL {
 
   static final float ALPHA_FACTOR = 0.55f;// .61f;
 
   public static void main(String[] args) {
     Shape surface = surface();
 
-    EmulGLChartFactory factory = new EmulGLChartFactory();
+    //ChartFactory factory = new EmulGLChartFactory(); // use me as a reference
+    ChartFactory factory = new PanamaGLChartFactory();
 
     Quality q = Quality.Advanced(); 
-    q.setAnimated(false); // leave CPU quiet if no need to re-render
-    q.setHiDPIEnabled(true); // need java 9+ to enable HiDPI & Retina displays 
-    // (tutorials built with Java 8 for backward compatibility, update your runtime to get HiDPI)
     Chart chart = factory.newChart(q);
     chart.add(surface);
-    
-    EmulGLSkin skin = EmulGLSkin.on(chart);
-    skin.getCanvas().setProfileDisplayMethod(true);
 
-    chart.open();
-    chart.addMouseCameraController();
+    // Manual HiDPI setting
+    float[] pixelScale = {2f,2f};
+    chart.getCanvas().setPixelScale(pixelScale);
 
-    try {
-      chart.screenshot(new File("target/" + SurfaceDemoEmulGLP.class.getSimpleName() + ".png"));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+
+    chart.open(800,600);
+    // with GLUT, can't do anything after open until main loop ends
   }
 
 
