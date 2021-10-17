@@ -36,8 +36,6 @@ public class SurfaceDemoPanamaGL {
     ChartFactory factory = new PanamaGLChartFactory();
 
     Quality q = Quality.Advanced(); 
-    q.setAnimated(true);
-    q.setHiDPIEnabled(false);
     Chart chart = factory.newChart(q);
     chart.add(surface);
 

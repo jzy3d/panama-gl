@@ -3,9 +3,7 @@ package org.jzy3d.chart;
 import static jdk.incubator.foreign.CLinker.C_INT;
 import static opengl.glut_h.*;
 
-import opengl.glutIdleFunc$func;
-import opengl.glutMotionFunc$func;
-import opengl.glutMouseFunc$func;
+import opengl.*;
 import org.jzy3d.chart.controllers.mouse.camera.AWTCameraMouseController;
 import org.jzy3d.chart.factories.IFrame;
 import org.jzy3d.painters.PanamaGLPainter;
@@ -17,7 +15,6 @@ import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
 import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
-import opengl.glutDisplayFunc$func;
 
 import javax.swing.*;
 import java.awt.*;
@@ -42,6 +39,19 @@ public class PanamaGLFrame implements IFrame {
 
     @Override
     public void initialize(Chart chart, Rectangle bounds, String title, String message) {
+        glutStart(chart, bounds, title, message);
+
+        /*// Attempted access outside owning thread
+        glutBackgroundThread = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                glutStart(chart, bounds, title, message);
+            }
+        });
+        glutBackgroundThread.start();*/
+    }
+
+    private void glutStart(Chart chart, Rectangle bounds, String title, String message) {
         var painter = (PanamaGLPainter) chart.getPainter();
         var canvas = (PanamaGLCanvas) chart.getCanvas();
         var renderer = canvas.getRenderer();
@@ -56,10 +66,10 @@ public class PanamaGLFrame implements IFrame {
 
         // GLUT Display/Idle callback
         glutDisplayFunc(glutDisplayFunc$func.allocate(renderer::display, scope));
-        glutReshapeFunc(glutIdleFunc$func.allocate(renderer::display, scope));
+        glutReshapeFunc(glutReshapeFunc$func.allocate(renderer::reshape, scope));
         glutIdleFunc(glutIdleFunc$func.allocate(renderer::onIdle, scope));
 
-        // GLUT Mouse callback
+        // GLUT Mouse callbacks
         AWTCameraMouseController mouse = (AWTCameraMouseController) chart.getMouse();
 
         // Mouse click listener
@@ -76,14 +86,12 @@ public class PanamaGLFrame implements IFrame {
                         clickCount++;
                     }
                 }
-
                 if(state==0)
                    mouse.mousePressed(mouseEvent(x, y, InputEvent.BUTTON1_DOWN_MASK, clickCount));
                 else if(state==1)
                     mouse.mouseReleased(mouseEvent(x, y, InputEvent.BUTTON1_DOWN_MASK, clickCount));
 
                 timePrev = time;
-
                 //System.out.println("mouse x:"+x+" y:"+y + " button:" + button + " state:" + state);
             }
         };

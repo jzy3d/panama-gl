@@ -526,6 +526,9 @@ public class PanamaGLPainter extends AbstractPainter {
   public void glutBitmapString(int font, String string) {
     logger.error("not available in generated code");
     //opengl.glut_h.glutBitmapString(font, alloc(string));
+
+    // Use freeglut
+    ///opt/X11/include/GL/freeglut.h
   }
 
   @Override

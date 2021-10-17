@@ -78,6 +78,9 @@ public class Teapot {
   void onIdle() {
     rot += 0.1;
     glutPostRedisplay();
+
+//    if(rot>0.3)
+    throw new IllegalArgumentException("Teapot does not support coffee yet");
   }
 
   public static void main(String[] args) {
