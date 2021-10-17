@@ -80,7 +80,11 @@ public class PanamaGLPainter extends AbstractPainter {
   public MemorySegment alloc(String value) {
     return CLinker.toCString(value, scope);
   }
-  
+
+  public String glGetString(int stringID){
+    return CLinker.toJavaString(opengl.glut_h.glGetString(stringID));
+  }
+
   /////////////////////////////////////////////
 
   @Override

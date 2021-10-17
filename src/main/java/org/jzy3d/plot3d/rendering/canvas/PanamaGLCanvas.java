@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import com.jogamp.opengl.GL;
 import org.apache.log4j.Logger;
 import org.jzy3d.chart.IAnimator;
 import org.jzy3d.chart.factories.IChartFactory;
@@ -21,15 +22,12 @@ public class PanamaGLCanvas implements IScreenCanvas{
   protected View view;
   protected IAnimator animator;
   protected PanamaGLRenderer renderer;
-
   protected Coord2d pixelRatio = new Coord2d(1,1);
 
 
   public PanamaGLCanvas(IChartFactory factory, Scene scene, Quality quality) {
     view = scene.newView(this, quality);
-    
     renderer = new PanamaGLRenderer(view);
-
     animator = factory.getPainterFactory().newAnimator(this);
   }
 
@@ -75,26 +73,22 @@ public class PanamaGLCanvas implements IScreenCanvas{
 
   @Override
   public void addMouseController(Object o) {
-    // TODO Auto-generated method stub
-    
+    logger.warn("implemented in PanamaGLFrame");
   }
 
   @Override
   public void addKeyController(Object o) {
-    // TODO Auto-generated method stub
-    
+    logger.warn("not implemented");
   }
 
   @Override
   public void removeMouseController(Object o) {
-    // TODO Auto-generated method stub
-    
+    logger.warn("not implemented");
   }
 
   @Override
   public void removeKeyController(Object o) {
-    // TODO Auto-generated method stub
-    
+    logger.warn("not implemented");
   }
 
   @Override
@@ -116,19 +110,17 @@ public class PanamaGLCanvas implements IScreenCanvas{
   @Override
   public double getLastRenderingTimeMs() {
     // TODO Auto-generated method stub
-    return 0;
+    return -1;
   }
 
   @Override
   public void addCanvasListener(ICanvasListener listener) {
-    // TODO Auto-generated method stub
-    
+    logger.warn("not implemented");
   }
 
   @Override
   public void removeCanvasListener(ICanvasListener listener) {
-    // TODO Auto-generated method stub
-    
+    logger.warn("not implemented");
   }
 
   @Override
@@ -139,13 +131,11 @@ public class PanamaGLCanvas implements IScreenCanvas{
 
   @Override
   public void display() {
-    // TODO Auto-generated method stub
-    
+    logger.warn("not implemented");
   }
 
   @Override
   public IAnimator getAnimation() {
-    // TODO Auto-generated method stub
     return animator;
   }
 }
