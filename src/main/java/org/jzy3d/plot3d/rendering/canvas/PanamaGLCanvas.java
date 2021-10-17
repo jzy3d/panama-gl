@@ -19,9 +19,7 @@ public class PanamaGLCanvas implements IScreenCanvas{
   static Logger logger = Logger.getLogger(PanamaGLCanvas.class);
   
   protected View view;
-  protected PanamaGLPainter painter;
   protected IAnimator animator;
-  
   protected PanamaGLRenderer renderer;
 
   protected Coord2d pixelRatio = new Coord2d(1,1);
@@ -56,13 +54,12 @@ public class PanamaGLCanvas implements IScreenCanvas{
 
   @Override
   public void screenshot(File file) throws IOException {
-    logger.warn("not implemented");
+    throw new IOException("not implemented");
   }
 
   @Override
   public Object screenshot() {
-    logger.warn("not implemented");
-    return null;
+    throw new RuntimeException("not implemented");
   }
 
   @Override

@@ -120,7 +120,7 @@
 									<manifestEntries>
 										<Main-Class>org.jzy3d.demos.surface.SurfaceDemoPanamaGL</Main-Class>
 										<!--<Main-Class>Teapot</Main-Class>
-										<Main-Class>org.jzy3d.demos.teapot.TeapotDemo</Main-Class>-->
+										<Main-Class>org.jzy3d.demos.teapot.TeapotDemoPanamaGL</Main-Class>-->
 									</manifestEntries>
 								</transformer>
 							</transformers>

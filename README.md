@@ -1,50 +1,43 @@
 # panama-gl
 
-This project explore Native OpenGL capabilities of Panama Early Release. 
-JDK 17 incubation comes with [JEP-412 : Foreign Function & Memory API](https://openjdk.java.net/jeps/412) 
-which offers a brand new way of accessing native libraries. 
+This project explore Native OpenGL capabilities of Panama Early-Access Release.
+JDK 17 incubation comes with [JEP-412 : Foreign Function & Memory API](https://openjdk.java.net/jeps/412) which offers a brand new way of accessing native libraries.
 
-We will here try to use Panama as a rendering backup for Jzy3D as a prototype.
+We here show to use Panama as a rendering backend for Jzy3D as a prototype.
 
+### SurfaceDemoPanamaGL
+<img src="doc/panama-gl-surface.png"/>
 
-## Get
-
-* [Panama Early Build](https://jdk.java.net/panama/)
-* [JExtract samples](https://github.com/sundararajana/panama-jextract-samples)
-
-## Generate Java Code with JExtract
-
-```
-jextract -d ./target/java/ --source -t opengl -lGL -l/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT \
-  -I /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/ \
-  -C-F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks \
-  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GLUT.framework/Headers/glut.h
-```
-
-TODO : add target package with OS name & version
+### TeapotDemoPanamaGL
+<img src="doc/panama-gl-teapot.png"/>
 
 
-```
-javac --add-modules jdk.incubator.foreign opengl/*.java
-```
 
-## Build Maven project
+## Run
 
-Copy to a Maven project having jzy3D in path
+You need to install [Panama Early-Access build](https://jdk.java.net/panama/).
+
+### Run from IDE
+
+Then run from Intellij ([Eclipse won't work yet](https://github.com/jzy3d/panama-gl/issues/3)) one of these demos
+* SurfaceDemoPanamaGL
+* TeapotDemoPanamaGL
+
+This will require these VM arguments
 
 ```
-cp target/opengl/* /Users/martin/Dev/jzy3d/public/panama-gl/src/main/java/opengl
-cp *.java /Users/martin/Dev/jzy3d/public/panama-gl/src/main/java/
+-XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 ```
 
+### Run from CLI
 
-This one build a fat jar with all dependencies
+#### Build
+
 ```
 mvn clean install package
 ```
 
-
-## Run
+#### Run
 
 Check JRE is Panama
 ```
@@ -64,22 +57,32 @@ java -XstartOnFirstThread \
 ```
 
 
-Lead to
+## How I built the OpenGL wrappers
+
+See the OpenGL example in [JExtract samples](https://github.com/sundararajana/panama-jextract-samples).
+
+### Generate OpenGL Java wrappers with JExtract
+
+This allows generating OpenGL Java Wrapper from a MacOS. The generated package is already in src/main/java so you don't need to do it.
 
 ```
-Error: Unable to initialize main class Teapot
-Caused by: java.lang.NoClassDefFoundError: jdk/incubator/foreign/Addressable
+jextract -d ./target/java/ --source -t opengl -lGL -l/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT \
+  -I /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/ \
+  -C-F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GLUT.framework/Headers/glut.h
 ```
 
+### Move to a Maven project
 
-Add to IDE VM arguments the following (it must contain no backslash, at least for Eclipse)
+Copy to a Maven project having jzy3D in path
 
 ```
--XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+cp target/opengl/* /Users/martin/Dev/jzy3d/public/panama-gl/src/main/java/opengl
+cp *.java /Users/martin/Dev/jzy3d/public/panama-gl/src/main/java/
 ```
+
 
 ## Help
 
 * Modules https://openjdk.java.net/projects/jigsaw/quick-start
 * Modules https://github.com/tfesenko/Java-Modules-JPMS-CheatSheet
-

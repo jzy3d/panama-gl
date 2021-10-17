@@ -8,7 +8,7 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.lights.Light;
 import org.jzy3d.utils.LoggerUtils;
 
-public class TeapotDemo {
+public class TeapotDemoPanamaGL {
 
   public static void main(String[] args) {
     LoggerUtils.maximal();
