@@ -59,8 +59,7 @@ public class PanamaGLFrame implements IFrame {
         var allocator = painter.getAllocator();
         var argc = allocator.allocate(C_INT, 0);
 
-        System.out.println(version(painter));
-
+        // GLUT Init window
         glutInit(argc, argc);
         glutInitDisplayMode(GLUT_DOUBLE() | GLUT_RGB() | GLUT_DEPTH());
         glutInitWindowSize(bounds.width, bounds.height);
@@ -74,7 +73,7 @@ public class PanamaGLFrame implements IFrame {
         // GLUT Mouse callbacks
         AWTCameraMouseController mouse = (AWTCameraMouseController) chart.getMouse();
 
-        // Mouse click listener
+        // GLUT Mouse click listener
         glutMouseFunc$func mouseClickCallback = new glutMouseFunc$func(){
             long time;
             long timePrev;
@@ -110,6 +109,12 @@ public class PanamaGLFrame implements IFrame {
         };
         glutMotionFunc(glutMotionFunc$func.allocate(mouseMotionCallback, scope));
 
+
+        // -----------------------------------------------------
+        // Version - GLUT need to be initialized
+
+        System.out.println(version(painter));
+
         // -----------------------------------------------------
         // Warn : this will block execution
 
@@ -128,11 +133,11 @@ public class PanamaGLFrame implements IFrame {
 
     protected StringBuffer version(PanamaGLPainter painter){
         StringBuffer sb = new StringBuffer();
-        //sb.append("GL_VENDOR     : " + painter.glGetString(opengl.glut_h.GL_VENDOR()) + "\n");
-        //sb.append("GL_RENDERER   : " + painter.glGetString(opengl.glut_h.GL_RENDERER()) + "\n");
+        sb.append("GL_VENDOR     : " + painter.glGetString(opengl.glut_h.GL_VENDOR()) + "\n");
+        sb.append("GL_RENDERER   : " + painter.glGetString(opengl.glut_h.GL_RENDERER()) + "\n");
         sb.append("GL_VERSION    : " + painter.glGetString(opengl.glut_h.GL_VERSION()) + "\n");
 
-        /*String ext = painter.glGetString(opengl.glut_h.GL_EXTENSIONS());
+        String ext = painter.glGetString(opengl.glut_h.GL_EXTENSIONS());
 
         if(ext!=null) {
             sb.append("GL_EXTENSIONS : " + "\n");
@@ -142,7 +147,7 @@ public class PanamaGLFrame implements IFrame {
         }
         else {
             sb.append("GL_EXTENSIONS : null\n");
-        }*/
+        }
 
         return sb;
     }

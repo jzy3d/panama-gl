@@ -82,7 +82,7 @@ public class PanamaGLPainter extends AbstractPainter {
   }
 
   public String glGetString(int stringID){
-    return CLinker.toJavaString(opengl.glut_h.glGetString(opengl.glut_h.GL_VENDOR()));
+    return CLinker.toJavaString(opengl.glut_h.glGetString(stringID));
   }
 
   /////////////////////////////////////////////
