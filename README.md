@@ -3,7 +3,11 @@
 This project explore Native OpenGL capabilities of Panama Early-Access Release.
 JDK 17 incubation comes with [JEP-412 : Foreign Function & Memory API](https://openjdk.java.net/jeps/412) which offers a brand new way of accessing native libraries.
 
-We here show to use Panama as a rendering backend for Jzy3D as a prototype.
+We here show how to use Panama to generate an OpenGL wrapper for Jzy3D, which already uses JOGL for GPU rendering and EmulGL for CPU rendering.
+
+## Demos
+
+These two demo open a native window. One can use the mouse to rotate the object, and double click to start an automatic rotation.
 
 ### SurfaceDemoPanamaGL
 <img src="doc/panama-gl-surface.png"/>
