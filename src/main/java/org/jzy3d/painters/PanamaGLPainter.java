@@ -1404,5 +1404,16 @@ public class PanamaGLPainter extends AbstractPainter {
   public void glDisable_DepthTest() {
     opengl.glut_h.glDisable(GL.GL_DEPTH_TEST);
   }
+  
+  @Override
+  public void glEnable_Stencil() {
+    opengl.glut_h.glEnable(opengl.glut_h.GL_STENCIL());
+  }
+  
+  @Override
+  public void glDisable_Stencil() {
+    opengl.glut_h.glDisable(opengl.glut_h.GL_STENCIL());
+  }
+
 
 }
