@@ -33,10 +33,10 @@ import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.MemorySegment;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
-import jgl.wt.awt.GL;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
+import com.jogamp.opengl.GL;
 import com.jogamp.opengl.fixedfunc.GLLightingFunc;
 
 public class PanamaGLPainter extends AbstractPainter {
@@ -704,9 +704,19 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public void glStencilMask(int mask) {
     opengl.glut_h.glStencilMask(mask);
-
   }
 
+  @Override
+  public void glStencilMask_True() {
+    opengl.glut_h.glStencilMask(opengl.glut_h.GL_TRUE());
+  }
+
+  @Override
+  public void glStencilMask_False(){
+    opengl.glut_h.glStencilMask(opengl.glut_h.GL_FALSE());    
+  }
+
+  
   @Override
   public void glStencilOp(StencilOp fail, StencilOp zfail, StencilOp zpass) {
     opengl.glut_h.glStencilOp(toInt(fail), toInt(zfail), toInt(zpass));
@@ -1370,25 +1380,25 @@ public class PanamaGLPainter extends AbstractPainter {
         opengl.glut_h.glDepthFunc(opengl.glut_h.GL_ALWAYS());
         break;
       case GL_NEVER:
-        opengl.glut_h.glDepthFunc(GL.GL_NEVER);
+        opengl.glut_h.glDepthFunc(opengl.glut_h.GL_NEVER());
         break;
       case GL_EQUAL:
-        opengl.glut_h.glDepthFunc(GL.GL_EQUAL);
+        opengl.glut_h.glDepthFunc(opengl.glut_h.GL_EQUAL());
         break;
       case GL_GEQUAL:
-        opengl.glut_h.glDepthFunc(GL.GL_GEQUAL);
+        opengl.glut_h.glDepthFunc(opengl.glut_h.GL_GEQUAL());
         break;
       case GL_GREATER:
-        opengl.glut_h.glDepthFunc(GL.GL_GREATER);
+        opengl.glut_h.glDepthFunc(opengl.glut_h.GL_GREATER());
         break;
       case GL_LEQUAL:
-        opengl.glut_h.glDepthFunc(GL.GL_LEQUAL);
+        opengl.glut_h.glDepthFunc(opengl.glut_h.GL_LEQUAL());
         break;
       case GL_LESS:
-        opengl.glut_h.glDepthFunc(GL.GL_LESS);
+        opengl.glut_h.glDepthFunc(opengl.glut_h.GL_LESS());
         break;
       case GL_NOTEQUAL:
-        opengl.glut_h.glDepthFunc(GL.GL_NOTEQUAL);
+        opengl.glut_h.glDepthFunc(opengl.glut_h.GL_NOTEQUAL());
         break;
       default:
         throw new RuntimeException("Enum value not supported : " + func);
@@ -1397,12 +1407,12 @@ public class PanamaGLPainter extends AbstractPainter {
 
   @Override
   public void glEnable_DepthTest() {
-    opengl.glut_h.glEnable(GL.GL_DEPTH_TEST);
+    opengl.glut_h.glEnable(opengl.glut_h.GL_DEPTH_TEST());
   }
 
   @Override
   public void glDisable_DepthTest() {
-    opengl.glut_h.glDisable(GL.GL_DEPTH_TEST);
+    opengl.glut_h.glDisable(opengl.glut_h.GL_DEPTH_TEST());
   }
   
   @Override
@@ -1414,6 +1424,5 @@ public class PanamaGLPainter extends AbstractPainter {
   public void glDisable_Stencil() {
     opengl.glut_h.glDisable(opengl.glut_h.GL_STENCIL());
   }
-
 
 }
