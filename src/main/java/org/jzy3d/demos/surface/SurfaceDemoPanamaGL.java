@@ -33,8 +33,15 @@ public class SurfaceDemoPanamaGL {
   public static void main(String[] args) {
     Shape surface = surface();
 
-    ChartFactory factory = new EmulGLChartFactory(); // use me as a reference
-    //ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
+    /**
+     * In case the below factory is not working, on case use CPU rendering fallback as follow
+     * <code>
+     * ChartFactory factory = new EmulGLChartFactory(); // use me as a reference
+     * </code>
+     *
+     * @see https://github.com/jzy3d/jzy3d-api/blob/master/jzy3d-tutorials/src/main/java/org/jzy3d/demos/surface/SurfaceDemoEmulGL.java
+     */
+    ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
 
     Quality q = Quality.Advanced(); 
     Chart chart = factory.newChart(q);
