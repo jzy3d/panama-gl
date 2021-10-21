@@ -30,19 +30,16 @@ public class SurfaceDemoPanamaGL {
   static final float ALPHA_FACTOR = 0.55f;// .61f;
 
   public static void main(String[] args) {
-    Shape surface = surface();
-
     //ChartFactory factory = new EmulGLChartFactory(); // use me as a reference
     ChartFactory factory = new PanamaGLChartFactory();
 
     Quality q = Quality.Advanced(); 
     Chart chart = factory.newChart(q);
-    chart.add(surface);
+    chart.add(surface());
 
     // Manual HiDPI setting
     float[] pixelScale = {2f,2f};
     chart.getCanvas().setPixelScale(pixelScale);
-
 
     chart.open(800,600);
     // with GLUT, can't do anything after open until main loop ends
