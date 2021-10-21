@@ -5,6 +5,7 @@ import org.jzy3d.chart.EmulGLSkin;
 import org.jzy3d.chart.factories.ChartFactory;
 import org.jzy3d.chart.factories.EmulGLChartFactory;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
+import org.jzy3d.chart.factories.PanamaGLPainterFactory_MacOS_10_15_3;
 import org.jzy3d.colors.Color;
 import org.jzy3d.colors.ColorMapper;
 import org.jzy3d.colors.colormaps.ColorMapRainbow;
@@ -32,8 +33,8 @@ public class SurfaceDemoPanamaGL {
   public static void main(String[] args) {
     Shape surface = surface();
 
-    //ChartFactory factory = new EmulGLChartFactory(); // use me as a reference
-    ChartFactory factory = new PanamaGLChartFactory();
+    ChartFactory factory = new EmulGLChartFactory(); // use me as a reference
+    //ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
 
     Quality q = Quality.Advanced(); 
     Chart chart = factory.newChart(q);
