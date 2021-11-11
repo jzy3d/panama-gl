@@ -33,15 +33,15 @@ import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.MemorySegment;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
-import jgl.wt.awt.GL;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
+import com.jogamp.opengl.GL;
 import com.jogamp.opengl.fixedfunc.GLLightingFunc;
 
 public class PanamaGLPainter extends AbstractPainter {
   static Logger logger = Logger.getLogger(PanamaGLPainter.class);
-  
+
   ResourceScope scope;
   SegmentAllocator allocator;
 
@@ -54,9 +54,9 @@ public class PanamaGLPainter extends AbstractPainter {
       System.err.println(e);
     }
   }
-  
+
   /////////////////////////////////////////////
-  
+
   public ResourceScope getScope() {
     return scope;
   }
@@ -81,7 +81,7 @@ public class PanamaGLPainter extends AbstractPainter {
     return CLinker.toCString(value, scope);
   }
 
-  public String glGetString(int stringID){
+  public String glGetString(int stringID) {
     return CLinker.toJavaString(opengl.glut_h.glGetString(stringID));
   }
 
@@ -149,7 +149,7 @@ public class PanamaGLPainter extends AbstractPainter {
       opengl.glut_h.glEnable(opengl.glut_h.GL_POINT_SMOOTH());
     } else
       opengl.glut_h.glDisable(opengl.glut_h.GL_POINT_SMOOTH());
-    
+
   }
 
   @Override
@@ -298,25 +298,25 @@ public class PanamaGLPainter extends AbstractPainter {
 
   protected int polygonModeValue(PolygonMode mode) {
     switch (mode) {
-    case FRONT:
-      return opengl.glut_h.GL_FRONT();
-    case BACK:
-      return opengl.glut_h.GL_BACK();
-    case FRONT_AND_BACK:
-      return opengl.glut_h.GL_FRONT_AND_BACK();
-    default:
-      throw new IllegalArgumentException("Unsupported mode '" + mode + "'");
+      case FRONT:
+        return opengl.glut_h.GL_FRONT();
+      case BACK:
+        return opengl.glut_h.GL_BACK();
+      case FRONT_AND_BACK:
+        return opengl.glut_h.GL_FRONT_AND_BACK();
+      default:
+        throw new IllegalArgumentException("Unsupported mode '" + mode + "'");
     }
   }
 
   protected int polygonFillValue(PolygonFill mode) {
     switch (mode) {
-    case FILL:
-      return opengl.glut_h.GL_FILL();
-    case LINE:
-      return opengl.glut_h.GL_LINE();
-    default:
-      throw new IllegalArgumentException("Unsupported mode '" + mode + "'");
+      case FILL:
+        return opengl.glut_h.GL_FILL();
+      case LINE:
+        return opengl.glut_h.GL_LINE();
+      default:
+        throw new IllegalArgumentException("Unsupported mode '" + mode + "'");
     }
   }
 
@@ -364,8 +364,8 @@ public class PanamaGLPainter extends AbstractPainter {
   /**
    * glRasterPos3f not implemented by {@link GL}.
    * 
-   * This method will fallback on {@link GL#glRasterPos2f(float, float)} or
-   * trigger a {@link NotImplementedException} in case z value is not equal to 0.
+   * This method will fallback on {@link GL#glRasterPos2f(float, float)} or trigger a
+   * {@link NotImplementedException} in case z value is not equal to 0.
    */
   @Override
   public void glRasterPos3f(float x, float y, float z) {
@@ -389,9 +389,9 @@ public class PanamaGLPainter extends AbstractPainter {
 
 
   /**
-   * glPixelZoom is not implemented by {@link GL}. This method will do nothing but
-   * triggering a {@link NotImplementedException} in case x and y zoom factor are
-   * not both equal to 1 (i.e. in case a zoom is needed).
+   * glPixelZoom is not implemented by {@link GL}. This method will do nothing but triggering a
+   * {@link NotImplementedException} in case x and y zoom factor are not both equal to 1 (i.e. in
+   * case a zoom is needed).
    * 
    */
   @Override
@@ -409,27 +409,26 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public void glPixelStore(PixelStore store, int param) {
     switch (store) {
-    case PACK_ALIGNMENT:
-      opengl.glut_h.glPixelStorei(opengl.glut_h.GL_PACK_ALIGNMENT(), param);
-      break;
-    case UNPACK_ALIGNMENT:
-      opengl.glut_h.glPixelStorei(opengl.glut_h.GL_UNPACK_ALIGNMENT(), param);
-      break;
+      case PACK_ALIGNMENT:
+        opengl.glut_h.glPixelStorei(opengl.glut_h.GL_PACK_ALIGNMENT(), param);
+        break;
+      case UNPACK_ALIGNMENT:
+        opengl.glut_h.glPixelStorei(opengl.glut_h.GL_UNPACK_ALIGNMENT(), param);
+        break;
     }
     throw new IllegalArgumentException("Unsupported mode '" + store + "'");
   }
 
   @Override
-  public void glBitmap(int width, int height, float xorig, float yorig, float xmove, float ymove, byte[] bitmap,
-      int bitmap_offset) {
+  public void glBitmap(int width, int height, float xorig, float yorig, float xmove, float ymove,
+      byte[] bitmap, int bitmap_offset) {
     throw new NotImplementedException();
     // opengl.glut_h.glBitmap(width, height, xorig, yorig, xmove, ymove, bitmap,
     // bitmap_offset);
   }
 
   /**
-   * A very failing implementation. SHOULD SUPPORT AWT BufferedImage in EmulGL -
-   * or reverse converse
+   * A very failing implementation. SHOULD SUPPORT AWT BufferedImage in EmulGL - or reverse converse
    */
   @Override
   public void drawImage(ByteBuffer imageBuffer, int imageWidth, int imageHeight, Coord2d pixelZoom,
@@ -455,11 +454,9 @@ public class PanamaGLPainter extends AbstractPainter {
   /**
    * Process the given font length to further process alignement.
    * 
-   * Will only return a valid width for known {@link Font} (Helevetica and Times
-   * Roman).
+   * Will only return a valid width for known {@link Font} (Helevetica and Times Roman).
    * 
-   * Getting text width of any string can be done
-   * {@link #getTextLengthInPixels(Font, String)}.
+   * Getting text width of any string can be done {@link #getTextLengthInPixels(Font, String)}.
    */
   @Override
   public int glutBitmapLength(int font, String string) {
@@ -485,8 +482,8 @@ public class PanamaGLPainter extends AbstractPainter {
   }
 
   /**
-   * Text length processing based on AWT {@link FontMetrics} obtained by
-   * retrieving the graphic context of the {@link GLCanvas}.
+   * Text length processing based on AWT {@link FontMetrics} obtained by retrieving the graphic
+   * context of the {@link GLCanvas}.
    * 
    * In case no graphics is available
    */
@@ -509,30 +506,28 @@ public class PanamaGLPainter extends AbstractPainter {
   }
 
   /**
-   * Replace {@link #glutBitmapString(int, String) which is the official OpenGL
-   * interface.
+   * Replace {@link #glutBitmapString(int, String) which is the official OpenGL interface.
    * 
-   * This alternative interface allows rendering text based on AWT Fonts which are
-   * drawn on top of the GL Image.
+   * This alternative interface allows rendering text based on AWT Fonts which are drawn on top of
+   * the GL Image.
    */
   /*
-   * @Override public void glutBitmapString(Font font, String label, Coord3d
-   * position, Color color) { opengl.glut_h.glutBitmapString(toAWT(font), label,
-   * position.x, position.y, position.z, color.r, color.g, color.b, 0); }
+   * @Override public void glutBitmapString(Font font, String label, Coord3d position, Color color)
+   * { opengl.glut_h.glutBitmapString(toAWT(font), label, position.x, position.y, position.z,
+   * color.r, color.g, color.b, 0); }
    * 
-   * @Override public void drawText(Font font, String label, Coord3d position,
-   * Color color, float rotation) { opengl.glut_h.glutBitmapString(toAWT(font),
-   * label, position.x, position.y, position.z, color.r, color.g, color.b,
-   * rotation); }
+   * @Override public void drawText(Font font, String label, Coord3d position, Color color, float
+   * rotation) { opengl.glut_h.glutBitmapString(toAWT(font), label, position.x, position.y,
+   * position.z, color.r, color.g, color.b, rotation); }
    */
 
   @Override
   public void glutBitmapString(int font, String string) {
     logger.error("not available in generated code");
-    //opengl.glut_h.glutBitmapString(font, alloc(string));
+    // opengl.glut_h.glutBitmapString(font, alloc(string));
 
     // Use freeglut
-    ///opt/X11/include/GL/freeglut.h
+    /// opt/X11/include/GL/freeglut.h
   }
 
   @Override
@@ -566,10 +561,10 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public void glNewList(int list, ListMode mode) {
     switch (mode) {
-    case COMPILE:
-      glNewList(list, opengl.glut_h.GL_COMPILE());
-    case COMPILE_AND_EXECUTE:
-      glNewList(list, opengl.glut_h.GL_COMPILE_AND_EXECUTE());
+      case COMPILE:
+        glNewList(list, opengl.glut_h.GL_COMPILE());
+      case COMPILE_AND_EXECUTE:
+        glNewList(list, opengl.glut_h.GL_COMPILE_AND_EXECUTE());
     }
   }
 
@@ -586,7 +581,7 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public boolean glIsList(int list) {
     logger.error("to be implemented");
-    return false;//opengl.glut_h.glIsList(list);
+    return false;// opengl.glut_h.glIsList(list);
   }
 
   @Override
@@ -600,9 +595,9 @@ public class PanamaGLPainter extends AbstractPainter {
   public void gluDisk(double inner, double outer, int slices, int loops) {
     logger.error("to be implemented");
 
-    //GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
-    //qobj.Normals = opengl.glut_h.GLU_NONE(); // https://github.com/jzy3d/jzy3d-api/issues/179
-    //opengl.glut_h.gluDisk(qobj, inner, outer, slices, loops);
+    // GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
+    // qobj.Normals = opengl.glut_h.GLU_NONE(); // https://github.com/jzy3d/jzy3d-api/issues/179
+    // opengl.glut_h.gluDisk(qobj, inner, outer, slices, loops);
   }
 
   @Override
@@ -623,8 +618,8 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public void gluSphere(double radius, int slices, int stacks) {
     logger.error("to be implemented");
-    //GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
-    //opengl.glut_h.gluSphere(qobj, radius, slices, stacks);
+    // GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
+    // opengl.glut_h.gluSphere(qobj, radius, slices, stacks);
   }
 
   @Override
@@ -632,7 +627,7 @@ public class PanamaGLPainter extends AbstractPainter {
     logger.error("to be implemented");
 
     // GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
-    //opengl.glut_h.gluCylinder(qobj, base, top, height, slices, stacks);
+    // opengl.glut_h.gluCylinder(qobj, base, top, height, slices, stacks);
   }
 
   @Override
@@ -656,12 +651,12 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public int glRenderMode(RenderMode mode) {
     switch (mode) {
-    case RENDER:
-      return glRenderMode(opengl.glut_h.GL_RENDER());
-    case SELECT:
-      return glRenderMode(opengl.glut_h.GL_SELECT());
-    case FEEDBACK:
-      return glRenderMode(opengl.glut_h.GL_FEEDBACK());
+      case RENDER:
+        return glRenderMode(opengl.glut_h.GL_RENDER());
+      case SELECT:
+        return glRenderMode(opengl.glut_h.GL_SELECT());
+      case FEEDBACK:
+        return glRenderMode(opengl.glut_h.GL_FEEDBACK());
     }
     throw new IllegalArgumentException("Unsupported mode '" + mode + "'");
   }
@@ -671,10 +666,92 @@ public class PanamaGLPainter extends AbstractPainter {
     opengl.glut_h.glPassThrough(token);
   }
 
+  // GL STENCIL BUFFER
+
+  @Override
+  public void glStencilFunc(StencilFunc func, int ref, int mask) {
+    switch (func) {
+      case GL_ALWAYS:
+        opengl.glut_h.glStencilFunc(opengl.glut_h.GL_ALWAYS(), ref, mask);
+        break;
+      case GL_EQUAL:
+        opengl.glut_h.glStencilFunc(opengl.glut_h.GL_EQUAL(), ref, mask);
+        break;
+      case GL_GREATER:
+        opengl.glut_h.glStencilFunc(opengl.glut_h.GL_GREATER(), ref, mask);
+        break;
+      case GL_GEQUAL:
+        opengl.glut_h.glStencilFunc(opengl.glut_h.GL_GEQUAL(), ref, mask);
+        break;
+      case GL_LEQUAL:
+        opengl.glut_h.glStencilFunc(opengl.glut_h.GL_LEQUAL(), ref, mask);
+        break;
+      case GL_LESS:
+        opengl.glut_h.glStencilFunc(opengl.glut_h.GL_LESS(), ref, mask);
+        break;
+      case GL_NEVER:
+        opengl.glut_h.glStencilFunc(opengl.glut_h.GL_NEVER(), ref, mask);
+        break;
+      case GL_NOTEQUAL:
+        opengl.glut_h.glStencilFunc(opengl.glut_h.GL_NOTEQUAL(), ref, mask);
+        break;
+
+      default:
+        throw new IllegalArgumentException("Unknown enum value for StencilFunc: " + func);
+    }
+  }
+
+  @Override
+  public void glStencilMask(int mask) {
+    opengl.glut_h.glStencilMask(mask);
+  }
+
+  @Override
+  public void glStencilMask_True() {
+    opengl.glut_h.glStencilMask(opengl.glut_h.GL_TRUE());
+  }
+
+  @Override
+  public void glStencilMask_False(){
+    opengl.glut_h.glStencilMask(opengl.glut_h.GL_FALSE());    
+  }
+
+  
+  @Override
+  public void glStencilOp(StencilOp fail, StencilOp zfail, StencilOp zpass) {
+    opengl.glut_h.glStencilOp(toInt(fail), toInt(zfail), toInt(zpass));
+  }
+
+  @Override
+  public void glClearStencil(int s) {
+    opengl.glut_h.glClearStencil(s);
+  }
+
+  protected int toInt(StencilOp fail) {
+    switch (fail) {
+      case GL_DECR:
+        return opengl.glut_h.GL_DECR();
+      case GL_INCR:
+        return opengl.glut_h.GL_INCR();
+      case GL_INVERT:
+        return opengl.glut_h.GL_INVERT();
+      case GL_KEEP:
+        return opengl.glut_h.GL_KEEP();
+      case GL_REPLACE:
+        return opengl.glut_h.GL_REPLACE();
+      case GL_ZERO:
+        return opengl.glut_h.GL_ZERO();
+      default:
+        throw new IllegalArgumentException("Unknown enum value for StencilOp: " + fail);
+    }
+  }
+
+
   // GL VIEWPOINT
 
   @Override
-  public void glOrtho(double left, double right, double bottom, double top, double near_val, double far_val) {
+  public void glOrtho(double left, double right, double bottom, double top, double near_val,
+      double far_val) {
     opengl.glut_h.glOrtho(left, right, bottom, top, near_val, far_val);
   }
 
@@ -684,13 +761,14 @@ public class PanamaGLPainter extends AbstractPainter {
   }
 
   @Override
-  public void glFrustum(double left, double right, double bottom, double top, double zNear, double zFar) {
+  public void glFrustum(double left, double right, double bottom, double top, double zNear,
+      double zFar) {
     opengl.glut_h.glFrustum(left, right, bottom, top, zNear, zFar);
   }
 
   @Override
-  public void gluLookAt(float eyeX, float eyeY, float eyeZ, float centerX, float centerY, float centerZ, float upX,
-      float upY, float upZ) {
+  public void gluLookAt(float eyeX, float eyeY, float eyeZ, float centerX, float centerY,
+      float centerZ, float upX, float upY, float upZ) {
     opengl.glut_h.gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
   }
 
@@ -702,97 +780,99 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public void glClipPlane(int plane, double[] equation) {
     switch (plane) {
-    case 0:
-      opengl.glut_h.glClipPlane(opengl.glut_h.GL_CLIP_PLANE0(), alloc(equation));
-      break;
-    case 1:
-      opengl.glut_h.glClipPlane(opengl.glut_h.GL_CLIP_PLANE1(), alloc(equation));
-      break;
-    case 2:
-      opengl.glut_h.glClipPlane(opengl.glut_h.GL_CLIP_PLANE2(), alloc(equation));
-      break;
-    case 3:
-      opengl.glut_h.glClipPlane(opengl.glut_h.GL_CLIP_PLANE3(), alloc(equation));
-      break;
-    case 4:
-      opengl.glut_h.glClipPlane(opengl.glut_h.GL_CLIP_PLANE4(), alloc(equation));
-      break;
-    case 5:
-      opengl.glut_h.glClipPlane(opengl.glut_h.GL_CLIP_PLANE5(), alloc(equation));
-      break;
-    default:
-      throw new IllegalArgumentException("Expect a plane ID in [0;5]");
+      case 0:
+        opengl.glut_h.glClipPlane(opengl.glut_h.GL_CLIP_PLANE0(), alloc(equation));
+        break;
+      case 1:
+        opengl.glut_h.glClipPlane(opengl.glut_h.GL_CLIP_PLANE1(), alloc(equation));
+        break;
+      case 2:
+        opengl.glut_h.glClipPlane(opengl.glut_h.GL_CLIP_PLANE2(), alloc(equation));
+        break;
+      case 3:
+        opengl.glut_h.glClipPlane(opengl.glut_h.GL_CLIP_PLANE3(), alloc(equation));
+        break;
+      case 4:
+        opengl.glut_h.glClipPlane(opengl.glut_h.GL_CLIP_PLANE4(), alloc(equation));
+        break;
+      case 5:
+        opengl.glut_h.glClipPlane(opengl.glut_h.GL_CLIP_PLANE5(), alloc(equation));
+        break;
+      default:
+        throw new IllegalArgumentException("Expect a plane ID in [0;5]");
     }
   }
 
   @Override
   public void glEnable_ClipPlane(int plane) {
     switch (plane) {
-    case 0:
-      opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE0());
-      break;
-    case 1:
-      opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE1());
-      break;
-    case 2:
-      opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE2());
-      break;
-    case 3:
-      opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE3());
-      break;
-    case 4:
-      opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE4());
-      break;
-    case 5:
-      opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE5());
-      break;
-    default:
-      throw new IllegalArgumentException("Expect a plane ID in [0;5]");
+      case 0:
+        opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE0());
+        break;
+      case 1:
+        opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE1());
+        break;
+      case 2:
+        opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE2());
+        break;
+      case 3:
+        opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE3());
+        break;
+      case 4:
+        opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE4());
+        break;
+      case 5:
+        opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE5());
+        break;
+      default:
+        throw new IllegalArgumentException("Expect a plane ID in [0;5]");
     }
   }
 
   @Override
   public void glDisable_ClipPlane(int plane) {
     switch (plane) {
-    case 0:
-      opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE0());
-      break;
-    case 1:
-      opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE1());
-      break;
-    case 2:
-      opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE2());
-      break;
-    case 3:
-      opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE3());
-      break;
-    case 4:
-      opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE4());
-      break;
-    case 5:
-      opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE5());
-      break;
-    default:
-      throw new IllegalArgumentException("Expect a plane ID in [0;5]");
+      case 0:
+        opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE0());
+        break;
+      case 1:
+        opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE1());
+        break;
+      case 2:
+        opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE2());
+        break;
+      case 3:
+        opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE3());
+        break;
+      case 4:
+        opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE4());
+        break;
+      case 5:
+        opengl.glut_h.glEnable(opengl.glut_h.GL_CLIP_PLANE5());
+        break;
+      default:
+        throw new IllegalArgumentException("Expect a plane ID in [0;5]");
     }
   }
 
   @Override
-  public boolean gluUnProject(float winX, float winY, float winZ, float[] model, int model_offset, float[] proj,
-      int proj_offset, int[] view, int view_offset, float[] objPos, int objPos_offset) {
+  public boolean gluUnProject(float winX, float winY, float winZ, float[] model, int model_offset,
+      float[] proj, int proj_offset, int[] view, int view_offset, float[] objPos,
+      int objPos_offset) {
     // throw new NotImplementedException();
 
     double objX[] = new double[1];
     double objY[] = new double[1];
     double objZ[] = new double[1];
 
-    int st = opengl.glut_h.gluUnProject((double)winX, (double)winY, (double)winZ, alloc(dbl(model)), alloc(dbl(proj)), alloc(view), alloc(objX), alloc(objY), alloc(objZ));
+    int st = opengl.glut_h.gluUnProject((double) winX, (double) winY, (double) winZ,
+        alloc(dbl(model)), alloc(dbl(proj)), alloc(view), alloc(objX), alloc(objY), alloc(objZ));
 
     objPos[0] = (float) objX[0];
     objPos[1] = (float) objY[0];
     objPos[2] = (float) objZ[0];
 
-    return st==1;
+    return st == 1;
   }
 
   protected double[] dbl(float[] values) {
@@ -804,8 +884,9 @@ public class PanamaGLPainter extends AbstractPainter {
   }
 
   @Override
-  public boolean gluProject(float objX, float objY, float objZ, float[] model, int model_offset, float[] proj,
-      int proj_offset, int[] view, int view_offset, float[] winPos, int winPos_offset) {
+  public boolean gluProject(float objX, float objY, float objZ, float[] model, int model_offset,
+      float[] proj, int proj_offset, int[] view, int view_offset, float[] winPos,
+      int winPos_offset) {
     // throw new NotImplementedException();
     // opengl.glut_h.gluProject(objx, objy, objz, model, proj, viewport, winx, winy,
     // winz)
@@ -827,14 +908,15 @@ public class PanamaGLPainter extends AbstractPainter {
     double[] winy = new double[1];
     double[] winz = new double[1];
 
-    int out = opengl.glut_h.gluProject(objX, objY, objZ, alloc(modelD), alloc(projD), alloc(view), alloc(winx), alloc(winy), alloc(winz));
+    int out = opengl.glut_h.gluProject(objX, objY, objZ, alloc(modelD), alloc(projD), alloc(view),
+        alloc(winx), alloc(winy), alloc(winz));
 
     // winPos[0], winPos[1], winPos[2];
     winPos[0] = (float) winx[0];
     winPos[1] = (float) winy[0];
     winPos[2] = (float) winz[0];
 
-    return out==1;
+    return out == 1;
   }
 
   // GL GET
@@ -963,10 +1045,10 @@ public class PanamaGLPainter extends AbstractPainter {
   public void glLight_Specular(int lightId, Color specularColor) {
     glLightfv(lightId, opengl.glut_h.GL_SPECULAR(), specularColor.toArray(), 0);
   }
-  
+
   @Override
   public void glLight_Shininess(int lightId, float value) {
-    glLightf(lightId, opengl.glut_h.GL_SHININESS(), value);    
+    glLightf(lightId, opengl.glut_h.GL_SHININESS(), value);
   }
 
   @Override
@@ -981,22 +1063,22 @@ public class PanamaGLPainter extends AbstractPainter {
 
   protected int lightId(int id) {
     switch (id) {
-    case 0:
-      return opengl.glut_h.GL_LIGHT0();
-    case 1:
-      return opengl.glut_h.GL_LIGHT1();
-    case (2):
-      return opengl.glut_h.GL_LIGHT2();
-    case 3:
-      return opengl.glut_h.GL_LIGHT3();
-    case 4:
-      return opengl.glut_h.GL_LIGHT4();
-    case 5:
-      return opengl.glut_h.GL_LIGHT5();
-    case 6:
-      return opengl.glut_h.GL_LIGHT6();
-    case 7:
-      return opengl.glut_h.GL_LIGHT7();
+      case 0:
+        return opengl.glut_h.GL_LIGHT0();
+      case 1:
+        return opengl.glut_h.GL_LIGHT1();
+      case (2):
+        return opengl.glut_h.GL_LIGHT2();
+      case 3:
+        return opengl.glut_h.GL_LIGHT3();
+      case 4:
+        return opengl.glut_h.GL_LIGHT4();
+      case 5:
+        return opengl.glut_h.GL_LIGHT5();
+      case 6:
+        return opengl.glut_h.GL_LIGHT6();
+      case 7:
+        return opengl.glut_h.GL_LIGHT7();
     }
     throw new IllegalArgumentException("Unsupported light ID '" + id + "'");
   }
@@ -1081,7 +1163,8 @@ public class PanamaGLPainter extends AbstractPainter {
   }
 
   @Override
-  public void gluPickMatrix(double x, double y, double delX, double delY, int[] viewport, int viewport_offset) {
+  public void gluPickMatrix(double x, double y, double delX, double delY, int[] viewport,
+      int viewport_offset) {
     opengl.glut_h.gluPickMatrix(x, y, delX, delY, allocator.allocateArray(C_INT, viewport));
   }
 
@@ -1096,8 +1179,8 @@ public class PanamaGLPainter extends AbstractPainter {
   }
 
   @Override
-  public void glMap2f(int target, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride,
-      int vorder, FloatBuffer points) {
+  public void glMap2f(int target, float u1, float u2, int ustride, int uorder, float v1, float v2,
+      int vstride, int vorder, FloatBuffer points) {
     throw new NotImplementedException("NEED TO CONVERT FloatBuffer to float[][][]");
     // opengl.glut_h.glMap2f(target, u1, u2, ustride, uorder, v1, v2, vstride,
     // vorder, points);
@@ -1109,15 +1192,13 @@ public class PanamaGLPainter extends AbstractPainter {
   /**
    * NOT SUPPORTED in jGL wich emulate OpenGL 1 only.
    * 
-   * Note that {@lin NotImplementedException} are NOT triggered to ease
-   * compatibility with geometries that have the polygon offset fill setting
-   * enabled by default.
+   * Note that {@lin NotImplementedException} are NOT triggered to ease compatibility with
+   * geometries that have the polygon offset fill setting enabled by default.
    * 
    * Was added to OpenGL 2
    * (https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPolygonOffset.xhtml).
    * 
-   * You may desactivate offset fill with
-   * drawable.setPolygonOffsetFillEnable(false).
+   * You may desactivate offset fill with drawable.setPolygonOffsetFillEnable(false).
    * 
    * @see https://github.com/jzy3d/jGL/issues/3
    */
@@ -1270,14 +1351,14 @@ public class PanamaGLPainter extends AbstractPainter {
 
   protected int materialProperty(MaterialProperty material) {
     switch (material) {
-    case AMBIENT:
-      return opengl.glut_h.GL_AMBIENT();
-    case DIFFUSE:
-      return opengl.glut_h.GL_DIFFUSE();
-    case SPECULAR:
-      return opengl.glut_h.GL_SPECULAR();
-    case SHININESS:
-      return opengl.glut_h.GL_SHININESS();
+      case AMBIENT:
+        return opengl.glut_h.GL_AMBIENT();
+      case DIFFUSE:
+        return opengl.glut_h.GL_DIFFUSE();
+      case SPECULAR:
+        return opengl.glut_h.GL_SPECULAR();
+      case SHININESS:
+        return opengl.glut_h.GL_SHININESS();
     }
     throw new IllegalArgumentException("Unsupported property '" + material + "'");
   }
@@ -1294,27 +1375,54 @@ public class PanamaGLPainter extends AbstractPainter {
 
   @Override
   public void glDepthFunc(DepthFunc func) {
-    switch(func) {
-      case GL_ALWAYS: opengl.glut_h.glDepthFunc(opengl.glut_h.GL_ALWAYS()); break;
-      case GL_NEVER: opengl.glut_h.glDepthFunc(GL.GL_NEVER); break;
-      case GL_EQUAL: opengl.glut_h.glDepthFunc(GL.GL_EQUAL); break;
-      case GL_GEQUAL: opengl.glut_h.glDepthFunc(GL.GL_GEQUAL); break;
-      case GL_GREATER: opengl.glut_h.glDepthFunc(GL.GL_GREATER); break;
-      case GL_LEQUAL: opengl.glut_h.glDepthFunc(GL.GL_LEQUAL); break;
-      case GL_LESS: opengl.glut_h.glDepthFunc(GL.GL_LESS); break;
-      case GL_NOTEQUAL: opengl.glut_h.glDepthFunc(GL.GL_NOTEQUAL); break;
-      default: throw new RuntimeException("Enum value not supported : " + func);
+    switch (func) {
+      case GL_ALWAYS:
+        opengl.glut_h.glDepthFunc(opengl.glut_h.GL_ALWAYS());
+        break;
+      case GL_NEVER:
+        opengl.glut_h.glDepthFunc(opengl.glut_h.GL_NEVER());
+        break;
+      case GL_EQUAL:
+        opengl.glut_h.glDepthFunc(opengl.glut_h.GL_EQUAL());
+        break;
+      case GL_GEQUAL:
+        opengl.glut_h.glDepthFunc(opengl.glut_h.GL_GEQUAL());
+        break;
+      case GL_GREATER:
+        opengl.glut_h.glDepthFunc(opengl.glut_h.GL_GREATER());
+        break;
+      case GL_LEQUAL:
+        opengl.glut_h.glDepthFunc(opengl.glut_h.GL_LEQUAL());
+        break;
+      case GL_LESS:
+        opengl.glut_h.glDepthFunc(opengl.glut_h.GL_LESS());
+        break;
+      case GL_NOTEQUAL:
+        opengl.glut_h.glDepthFunc(opengl.glut_h.GL_NOTEQUAL());
+        break;
+      default:
+        throw new RuntimeException("Enum value not supported : " + func);
     }
   }
 
   @Override
   public void glEnable_DepthTest() {
-    opengl.glut_h.glEnable(GL.GL_DEPTH_TEST);    
+    opengl.glut_h.glEnable(opengl.glut_h.GL_DEPTH_TEST());
   }
 
   @Override
   public void glDisable_DepthTest() {
-    opengl.glut_h.glDisable(GL.GL_DEPTH_TEST);    
+    opengl.glut_h.glDisable(opengl.glut_h.GL_DEPTH_TEST());
+  }
+  
+  @Override
+  public void glEnable_Stencil() {
+    opengl.glut_h.glEnable(opengl.glut_h.GL_STENCIL());
+  }
+  
+  @Override
+  public void glDisable_Stencil() {
+    opengl.glut_h.glDisable(opengl.glut_h.GL_STENCIL());
   }
 
 }

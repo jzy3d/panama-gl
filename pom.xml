@@ -29,11 +29,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jzy3d</groupId>
-			<artifactId>jzy3d-emul-gl-awt</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jzy3d</groupId>
 			<artifactId>jzy3d-tester-native</artifactId>
 			<version>${project.version}</version>
 		</dependency>
