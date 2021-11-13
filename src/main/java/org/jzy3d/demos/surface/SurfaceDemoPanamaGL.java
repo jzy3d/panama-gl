@@ -2,9 +2,7 @@ package org.jzy3d.demos.surface;
 
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.EmulGLSkin;
-import org.jzy3d.chart.factories.ChartFactory;
-import org.jzy3d.chart.factories.EmulGLChartFactory;
-import org.jzy3d.chart.factories.PanamaGLChartFactory;
+import org.jzy3d.chart.factories.*;
 import org.jzy3d.colors.Color;
 import org.jzy3d.colors.ColorMapper;
 import org.jzy3d.colors.colormaps.ColorMapRainbow;
@@ -21,7 +19,7 @@ import java.io.IOException;
 
 /**
  * Demo an surface chart made with Panama (JEP-412).
- * 
+ *
  * @author Martin Pernollet
  *
  */
@@ -30,10 +28,20 @@ public class SurfaceDemoPanamaGL {
   static final float ALPHA_FACTOR = 0.55f;// .61f;
 
   public static void main(String[] args) {
-    //ChartFactory factory = new EmulGLChartFactory(); // use me as a reference
-    ChartFactory factory = new PanamaGLChartFactory();
+    Shape surface = surface();
 
-    Quality q = Quality.Advanced(); 
+    /**
+     * In case the below factory is not working, one can use CPU rendering fallback as follow
+     * <code>
+     * ChartFactory factory = new EmulGLChartFactory(); // use me as a reference
+     * </code>
+     *
+     * @see https://github.com/jzy3d/jzy3d-api/blob/master/jzy3d-tutorials/src/main/java/org/jzy3d/demos/surface/SurfaceDemoEmulGL.java
+     */
+    //ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
+    ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_11_4());
+
+    Quality q = Quality.Advanced();
     Chart chart = factory.newChart(q);
     chart.add(surface());
 
@@ -48,7 +56,7 @@ public class SurfaceDemoPanamaGL {
 
   private static Shape surface() {
     SurfaceBuilder builder = new SurfaceBuilder();
-    
+
     Func3D func = new Func3D((x, y) -> x * Math.sin(x * y));
     Range range = new Range(-3, 3);
     int steps = 50;

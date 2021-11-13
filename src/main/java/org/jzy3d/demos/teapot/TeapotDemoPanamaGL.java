@@ -4,6 +4,7 @@ import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.ChartFactory;
 import org.jzy3d.chart.factories.EmulGLChartFactory;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
+import org.jzy3d.chart.factories.PanamaGLPainterFactory_MacOS_10_15_3;
 import org.jzy3d.colors.Color;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.lights.Light;
@@ -23,8 +24,15 @@ public class TeapotDemoPanamaGL {
     teapot.setReflectLight(true);
 
     // ---------------------------------------------
-    ChartFactory factory = new PanamaGLChartFactory();
-    //ChartFactory factory = new EmulGLChartFactory();
+    /**
+     * In case the below factory is not working, one can use CPU rendering fallback as follow
+     * <code>
+     * ChartFactory factory = new EmulGLChartFactory(); // use me as a reference
+     * </code>
+     *
+     * @see https://github.com/jzy3d/jzy3d-api/blob/master/jzy3d-tutorials/src/main/java/org/jzy3d/demos/surface/SurfaceDemoEmulGL.java
+     */
+    ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
 
     // Emulgl will show limitations
     // 1-wireframe and face do not mix cleanly (polygon offset fill)

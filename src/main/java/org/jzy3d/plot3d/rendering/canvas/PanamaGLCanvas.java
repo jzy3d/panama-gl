@@ -4,17 +4,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import com.jogamp.opengl.GL;
 import org.apache.log4j.Logger;
 import org.jzy3d.chart.IAnimator;
 import org.jzy3d.chart.factories.IChartFactory;
 import org.jzy3d.maths.Coord2d;
-import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.plot3d.rendering.scene.Scene;
 import org.jzy3d.plot3d.rendering.view.PanamaGLRenderer;
 import org.jzy3d.plot3d.rendering.view.View;
 
-import static opengl.glut_h.*;
+import static opengl.macos.v10_15_3.glut_h.*;
 
 public class PanamaGLCanvas implements IScreenCanvas{
   static Logger logger = Logger.getLogger(PanamaGLCanvas.class);

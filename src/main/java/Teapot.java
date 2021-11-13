@@ -33,9 +33,11 @@
 import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
-import opengl.*;
+import opengl.macos.v10_15_3.glutDisplayFunc$func;
+import opengl.macos.v10_15_3.glutIdleFunc$func;
+
 import static jdk.incubator.foreign.CLinker.*;
-import static opengl.glut_h.*;
+import static opengl.macos.v10_15_3.glut_h.*;
 
 /**
  * Requires VM args <code>

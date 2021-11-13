@@ -1,20 +1,20 @@
 package org.jzy3d.chart;
 
 import static jdk.incubator.foreign.CLinker.C_INT;
-import static opengl.glut_h.*;
+//import static opengl.macos.v10_15_3.glut_h.*;
+import static opengl.macos.v11_4.glut_h.*;
 
-import opengl.*;
+//import opengl.macos.v10_15_3.*;
+import opengl.macos.v11_4.*;
+
 import org.jzy3d.chart.controllers.mouse.camera.AWTCameraMouseController;
 import org.jzy3d.chart.factories.IFrame;
 import org.jzy3d.painters.PanamaGLPainter;
-import org.jzy3d.chart.Chart;
+
 import org.jzy3d.maths.Rectangle;
-import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
 
 import jdk.incubator.foreign.CLinker;
-import jdk.incubator.foreign.ResourceScope;
-import jdk.incubator.foreign.SegmentAllocator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -133,11 +133,11 @@ public class PanamaGLFrame implements IFrame {
 
     protected StringBuffer version(PanamaGLPainter painter){
         StringBuffer sb = new StringBuffer();
-        sb.append("GL_VENDOR     : " + painter.glGetString(opengl.glut_h.GL_VENDOR()) + "\n");
-        sb.append("GL_RENDERER   : " + painter.glGetString(opengl.glut_h.GL_RENDERER()) + "\n");
-        sb.append("GL_VERSION    : " + painter.glGetString(opengl.glut_h.GL_VERSION()) + "\n");
+        sb.append("GL_VENDOR     : " + painter.glGetString(glut_h.GL_VENDOR()) + "\n");
+        sb.append("GL_RENDERER   : " + painter.glGetString(glut_h.GL_RENDERER()) + "\n");
+        sb.append("GL_VERSION    : " + painter.glGetString(glut_h.GL_VERSION()) + "\n");
 
-        String ext = painter.glGetString(opengl.glut_h.GL_EXTENSIONS());
+        String ext = painter.glGetString(glut_h.GL_EXTENSIONS());
 
         if(ext!=null) {
             sb.append("GL_EXTENSIONS : " + "\n");
