@@ -38,10 +38,28 @@ import opengl.macos.v10_15_3.glutIdleFunc$func;
 
 import static jdk.incubator.foreign.CLinker.*;
 import static opengl.macos.v10_15_3.glut_h.*;
+//import static opengl.ubuntu.v20.glut_h.*;
 
 /**
- * Requires VM args <code>
+ * This is the original demonstration program provided at https://github.com/sundararajana/panama-jextract-samples/tree/master/opengl.
+ *
+ * Requires modifying import manually
+ *
+ * <ul>
+ * <li>MacOS : import static opengl.macos.v10_15_3.glut_h.*;
+ * <li>Ubuntu : import static opengl.ubuntu.v20.glut_h.*;
+ * </ul>
+ *
+ * Requires VM args
+ *
+ * MacOS
+ * <code>
  * -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+ * </code>
+ *
+ * Ubuntu
+ * <code>
+ * --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
  * </code>
  *
  */
