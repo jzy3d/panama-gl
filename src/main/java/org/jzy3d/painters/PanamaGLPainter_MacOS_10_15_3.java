@@ -664,28 +664,28 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
   public void glStencilFunc(StencilFunc func, int ref, int mask) {
     switch (func) {
       case GL_ALWAYS:
-        opengl.glut_h.glStencilFunc(opengl.glut_h.GL_ALWAYS(), ref, mask);
+        glut_h.glStencilFunc(glut_h.GL_ALWAYS(), ref, mask);
         break;
       case GL_EQUAL:
-        opengl.glut_h.glStencilFunc(opengl.glut_h.GL_EQUAL(), ref, mask);
+        glut_h.glStencilFunc(glut_h.GL_EQUAL(), ref, mask);
         break;
       case GL_GREATER:
-        opengl.glut_h.glStencilFunc(opengl.glut_h.GL_GREATER(), ref, mask);
+        glut_h.glStencilFunc(glut_h.GL_GREATER(), ref, mask);
         break;
       case GL_GEQUAL:
-        opengl.glut_h.glStencilFunc(opengl.glut_h.GL_GEQUAL(), ref, mask);
+        glut_h.glStencilFunc(glut_h.GL_GEQUAL(), ref, mask);
         break;
       case GL_LEQUAL:
-        opengl.glut_h.glStencilFunc(opengl.glut_h.GL_LEQUAL(), ref, mask);
+        glut_h.glStencilFunc(glut_h.GL_LEQUAL(), ref, mask);
         break;
       case GL_LESS:
-        opengl.glut_h.glStencilFunc(opengl.glut_h.GL_LESS(), ref, mask);
+        glut_h.glStencilFunc(glut_h.GL_LESS(), ref, mask);
         break;
       case GL_NEVER:
-        opengl.glut_h.glStencilFunc(opengl.glut_h.GL_NEVER(), ref, mask);
+        glut_h.glStencilFunc(glut_h.GL_NEVER(), ref, mask);
         break;
       case GL_NOTEQUAL:
-        opengl.glut_h.glStencilFunc(opengl.glut_h.GL_NOTEQUAL(), ref, mask);
+        glut_h.glStencilFunc(glut_h.GL_NOTEQUAL(), ref, mask);
         break;
 
       default:
@@ -695,44 +695,44 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
 
   @Override
   public void glStencilMask(int mask) {
-    opengl.glut_h.glStencilMask(mask);
+    glut_h.glStencilMask(mask);
   }
 
   @Override
   public void glStencilMask_True() {
-    opengl.glut_h.glStencilMask(opengl.glut_h.GL_TRUE());
+    glut_h.glStencilMask(glut_h.GL_TRUE());
   }
 
   @Override
   public void glStencilMask_False(){
-    opengl.glut_h.glStencilMask(opengl.glut_h.GL_FALSE());
+    glut_h.glStencilMask(glut_h.GL_FALSE());
   }
 
 
   @Override
   public void glStencilOp(StencilOp fail, StencilOp zfail, StencilOp zpass) {
-    opengl.glut_h.glStencilOp(toInt(fail), toInt(zfail), toInt(zpass));
+    glut_h.glStencilOp(toInt(fail), toInt(zfail), toInt(zpass));
   }
 
   @Override
   public void glClearStencil(int s) {
-    opengl.glut_h.glClearStencil(s);
+    glut_h.glClearStencil(s);
   }
 
   protected int toInt(StencilOp fail) {
     switch (fail) {
       case GL_DECR:
-        return opengl.glut_h.GL_DECR();
+        return glut_h.GL_DECR();
       case GL_INCR:
-        return opengl.glut_h.GL_INCR();
+        return glut_h.GL_INCR();
       case GL_INVERT:
-        return opengl.glut_h.GL_INVERT();
+        return glut_h.GL_INVERT();
       case GL_KEEP:
-        return opengl.glut_h.GL_KEEP();
+        return glut_h.GL_KEEP();
       case GL_REPLACE:
-        return opengl.glut_h.GL_REPLACE();
+        return glut_h.GL_REPLACE();
       case GL_ZERO:
-        return opengl.glut_h.GL_ZERO();
+        return glut_h.GL_ZERO();
       default:
         throw new IllegalArgumentException("Unknown enum value for StencilOp: " + fail);
     }
@@ -1385,4 +1385,13 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
     glut_h.glDisable(glut_h.GL_DEPTH_TEST());
   }
 
+  @Override
+  public void glEnable_Stencil() {
+    glut_h.glEnable(glut_h.GL_STENCIL());
+  }
+
+  @Override
+  public void glDisable_Stencil() {
+    glut_h.glDisable(glut_h.GL_STENCIL());
+  }
 }

@@ -659,6 +659,86 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
     glut_h.glPassThrough(token);
   }
 
+// GL STENCIL BUFFER
+
+  @Override
+  public void glStencilFunc(StencilFunc func, int ref, int mask) {
+    switch (func) {
+      case GL_ALWAYS:
+        glut_h.glStencilFunc(glut_h.GL_ALWAYS(), ref, mask);
+        break;
+      case GL_EQUAL:
+        glut_h.glStencilFunc(glut_h.GL_EQUAL(), ref, mask);
+        break;
+      case GL_GREATER:
+        glut_h.glStencilFunc(glut_h.GL_GREATER(), ref, mask);
+        break;
+      case GL_GEQUAL:
+        glut_h.glStencilFunc(glut_h.GL_GEQUAL(), ref, mask);
+        break;
+      case GL_LEQUAL:
+        glut_h.glStencilFunc(glut_h.GL_LEQUAL(), ref, mask);
+        break;
+      case GL_LESS:
+        glut_h.glStencilFunc(glut_h.GL_LESS(), ref, mask);
+        break;
+      case GL_NEVER:
+        glut_h.glStencilFunc(glut_h.GL_NEVER(), ref, mask);
+        break;
+      case GL_NOTEQUAL:
+        glut_h.glStencilFunc(glut_h.GL_NOTEQUAL(), ref, mask);
+        break;
+
+      default:
+        throw new IllegalArgumentException("Unknown enum value for StencilFunc: " + func);
+    }
+  }
+
+  @Override
+  public void glStencilMask(int mask) {
+    glut_h.glStencilMask(mask);
+  }
+
+  @Override
+  public void glStencilMask_True() {
+    glut_h.glStencilMask(glut_h.GL_TRUE());
+  }
+
+  @Override
+  public void glStencilMask_False(){
+    glut_h.glStencilMask(glut_h.GL_FALSE());
+  }
+
+
+  @Override
+  public void glStencilOp(StencilOp fail, StencilOp zfail, StencilOp zpass) {
+    glut_h.glStencilOp(toInt(fail), toInt(zfail), toInt(zpass));
+  }
+
+  @Override
+  public void glClearStencil(int s) {
+    glut_h.glClearStencil(s);
+  }
+
+  protected int toInt(StencilOp fail) {
+    switch (fail) {
+      case GL_DECR:
+        return glut_h.GL_DECR();
+      case GL_INCR:
+        return glut_h.GL_INCR();
+      case GL_INVERT:
+        return glut_h.GL_INVERT();
+      case GL_KEEP:
+        return glut_h.GL_KEEP();
+      case GL_REPLACE:
+        return glut_h.GL_REPLACE();
+      case GL_ZERO:
+        return glut_h.GL_ZERO();
+      default:
+        throw new IllegalArgumentException("Unknown enum value for StencilOp: " + fail);
+    }
+  }
+
   // GL VIEWPOINT
 
   @Override
@@ -1305,4 +1385,13 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
     glut_h.glDisable(glut_h.GL_DEPTH_TEST());
   }
 
+  @Override
+  public void glEnable_Stencil() {
+    glut_h.glEnable(opengl.macos.v10_15_3.glut_h.GL_STENCIL());
+  }
+
+  @Override
+  public void glDisable_Stencil() {
+    glut_h.glDisable(opengl.macos.v10_15_3.glut_h.GL_STENCIL());
+  }
 }

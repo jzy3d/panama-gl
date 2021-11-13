@@ -25,7 +25,7 @@ public class TeapotDemoPanamaGL {
 
     // ---------------------------------------------
     /**
-     * In case the below factory is not working, on case use CPU rendering fallback as follow
+     * In case the below factory is not working, one can use CPU rendering fallback as follow
      * <code>
      * ChartFactory factory = new EmulGLChartFactory(); // use me as a reference
      * </code>
