@@ -4,6 +4,7 @@ import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.ChartFactory;
 import org.jzy3d.chart.factories.EmulGLChartFactory;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
+import org.jzy3d.chart.factories.PanamaGLPainterFactory_MacOS_10_15_3;
 import org.jzy3d.colors.Color;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.lights.Light;
@@ -23,7 +24,7 @@ public class TeapotDemoPanamaGL {
     teapot.setReflectLight(true);
 
     // ---------------------------------------------
-    ChartFactory factory = new PanamaGLChartFactory();
+    ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
     //ChartFactory factory = new EmulGLChartFactory();
 
     // Emulgl will show limitations
