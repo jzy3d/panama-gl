@@ -13,7 +13,7 @@ These two demo open a native window. One can use the mouse to rotate the object,
 <img src="doc/panama-gl-surface.png"/>
 
 ### TeapotDemoPanamaGL
-<img src="doc/panama-gl-teapot.png"/>
+<img src="./doc/panama-gl-teapot.png"/>
 
 
 
@@ -29,9 +29,20 @@ Then run from Intellij ([Eclipse won't work yet](https://github.com/jzy3d/panama
 
 This will require these VM arguments
 
+MacOS 10.15.3
 ```
 -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 ```
+
+MacOS 11.4
+```
+-XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/
+```
+
+/opt/homebrew/Cellar/freeglut/3.2.1_1/lib
+
+https://stackoverflow.com/questions/65802625/develop-using-opengl-4-x-on-osx-big-sur
+<<
 
 ### Run from CLI
 
@@ -69,12 +80,28 @@ See the OpenGL example in [JExtract samples](https://github.com/sundararajana/pa
 
 This allows generating OpenGL Java Wrapper from a MacOS. The generated package is already in src/main/java so you don't need to do it.
 
+
+MacOS 
 ```
-jextract -d ./target/java/ --source -t opengl -lGL -l/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT \
-  -I /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/ \
+/Library/Java/JavaVirtualMachines/jdk-17.jdk-panama/Contents/Home/bin/jextract -d ./src/main/java/ --source -t opengl.macos.v10_15_3 \
+  -lGL -l/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT \
+  -I  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/ \
   -C-F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks \
-  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GLUT.framework/Headers/glut.h
+      /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GLUT.framework/Headers/glut.h
 ```
+
+MacOS 11.4
+```
+/Library/Java/JavaVirtualMachines/jdk-17.jdk-panama/Contents/Home/bin/jextract -d ./src/main/java/ --source -t opengl.macos.v11_4 \
+  -lGL -l/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/GLUT.framework/Versions/A/GLUT.tbd \
+  -I  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include \
+  -C-F/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/ \
+      /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/GLUT.framework/Versions/A/Headers/glut.h
+```
+
+libGL.tbd is at /Library/Developer/CommandLineTools/SDKs/MacOSX11.3.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries
+which indicates /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib
+which is missing
 
 ### Move to a Maven project
 

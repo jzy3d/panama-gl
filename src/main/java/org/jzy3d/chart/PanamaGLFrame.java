@@ -1,12 +1,16 @@
 package org.jzy3d.chart;
 
 import static jdk.incubator.foreign.CLinker.C_INT;
-import static opengl.macos.v10_15_3.glut_h.*;
+//import static opengl.macos.v10_15_3.glut_h.*;
+import static opengl.macos.v11_4.glut_h.*;
 
-import opengl.macos.v10_15_3.*;
+//import opengl.macos.v10_15_3.*;
+import opengl.macos.v11_4.*;
+
 import org.jzy3d.chart.controllers.mouse.camera.AWTCameraMouseController;
 import org.jzy3d.chart.factories.IFrame;
-import org.jzy3d.painters.PanamaGLPainter_MacOS_10_15_3;
+import org.jzy3d.painters.PanamaGLPainter;
+
 import org.jzy3d.maths.Rectangle;
 import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
 
@@ -48,7 +52,7 @@ public class PanamaGLFrame implements IFrame {
     }
 
     private void glutStart(Chart chart, Rectangle bounds, String title, String message) {
-        var painter = (PanamaGLPainter_MacOS_10_15_3) chart.getPainter();
+        var painter = (PanamaGLPainter) chart.getPainter();
         var canvas = (PanamaGLCanvas) chart.getCanvas();
         var renderer = canvas.getRenderer();
         var scope = painter.getScope();
@@ -127,7 +131,7 @@ public class PanamaGLFrame implements IFrame {
     }
     static Component dummy = new JPanel();
 
-    protected StringBuffer version(PanamaGLPainter_MacOS_10_15_3 painter){
+    protected StringBuffer version(PanamaGLPainter painter){
         StringBuffer sb = new StringBuffer();
         sb.append("GL_VENDOR     : " + painter.glGetString(glut_h.GL_VENDOR()) + "\n");
         sb.append("GL_RENDERER   : " + painter.glGetString(glut_h.GL_RENDERER()) + "\n");

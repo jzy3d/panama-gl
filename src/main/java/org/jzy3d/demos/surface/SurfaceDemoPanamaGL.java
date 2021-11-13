@@ -2,10 +2,7 @@ package org.jzy3d.demos.surface;
 
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.EmulGLSkin;
-import org.jzy3d.chart.factories.ChartFactory;
-import org.jzy3d.chart.factories.EmulGLChartFactory;
-import org.jzy3d.chart.factories.PanamaGLChartFactory;
-import org.jzy3d.chart.factories.PanamaGLPainterFactory_MacOS_10_15_3;
+import org.jzy3d.chart.factories.*;
 import org.jzy3d.colors.Color;
 import org.jzy3d.colors.ColorMapper;
 import org.jzy3d.colors.colormaps.ColorMapRainbow;
@@ -41,7 +38,8 @@ public class SurfaceDemoPanamaGL {
      *
      * @see https://github.com/jzy3d/jzy3d-api/blob/master/jzy3d-tutorials/src/main/java/org/jzy3d/demos/surface/SurfaceDemoEmulGL.java
      */
-    ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
+    //ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
+    ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_11_4());
 
     Quality q = Quality.Advanced();
     Chart chart = factory.newChart(q);

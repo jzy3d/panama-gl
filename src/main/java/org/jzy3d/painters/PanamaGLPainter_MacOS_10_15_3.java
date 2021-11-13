@@ -31,7 +31,7 @@ import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
 
-public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter {
+public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements PanamaGLPainter {
   static Logger logger = Logger.getLogger(PanamaGLPainter_MacOS_10_15_3.class);
 
   ResourceScope scope;
@@ -381,9 +381,9 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter {
 
 
   /**
-   * glPixelZoom is not implemented by {@link GL}. This method will do nothing but triggering a
-   * {@link NotImplementedException} in case x and y zoom factor are not both equal to 1 (i.e. in
-   * case a zoom is needed).
+   * glPixelZoom is not implemented by GL. This method will do nothing but
+   * triggering a {@link NotImplementedException} in case x and y zoom factor are
+   * not both equal to 1 (i.e. in case a zoom is needed).
    *
    */
   @Override
@@ -474,8 +474,8 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter {
   }
 
   /**
-   * Text length processing based on AWT {@link FontMetrics} obtained by retrieving the graphic
-   * context of the {@link GLCanvas}.
+   * Text length processing based on AWT {@link FontMetrics} obtained by
+   * retrieving the graphic context of the GLCanvas.
    *
    * In case no graphics is available
    */
@@ -1364,25 +1364,25 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter {
   public void glDepthFunc(DepthFunc func) {
     switch(func) {
       case GL_ALWAYS: glut_h.glDepthFunc(glut_h.GL_ALWAYS()); break;
-      case GL_NEVER: glut_h.glDepthFunc(GL.GL_NEVER); break;
-      case GL_EQUAL: glut_h.glDepthFunc(GL.GL_EQUAL); break;
-      case GL_GEQUAL: glut_h.glDepthFunc(GL.GL_GEQUAL); break;
-      case GL_GREATER: glut_h.glDepthFunc(GL.GL_GREATER); break;
-      case GL_LEQUAL: glut_h.glDepthFunc(GL.GL_LEQUAL); break;
-      case GL_LESS: glut_h.glDepthFunc(GL.GL_LESS); break;
-      case GL_NOTEQUAL: glut_h.glDepthFunc(GL.GL_NOTEQUAL); break;
+      case GL_NEVER: glut_h.glDepthFunc(glut_h.GL_NEVER()); break;
+      case GL_EQUAL: glut_h.glDepthFunc(glut_h.GL_EQUAL()); break;
+      case GL_GEQUAL: glut_h.glDepthFunc(glut_h.GL_GEQUAL()); break;
+      case GL_GREATER: glut_h.glDepthFunc(glut_h.GL_GREATER()); break;
+      case GL_LEQUAL: glut_h.glDepthFunc(glut_h.GL_LEQUAL()); break;
+      case GL_LESS: glut_h.glDepthFunc(glut_h.GL_LESS()); break;
+      case GL_NOTEQUAL: glut_h.glDepthFunc(glut_h.GL_NOTEQUAL()); break;
       default: throw new RuntimeException("Enum value not supported : " + func);
     }
   }
 
   @Override
   public void glEnable_DepthTest() {
-    glut_h.glEnable(GL.GL_DEPTH_TEST);
+    glut_h.glEnable(glut_h.GL_DEPTH_TEST());
   }
 
   @Override
   public void glDisable_DepthTest() {
-    glut_h.glDisable(GL.GL_DEPTH_TEST);
+    glut_h.glDisable(glut_h.GL_DEPTH_TEST());
   }
 
 }
