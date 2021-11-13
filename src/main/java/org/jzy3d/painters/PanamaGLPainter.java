@@ -5,6 +5,8 @@ import jdk.incubator.foreign.MemorySegment;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
 import opengl.macos.v10_15_3.glut_h;
+import org.jzy3d.chart.Chart;
+import org.jzy3d.maths.Rectangle;
 
 import static jdk.incubator.foreign.CLinker.*;
 
@@ -22,4 +24,15 @@ public interface PanamaGLPainter {
     public MemorySegment alloc(String value);
 
     public String glGetString(int stringID);
+
+    /**
+     * This temporary helper allows starting a GLUT window like an AWT Frame would start
+     * for a Jzy3D chart.
+     *
+     * @param chart
+     * @param bounds
+     * @param title
+     * @param message
+     */
+    public void glutStart(Chart chart, Rectangle bounds, String title, String message);
 }

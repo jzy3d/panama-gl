@@ -16,7 +16,7 @@ import com.jogamp.opengl.GLProfile;
 
 public class ScatterDemoPanamaGL  {
   public static void main(String[] args) {
-    IChartFactory f = new PanamaGLChartFactory();
+    IChartFactory f = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
     Chart chart = f.newChart(Quality.Advanced());
     chart.add(scatter());
 

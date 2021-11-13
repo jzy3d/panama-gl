@@ -4,22 +4,29 @@ import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.MemorySegment;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
-import opengl.macos.v11_4.glut_h;
+import opengl.macos.v11_4.*;
 import org.apache.log4j.Logger;
+import org.jzy3d.chart.Chart;
+import org.jzy3d.chart.controllers.mouse.camera.AWTCameraMouseController;
 import org.jzy3d.colors.Color;
 import org.jzy3d.maths.Array;
 import org.jzy3d.maths.Coord2d;
 import org.jzy3d.maths.Coord3d;
+import org.jzy3d.maths.Rectangle;
 import org.jzy3d.plot3d.pipelines.NotImplementedException;
 import org.jzy3d.plot3d.primitives.PolygonFill;
 import org.jzy3d.plot3d.primitives.PolygonMode;
 import org.jzy3d.plot3d.rendering.canvas.EmulGLCanvas;
+import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
@@ -71,6 +78,110 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
 
   public String glGetString(int stringID){
     return CLinker.toJavaString(glut_h.glGetString(stringID));
+  }
+
+  /////////////////////////////////////////////
+
+  public void glutStart(Chart chart, Rectangle bounds, String title, String message) {
+    var painter = (PanamaGLPainter) chart.getPainter();
+    var canvas = (PanamaGLCanvas) chart.getCanvas();
+    var renderer = canvas.getRenderer();
+    var scope = painter.getScope();
+    var allocator = painter.getAllocator();
+    var argc = allocator.allocate(C_INT, 0);
+
+    // GLUT Init window
+    opengl.macos.v10_15_3.glut_h.glutInit(argc, argc);
+    opengl.macos.v10_15_3.glut_h.glutInitDisplayMode(opengl.macos.v10_15_3.glut_h.GLUT_DOUBLE() | opengl.macos.v10_15_3.glut_h.GLUT_RGB() | opengl.macos.v10_15_3.glut_h.GLUT_DEPTH());
+    opengl.macos.v10_15_3.glut_h.glutInitWindowSize(bounds.width, bounds.height);
+    opengl.macos.v10_15_3.glut_h.glutCreateWindow(CLinker.toCString(title + "/" + message, scope));
+
+    // GLUT Display/Idle callback
+    opengl.macos.v10_15_3.glut_h.glutDisplayFunc(glutDisplayFunc$func.allocate(renderer::display, scope));
+    opengl.macos.v10_15_3.glut_h.glutReshapeFunc(glutReshapeFunc$func.allocate(renderer::reshape, scope));
+    opengl.macos.v10_15_3.glut_h.glutIdleFunc(glutIdleFunc$func.allocate(renderer::onIdle, scope));
+
+    // GLUT Mouse callbacks
+    AWTCameraMouseController mouse = (AWTCameraMouseController) chart.getMouse();
+
+    // GLUT Mouse click listener
+    glutMouseFunc$func mouseClickCallback = new glutMouseFunc$func(){
+      long time;
+      long timePrev;
+      @Override
+      public void apply(int button, int state, int x, int y) {
+        int clickCount = 1;
+        time = System.currentTimeMillis();
+        if(timePrev>0){
+          long elapsed = time-timePrev;
+          if(elapsed<200){
+            clickCount++;
+          }
+        }
+        if(state==0)
+          mouse.mousePressed(mouseEvent(x, y, InputEvent.BUTTON1_DOWN_MASK, clickCount));
+        else if(state==1)
+          mouse.mouseReleased(mouseEvent(x, y, InputEvent.BUTTON1_DOWN_MASK, clickCount));
+
+        timePrev = time;
+        //System.out.println("mouse x:"+x+" y:"+y + " button:" + button + " state:" + state);
+      }
+    };
+    opengl.macos.v10_15_3.glut_h.glutMouseFunc(glutMouseFunc$func.allocate(mouseClickCallback, scope));
+
+    // Motion is invoked if a mouse button is pressed, otherwise not
+    // https://www.opengl.org/resources/libraries/glut/spec3/node51.html
+    glutMotionFunc$func mouseMotionCallback = new glutMotionFunc$func(){
+      @Override
+      public void apply(int x, int y) {
+        mouse.mouseDragged(mouseEvent(x, y, InputEvent.BUTTON1_DOWN_MASK));
+        //System.out.println("mouse motion.x:"+x+" y:"+y);
+      }
+    };
+    opengl.macos.v10_15_3.glut_h.glutMotionFunc(glutMotionFunc$func.allocate(mouseMotionCallback, scope));
+
+
+    // -----------------------------------------------------
+    // Version - GLUT need to be initialized
+
+    System.out.println(version(painter));
+
+    // -----------------------------------------------------
+    // Warn : this will block execution
+
+    opengl.macos.v10_15_3.glut_h.glutMainLoop();
+
+    // glut is OS specific
+  }
+
+  protected static MouseEvent mouseEvent(int x, int y, int modifiers) {
+    return mouseEvent(x,y,modifiers,1);
+  }
+
+  protected static MouseEvent mouseEvent(int x, int y, int modifiers, int clickCount) {
+    return new MouseEvent(dummy, 0, 0, modifiers, x, y, 100, 100, clickCount, false, 0);
+  }
+  static Component dummy = new JPanel();
+
+  protected StringBuffer version(PanamaGLPainter painter){
+    StringBuffer sb = new StringBuffer();
+    sb.append("GL_VENDOR     : " + painter.glGetString(opengl.macos.v10_15_3.glut_h.GL_VENDOR()) + "\n");
+    sb.append("GL_RENDERER   : " + painter.glGetString(opengl.macos.v10_15_3.glut_h.GL_RENDERER()) + "\n");
+    sb.append("GL_VERSION    : " + painter.glGetString(opengl.macos.v10_15_3.glut_h.GL_VERSION()) + "\n");
+
+    String ext = painter.glGetString(opengl.macos.v10_15_3.glut_h.GL_EXTENSIONS());
+
+    if(ext!=null) {
+      sb.append("GL_EXTENSIONS : " + "\n");
+      for(String e: ext.split(" ")) {
+        sb.append("\t" + e + "\n");
+      }
+    }
+    else {
+      sb.append("GL_EXTENSIONS : null\n");
+    }
+
+    return sb;
   }
 
   /////////////////////////////////////////////
@@ -349,18 +460,12 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
     glut_h.glTexEnvi(target, pname, param);
   }
 
-  /**
-   * glRasterPos3f not implemented by {@link GL}.
-   * 
-   * This method will fallback on {@link GL#glRasterPos2f(float, float)} or
-   * trigger a {@link NotImplementedException} in case z value is not equal to 0.
-   */
   @Override
   public void glRasterPos3f(float x, float y, float z) {
-    if (!(z == 0 || Float.isNaN(z)))
+    /*if (!(z == 0 || Float.isNaN(z)))
       throw new NotImplementedException("z:" + z);
-    else
-      glut_h.glRasterPos2f(x, y);
+    else*/
+      glut_h.glRasterPos3f(x, y, z);
   }
 
   /**
@@ -375,13 +480,6 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
 
   // MOVE FOLLOWING TO GLImage
 
-
-  /**
-   * glPixelZoom is not implemented by {@link GL}. This method will do nothing but
-   * triggering a {@link NotImplementedException} in case x and y zoom factor are
-   * not both equal to 1 (i.e. in case a zoom is needed).
-   * 
-   */
   @Override
   public void glPixelZoom(float xfactor, float yfactor) {
     if (xfactor != 1 || yfactor != 1)
@@ -474,7 +572,7 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
 
   /**
    * Text length processing based on AWT {@link FontMetrics} obtained by
-   * retrieving the graphic context of the {@link GLCanvas}.
+   * retrieving the graphic context of the canvas.
    * 
    * In case no graphics is available
    */
@@ -1175,48 +1273,24 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
 
   /* ***************** SHORTCUTS TO GL CONSTANTS *************************** */
 
-  /**
-   * NOT SUPPORTED in jGL wich emulate OpenGL 1 only.
-   * 
-   * Note that {@lin NotImplementedException} are NOT triggered to ease
-   * compatibility with geometries that have the polygon offset fill setting
-   * enabled by default.
-   * 
-   * Was added to OpenGL 2
-   * (https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPolygonOffset.xhtml).
-   * 
-   * You may desactivate offset fill with
-   * drawable.setPolygonOffsetFillEnable(false).
-   * 
-   * @see https://github.com/jzy3d/jGL/issues/3
-   */
   @Override
   public void glEnable_PolygonOffsetFill() {
-    // throw new NotImplementedException(OFFSET_FILL_NOT_IMPLEMENTED);
+    glEnable(opengl.macos.v10_15_3.glut_h.GL_POLYGON_OFFSET_FILL());
   }
 
-  /**
-   * @see {@link #glEnable_PolygonOffsetFill()}
-   */
   @Override
   public void glDisable_PolygonOffsetFill() {
-    // throw new NotImplementedException(OFFSET_FILL_NOT_IMPLEMENTED);
+    glDisable(opengl.macos.v10_15_3.glut_h.GL_POLYGON_OFFSET_FILL());
   }
 
-  /**
-   * @see {@link #glEnable_PolygonOffsetFill()}
-   */
   @Override
   public void glEnable_PolygonOffsetLine() {
-    // throw new NotImplementedException(OFFSET_FILL_NOT_IMPLEMENTED);
+    glEnable(opengl.macos.v10_15_3.glut_h.GL_POLYGON_OFFSET_LINE());
   }
 
-  /**
-   * @see {@link #glEnable_PolygonOffsetFill()}
-   */
   @Override
   public void glDisable_PolygonOffsetLine() {
-    // throw new NotImplementedException(OFFSET_FILL_NOT_IMPLEMENTED);
+    glDisable(opengl.macos.v10_15_3.glut_h.GL_POLYGON_OFFSET_LINE());
   }
 
   @Override
