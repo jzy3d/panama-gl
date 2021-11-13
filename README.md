@@ -27,7 +27,14 @@ Then run from Intellij ([Eclipse won't work yet](https://github.com/jzy3d/panama
 * SurfaceDemoPanamaGL
 * TeapotDemoPanamaGL
 
-This will require these VM arguments
+There is no automatic OS detection yet so you should verify if the `Painter` is the good one :
+
+```java
+ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
+//ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_11_4());
+```
+
+Running the program will require extra VM arguments as shown below.
 
 #### MacOS 10.15.3
 ```
@@ -48,7 +55,11 @@ https://stackoverflow.com/questions/65802625/develop-using-opengl-4-x-on-osx-big
 
 #### Ubuntu 20
 
-Need to resolve [how to start with foreign on Ubuntu](https://stackoverflow.com/questions/65861700/java-package-jdk-incubator-foreign-is-not-visible-error-in-java-15). 
+Need to resolve [how to start with foreign on Ubuntu from IntelliJ](https://stackoverflow.com/questions/65861700/java-package-jdk-incubator-foreign-is-not-visible-error-in-java-15). 
+
+```
+--enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
+```
 
 ### Run from CLI
 
@@ -84,7 +95,7 @@ See the OpenGL example in [JExtract samples](https://github.com/sundararajana/pa
 
 ### Generate OpenGL Java wrappers with JExtract
 
-This allows generating OpenGL Java Wrapper. The generated package is already in src/main/java so you don't need to do it, 
+This allows generating OpenGL Java Wrapper. The generated packages are already in `src/main/java` so you don't need to do it, 
 it is just a helper for adding wrappers for new platforms.
 
 #### General pattern
@@ -128,6 +139,8 @@ which is missing
 
 NB : can generate code but there is an issue when [building with Maven](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=980467).
 
+You need to run [Ubuntu setup script](setup/setup_ubuntu.md) before running the below command.
+
 ```
 /usr/lib/jvm/jdk-17-panama/bin/jextract  -d ./src/main/java/ --source -t opengl.ubuntu.v20 \
 -lGL \
@@ -136,6 +149,24 @@ NB : can generate code but there is an issue when [building with Maven](https://
 -C-F/usr/include/GL \
 /usr/include/GL/glut.h
 ```
+
+#### Windows 10
+
+Generating wrapper will crash with `Build 17-panama+3-167 (2021/5/18)`! Wait for next JDK release fixing [this](https://github.com/openjdk/jdk17/pull/35). 
+
+You need to follow [Windows Setup instructions](setup/setup_windows.md) before running the below command.
+
+```
+C:\Program" "Files\Java\openjdk-17-panama+3-167_windows-x64_bin\jdk-17\bin\jextract.exe -d ./src/main/java/ --source -t opengl.windows.v10 `
+-I "C:\Users\Martin\Dev\jzy3d\external\freeglut\include" `
+"-l" opengl32 `
+"-l" glu32 `
+"-l" freeglut `
+"-t" "opengl" `
+"--" `
+"C:\Users\Martin\Dev\jzy3d\external\freeglut\include\GL\freeglut.h"
+```
+
 
 
 ## Help
