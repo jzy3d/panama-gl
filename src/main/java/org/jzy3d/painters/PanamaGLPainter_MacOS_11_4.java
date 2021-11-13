@@ -659,7 +659,7 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
     glut_h.glPassThrough(token);
   }
 
-<<<<<<< HEAD
+
 // GL STENCIL BUFFER
 
   @Override
@@ -740,8 +740,6 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
     }
   }
 
-=======
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
   // GL VIEWPOINT
 
   @Override
@@ -1388,7 +1386,6 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
     glut_h.glDisable(glut_h.GL_DEPTH_TEST());
   }
 
-<<<<<<< HEAD
   @Override
   public void glEnable_Stencil() {
     glut_h.glEnable(opengl.macos.v10_15_3.glut_h.GL_STENCIL());
@@ -1398,6 +1395,4 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
   public void glDisable_Stencil() {
     glut_h.glDisable(opengl.macos.v10_15_3.glut_h.GL_STENCIL());
   }
-=======
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
 }

@@ -33,11 +33,6 @@ import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
 
 public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements PanamaGLPainter {
   static Logger logger = Logger.getLogger(PanamaGLPainter_MacOS_10_15_3.class);
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
   ResourceScope scope;
   SegmentAllocator allocator;
 
@@ -50,15 +45,9 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
       System.err.println(e);
     }
   }
-<<<<<<< HEAD
 
   /////////////////////////////////////////////
 
-=======
-  
-  /////////////////////////////////////////////
-  
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
   public ResourceScope getScope() {
     return scope;
   }
@@ -151,11 +140,6 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
       glut_h.glEnable(glut_h.GL_POINT_SMOOTH());
     } else
       glut_h.glDisable(glut_h.GL_POINT_SMOOTH());
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
   }
 
   @Override
@@ -433,25 +417,15 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
   }
 
   @Override
-<<<<<<< HEAD
   public void glBitmap(int width, int height, float xorig, float yorig, float xmove, float ymove,
       byte[] bitmap, int bitmap_offset) {
-=======
-  public void glBitmap(int width, int height, float xorig, float yorig, float xmove, float ymove, byte[] bitmap,
-      int bitmap_offset) {
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
     throw new NotImplementedException();
     // opengl.glut_h.glBitmap(width, height, xorig, yorig, xmove, ymove, bitmap,
     // bitmap_offset);
   }
 
   /**
-<<<<<<< HEAD
    * A very failing implementation. SHOULD SUPPORT AWT BufferedImage in EmulGL - or reverse converse
-=======
-   * A very failing implementation. SHOULD SUPPORT AWT BufferedImage in EmulGL -
-   * or reverse converse
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
    */
   @Override
   public void drawImage(ByteBuffer imageBuffer, int imageWidth, int imageHeight, Coord2d pixelZoom,
@@ -476,19 +450,10 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
 
   /**
    * Process the given font length to further process alignement.
-<<<<<<< HEAD
    *
    * Will only return a valid width for known {@link Font} (Helevetica and Times Roman).
    *
    * Getting text width of any string can be done {@link #getTextLengthInPixels(Font, String)}.
-=======
-   * 
-   * Will only return a valid width for known {@link Font} (Helevetica and Times
-   * Roman).
-   * 
-   * Getting text width of any string can be done
-   * {@link #getTextLengthInPixels(Font, String)}.
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
    */
   @Override
   public int glutBitmapLength(int font, String string) {
@@ -516,11 +481,6 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
   /**
    * Text length processing based on AWT {@link FontMetrics} obtained by
    * retrieving the graphic context of the GLCanvas.
-<<<<<<< HEAD
-   *
-=======
-   * 
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
    * In case no graphics is available
    */
   @Override
@@ -542,21 +502,6 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
   }
 
   /**
-<<<<<<< HEAD
-   * Replace {@link #glutBitmapString(int, String) which is the official OpenGL interface.
-   *
-   * This alternative interface allows rendering text based on AWT Fonts which are drawn on top of
-   * the GL Image.
-   */
-  /*
-   * @Override public void glutBitmapString(Font font, String label, Coord3d position, Color color)
-   * { opengl.glut_h.glutBitmapString(toAWT(font), label, position.x, position.y, position.z,
-   * color.r, color.g, color.b, 0); }
-   *
-   * @Override public void drawText(Font font, String label, Coord3d position, Color color, float
-   * rotation) { opengl.glut_h.glutBitmapString(toAWT(font), label, position.x, position.y,
-   * position.z, color.r, color.g, color.b, rotation); }
-=======
    * Replace {@link #glutBitmapString(int, String) which is the official OpenGL
    * interface.
    * 
@@ -572,23 +517,15 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
    * Color color, float rotation) { opengl.glut_h.glutBitmapString(toAWT(font),
    * label, position.x, position.y, position.z, color.r, color.g, color.b,
    * rotation); }
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
    */
 
   @Override
   public void glutBitmapString(int font, String string) {
     logger.error("not available in generated code");
-<<<<<<< HEAD
-    // opengl.glut_h.glutBitmapString(font, alloc(string));
-
-    // Use freeglut
-    /// opt/X11/include/GL/freeglut.h
-=======
     //opengl.glut_h.glutBitmapString(font, alloc(string));
 
     // Use freeglut
     ///opt/X11/include/GL/freeglut.h
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
   }
 
   @Override
@@ -642,11 +579,7 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
   @Override
   public boolean glIsList(int list) {
     logger.error("to be implemented");
-<<<<<<< HEAD
     return false;// opengl.glut_h.glIsList(list);
-=======
-    return false;//opengl.glut_h.glIsList(list);
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
   }
 
   @Override
@@ -660,15 +593,9 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
   public void gluDisk(double inner, double outer, int slices, int loops) {
     logger.error("to be implemented");
 
-<<<<<<< HEAD
     // GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
     // qobj.Normals = opengl.glut_h.GLU_NONE(); // https://github.com/jzy3d/jzy3d-api/issues/179
     // opengl.glut_h.gluDisk(qobj, inner, outer, slices, loops);
-=======
-    //GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
-    //qobj.Normals = opengl.glut_h.GLU_NONE(); // https://github.com/jzy3d/jzy3d-api/issues/179
-    //opengl.glut_h.gluDisk(qobj, inner, outer, slices, loops);
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
   }
 
   @Override
@@ -689,13 +616,8 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
   @Override
   public void gluSphere(double radius, int slices, int stacks) {
     logger.error("to be implemented");
-<<<<<<< HEAD
     // GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
     // opengl.glut_h.gluSphere(qobj, radius, slices, stacks);
-=======
-    //GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
-    //opengl.glut_h.gluSphere(qobj, radius, slices, stacks);
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
   }
 
   @Override
@@ -703,11 +625,7 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
     logger.error("to be implemented");
 
     // GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
-<<<<<<< HEAD
     // opengl.glut_h.gluCylinder(qobj, base, top, height, slices, stacks);
-=======
-    //opengl.glut_h.gluCylinder(qobj, base, top, height, slices, stacks);
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
   }
 
   @Override
@@ -746,7 +664,6 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
     glut_h.glPassThrough(token);
   }
 
-<<<<<<< HEAD
   // GL STENCIL BUFFER
 
   @Override
@@ -827,9 +744,6 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
     }
   }
 
-
-=======
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
   // GL VIEWPOINT
 
   @Override
@@ -937,14 +851,8 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
   }
 
   @Override
-<<<<<<< HEAD
-  public boolean gluUnProject(float winX, float winY, float winZ, float[] model, int model_offset,
-      float[] proj, int proj_offset, int[] view, int view_offset, float[] objPos,
-      int objPos_offset) {
-=======
   public boolean gluUnProject(float winX, float winY, float winZ, float[] model, int model_offset, float[] proj,
       int proj_offset, int[] view, int view_offset, float[] objPos, int objPos_offset) {
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
     // throw new NotImplementedException();
 
     double objX[] = new double[1];
@@ -957,11 +865,7 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
     objPos[1] = (float) objY[0];
     objPos[2] = (float) objZ[0];
 
-<<<<<<< HEAD
     return st == 1;
-=======
-    return st==1;
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
   }
 
   protected double[] dbl(float[] values) {
@@ -973,14 +877,9 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
   }
 
   @Override
-<<<<<<< HEAD
   public boolean gluProject(float objX, float objY, float objZ, float[] model, int model_offset,
       float[] proj, int proj_offset, int[] view, int view_offset, float[] winPos,
       int winPos_offset) {
-=======
-  public boolean gluProject(float objX, float objY, float objZ, float[] model, int model_offset, float[] proj,
-      int proj_offset, int[] view, int view_offset, float[] winPos, int winPos_offset) {
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
     // throw new NotImplementedException();
     // opengl.glut_h.gluProject(objx, objy, objz, model, proj, viewport, winx, winy,
     // winz)
@@ -1009,11 +908,7 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
     winPos[1] = (float) winy[0];
     winPos[2] = (float) winz[0];
 
-<<<<<<< HEAD
     return out == 1;
-=======
-    return out==1;
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
   }
 
   // GL GET
@@ -1142,11 +1037,7 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
   public void glLight_Specular(int lightId, Color specularColor) {
     glLightfv(lightId, glut_h.GL_SPECULAR(), specularColor.toArray(), 0);
   }
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
   @Override
   public void glLight_Shininess(int lightId, float value) {
     glLightf(lightId, glut_h.GL_SHININESS(), value);
@@ -1279,13 +1170,8 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
   }
 
   @Override
-<<<<<<< HEAD
-  public void glMap2f(int target, float u1, float u2, int ustride, int uorder, float v1, float v2,
-      int vstride, int vorder, FloatBuffer points) {
-=======
   public void glMap2f(int target, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride,
       int vorder, FloatBuffer points) {
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
     throw new NotImplementedException("NEED TO CONVERT FloatBuffer to float[][][]");
     // opengl.glut_h.glMap2f(target, u1, u2, ustride, uorder, v1, v2, vstride,
     // vorder, points);
@@ -1296,18 +1182,7 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
 
   /**
    * NOT SUPPORTED in jGL wich emulate OpenGL 1 only.
-<<<<<<< HEAD
    *
-   * Note that {@lin NotImplementedException} are NOT triggered to ease compatibility with
-   * geometries that have the polygon offset fill setting enabled by default.
-   *
-   * Was added to OpenGL 2
-   * (https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPolygonOffset.xhtml).
-   *
-   * You may desactivate offset fill with drawable.setPolygonOffsetFillEnable(false).
-   *
-=======
-   * 
    * Note that {@lin NotImplementedException} are NOT triggered to ease
    * compatibility with geometries that have the polygon offset fill setting
    * enabled by default.
@@ -1318,7 +1193,6 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
    * You may desactivate offset fill with
    * drawable.setPolygonOffsetFillEnable(false).
    * 
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
    * @see https://github.com/jzy3d/jGL/issues/3
    */
   @Override
@@ -1517,7 +1391,6 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
     glut_h.glDisable(glut_h.GL_DEPTH_TEST());
   }
 
-<<<<<<< HEAD
   @Override
   public void glEnable_Stencil() {
     glut_h.glEnable(glut_h.GL_STENCIL());
@@ -1527,6 +1400,4 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
   public void glDisable_Stencil() {
     glut_h.glDisable(glut_h.GL_STENCIL());
   }
-=======
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
 }
