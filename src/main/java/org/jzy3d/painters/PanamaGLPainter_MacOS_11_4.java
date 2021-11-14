@@ -91,15 +91,15 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
     var argc = allocator.allocate(C_INT, 0);
 
     // GLUT Init window
-    opengl.macos.v10_15_3.glut_h.glutInit(argc, argc);
-    opengl.macos.v10_15_3.glut_h.glutInitDisplayMode(opengl.macos.v10_15_3.glut_h.GLUT_DOUBLE() | opengl.macos.v10_15_3.glut_h.GLUT_RGB() | opengl.macos.v10_15_3.glut_h.GLUT_DEPTH());
-    opengl.macos.v10_15_3.glut_h.glutInitWindowSize(bounds.width, bounds.height);
-    opengl.macos.v10_15_3.glut_h.glutCreateWindow(CLinker.toCString(title + "/" + message, scope));
+    glut_h.glutInit(argc, argc);
+    glut_h.glutInitDisplayMode(glut_h.GLUT_DOUBLE() | glut_h.GLUT_RGB() | glut_h.GLUT_DEPTH());
+    glut_h.glutInitWindowSize(bounds.width, bounds.height);
+    glut_h.glutCreateWindow(CLinker.toCString(title + "/" + message, scope));
 
     // GLUT Display/Idle callback
-    opengl.macos.v10_15_3.glut_h.glutDisplayFunc(glutDisplayFunc$func.allocate(renderer::display, scope));
-    opengl.macos.v10_15_3.glut_h.glutReshapeFunc(glutReshapeFunc$func.allocate(renderer::reshape, scope));
-    opengl.macos.v10_15_3.glut_h.glutIdleFunc(glutIdleFunc$func.allocate(renderer::onIdle, scope));
+    glut_h.glutDisplayFunc(glutDisplayFunc$func.allocate(renderer::display, scope));
+    glut_h.glutReshapeFunc(glutReshapeFunc$func.allocate(renderer::reshape, scope));
+    glut_h.glutIdleFunc(glutIdleFunc$func.allocate(renderer::onIdle, scope));
 
     // GLUT Mouse callbacks
     AWTCameraMouseController mouse = (AWTCameraMouseController) chart.getMouse();
@@ -127,7 +127,7 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
         //System.out.println("mouse x:"+x+" y:"+y + " button:" + button + " state:" + state);
       }
     };
-    opengl.macos.v10_15_3.glut_h.glutMouseFunc(glutMouseFunc$func.allocate(mouseClickCallback, scope));
+    glut_h.glutMouseFunc(glutMouseFunc$func.allocate(mouseClickCallback, scope));
 
     // Motion is invoked if a mouse button is pressed, otherwise not
     // https://www.opengl.org/resources/libraries/glut/spec3/node51.html
@@ -138,7 +138,7 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
         //System.out.println("mouse motion.x:"+x+" y:"+y);
       }
     };
-    opengl.macos.v10_15_3.glut_h.glutMotionFunc(glutMotionFunc$func.allocate(mouseMotionCallback, scope));
+    glut_h.glutMotionFunc(glutMotionFunc$func.allocate(mouseMotionCallback, scope));
 
 
     // -----------------------------------------------------
@@ -149,7 +149,7 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
     // -----------------------------------------------------
     // Warn : this will block execution
 
-    opengl.macos.v10_15_3.glut_h.glutMainLoop();
+    glut_h.glutMainLoop();
 
     // glut is OS specific
   }
@@ -165,11 +165,11 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
 
   protected StringBuffer version(PanamaGLPainter painter){
     StringBuffer sb = new StringBuffer();
-    sb.append("GL_VENDOR     : " + painter.glGetString(opengl.macos.v10_15_3.glut_h.GL_VENDOR()) + "\n");
-    sb.append("GL_RENDERER   : " + painter.glGetString(opengl.macos.v10_15_3.glut_h.GL_RENDERER()) + "\n");
-    sb.append("GL_VERSION    : " + painter.glGetString(opengl.macos.v10_15_3.glut_h.GL_VERSION()) + "\n");
+    sb.append("GL_VENDOR     : " + painter.glGetString(glut_h.GL_VENDOR()) + "\n");
+    sb.append("GL_RENDERER   : " + painter.glGetString(glut_h.GL_RENDERER()) + "\n");
+    sb.append("GL_VERSION    : " + painter.glGetString(glut_h.GL_VERSION()) + "\n");
 
-    String ext = painter.glGetString(opengl.macos.v10_15_3.glut_h.GL_EXTENSIONS());
+    String ext = painter.glGetString(glut_h.GL_EXTENSIONS());
 
     if(ext!=null) {
       sb.append("GL_EXTENSIONS : " + "\n");
@@ -1275,22 +1275,22 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
 
   @Override
   public void glEnable_PolygonOffsetFill() {
-    glEnable(opengl.macos.v10_15_3.glut_h.GL_POLYGON_OFFSET_FILL());
+    glEnable(glut_h.GL_POLYGON_OFFSET_FILL());
   }
 
   @Override
   public void glDisable_PolygonOffsetFill() {
-    glDisable(opengl.macos.v10_15_3.glut_h.GL_POLYGON_OFFSET_FILL());
+    glDisable(glut_h.GL_POLYGON_OFFSET_FILL());
   }
 
   @Override
   public void glEnable_PolygonOffsetLine() {
-    glEnable(opengl.macos.v10_15_3.glut_h.GL_POLYGON_OFFSET_LINE());
+    glEnable(glut_h.GL_POLYGON_OFFSET_LINE());
   }
 
   @Override
   public void glDisable_PolygonOffsetLine() {
-    glDisable(opengl.macos.v10_15_3.glut_h.GL_POLYGON_OFFSET_LINE());
+    glDisable(glut_h.GL_POLYGON_OFFSET_LINE());
   }
 
   @Override
@@ -1462,11 +1462,11 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
 
   @Override
   public void glEnable_Stencil() {
-    glut_h.glEnable(opengl.macos.v10_15_3.glut_h.GL_STENCIL());
+    glut_h.glEnable(glut_h.GL_STENCIL());
   }
 
   @Override
   public void glDisable_Stencil() {
-    glut_h.glDisable(opengl.macos.v10_15_3.glut_h.GL_STENCIL());
+    glut_h.glDisable(glut_h.GL_STENCIL());
   }
 }
