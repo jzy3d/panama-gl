@@ -157,6 +157,21 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
     // glut is OS specific
   }
 
+  public void glutSwapBuffers(){
+    glut_h.glutSwapBuffers();
+  }
+
+  public void glutPostRedisplay(){
+    glut_h.glutPostRedisplay();
+  }
+
+  public int glutGetWindowWidth(){
+    return glut_h.glutGet(glut_h.GLUT_WINDOW_WIDTH());
+  }
+  public int glutGetWindowHeight(){
+    return glut_h.glutGet(glut_h.GLUT_WINDOW_HEIGHT());
+  }
+
   protected static MouseEvent mouseEvent(int x, int y, int modifiers) {
     return mouseEvent(x,y,modifiers,1);
   }

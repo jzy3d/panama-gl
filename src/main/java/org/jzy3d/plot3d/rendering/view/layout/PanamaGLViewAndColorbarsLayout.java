@@ -13,7 +13,7 @@ import org.jzy3d.plot3d.rendering.legends.colorbars.AWTColorbarLegend;
 import org.jzy3d.plot3d.rendering.view.View;
 import org.jzy3d.plot3d.rendering.view.ViewportBuilder;
 import org.jzy3d.plot3d.rendering.view.ViewportMode;
-import jgl.GL;
+//import jgl.GL;
 
 public class PanamaGLViewAndColorbarsLayout extends ViewAndColorbarsLayout {
   boolean fixHiDPI = true;
@@ -38,12 +38,7 @@ public class PanamaGLViewAndColorbarsLayout extends ViewAndColorbarsLayout {
   }
 
   /**
-   * This override allows
-   * <ul>
-   * <li>Shifting artificially the complete jGL viewport to let some place for a colorbar rendering.
-   * <li>Rendering the image using jGL dedicated image management
-   * ({@link GL#appendImageToDraw(BufferedImage, int, int)}).
-   * </ul>
+   * Disabled legend rendering for now
    */
   @Override
   protected void renderLegends(IPainter painter, float left, float right, List<ILegend> legends,

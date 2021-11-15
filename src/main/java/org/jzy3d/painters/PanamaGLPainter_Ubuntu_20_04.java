@@ -4,7 +4,8 @@ import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.MemorySegment;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
-import opengl.macos.v11_4.*;
+import opengl.macos.v11_4.glutReshapeFunc$func;
+import opengl.ubuntu.v20.*;
 import org.apache.log4j.Logger;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.controllers.mouse.camera.AWTCameraMouseController;
@@ -34,13 +35,13 @@ import java.nio.IntBuffer;
 
 import static jdk.incubator.foreign.CLinker.*;
 
-public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements PanamaGLPainter{
-  static Logger logger = Logger.getLogger(PanamaGLPainter_MacOS_11_4.class);
+public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements PanamaGLPainter{
+  static Logger logger = Logger.getLogger(PanamaGLPainter_Ubuntu_20_04.class);
 
   ResourceScope scope;
   SegmentAllocator allocator;
 
-  public PanamaGLPainter_MacOS_11_4() {
+  public PanamaGLPainter_Ubuntu_20_04() {
     try {
       scope = ResourceScope.newConfinedScope();
       allocator = SegmentAllocator.ofScope(scope);
@@ -97,15 +98,15 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
     glut_h.glutCreateWindow(CLinker.toCString(title + "/" + message, scope));
 
     // GLUT Display/Idle callback
-    glut_h.glutDisplayFunc(glutDisplayFunc$func.allocate(renderer::display, scope));
-    glut_h.glutReshapeFunc(glutReshapeFunc$func.allocate(renderer::reshape, scope));
-    glut_h.glutIdleFunc(glutIdleFunc$func.allocate(renderer::onIdle, scope));
+    glut_h.glutDisplayFunc(glutDisplayFunc$callback.allocate(renderer::display, scope));
+    glut_h.glutReshapeFunc(glutReshapeFunc$callback.allocate(renderer::reshape, scope));
+    glut_h.glutIdleFunc(glutIdleFunc$callback.allocate(renderer::onIdle, scope));
 
     // GLUT Mouse callbacks
     AWTCameraMouseController mouse = (AWTCameraMouseController) chart.getMouse();
 
     // GLUT Mouse click listener
-    glutMouseFunc$func mouseClickCallback = new glutMouseFunc$func(){
+    glutMouseFunc$callback mouseClickCallback = new glutMouseFunc$callback(){
       long time;
       long timePrev;
       @Override
@@ -127,18 +128,18 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
         //System.out.println("mouse x:"+x+" y:"+y + " button:" + button + " state:" + state);
       }
     };
-    glut_h.glutMouseFunc(glutMouseFunc$func.allocate(mouseClickCallback, scope));
+    glut_h.glutMouseFunc(glutMouseFunc$callback.allocate(mouseClickCallback, scope));
 
     // Motion is invoked if a mouse button is pressed, otherwise not
     // https://www.opengl.org/resources/libraries/glut/spec3/node51.html
-    glutMotionFunc$func mouseMotionCallback = new glutMotionFunc$func(){
+    glutMotionFunc$callback mouseMotionCallback = new glutMotionFunc$callback(){
       @Override
       public void apply(int x, int y) {
         mouse.mouseDragged(mouseEvent(x, y, InputEvent.BUTTON1_DOWN_MASK));
         //System.out.println("mouse motion.x:"+x+" y:"+y);
       }
     };
-    glut_h.glutMotionFunc(glutMotionFunc$func.allocate(mouseMotionCallback, scope));
+    glut_h.glutMotionFunc(glutMotionFunc$callback.allocate(mouseMotionCallback, scope));
 
 
     // -----------------------------------------------------

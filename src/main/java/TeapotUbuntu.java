@@ -33,47 +33,25 @@
 import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
-import opengl.macos.v10_15_3.glutDisplayFunc$func;
-import opengl.macos.v10_15_3.glutIdleFunc$func;
+import opengl.ubuntu.v20.glutDisplayFunc$callback;
+import opengl.ubuntu.v20.glutIdleFunc$callback;
 
-import static jdk.incubator.foreign.CLinker.*;
-//import static opengl.macos.v10_15_3.glut_h.*;
+import static jdk.incubator.foreign.CLinker.C_FLOAT;
+import static jdk.incubator.foreign.CLinker.C_INT;
 import static opengl.ubuntu.v20.glut_h.*;
 
 /**
  * This is the original demonstration program provided at https://github.com/sundararajana/panama-jextract-samples/tree/master/opengl.
  *
- * Requires VM args for MacOS
- * <code>
- * -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
- * </code>
- *
- * This is the original demonstration program provided at https://github.com/sundararajana/panama-jextract-samples/tree/master/opengl.
- *
- * Requires modifying import manually
- *
- * <ul>
- * <li>MacOS : import static opengl.macos.v10_15_3.glut_h.*;
- * <li>Ubuntu : import static opengl.ubuntu.v20.glut_h.*;
- * </ul>
- *
- * Requires VM args
- *
- * MacOS
- * <code>
- * -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
- * </code>
- *
- * Ubuntu
+ * Requires VM args for Ubuntu
  * <code>
  * --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
  * </code>
- *
  */
-public class Teapot {
+public class TeapotUbuntu {
   private float rot = 0;
 
-  Teapot(SegmentAllocator allocator) {
+  TeapotUbuntu(SegmentAllocator allocator) {
     // Reset Background
     glClearColor(0f, 0f, 0f, 0f);
     // Setup Lighting
@@ -116,9 +94,9 @@ public class Teapot {
       glutInitDisplayMode(GLUT_DOUBLE() | GLUT_RGB() | GLUT_DEPTH());
       glutInitWindowSize(500, 500);
       glutCreateWindow(CLinker.toCString("Hello Panama!", scope));
-      var teapot = new Teapot(allocator);
-      var displayStub = glutDisplayFunc$func.allocate(teapot::display, scope);
-      var idleStub = glutIdleFunc$func.allocate(teapot::onIdle, scope);
+      var teapot = new TeapotUbuntu(allocator);
+      var displayStub = glutDisplayFunc$callback.allocate(teapot::display, scope);
+      var idleStub = glutIdleFunc$callback.allocate(teapot::onIdle, scope);
       glutDisplayFunc(displayStub);
       glutIdleFunc(idleStub);
       glutMainLoop();

@@ -150,6 +150,9 @@ You need to run [Ubuntu setup script](setup/setup_ubuntu.md) before running the 
 /usr/include/GL/glut.h
 ```
 
+You may note that the generated code won't be exactly similar to MacOSX : MacOS X will generate `glutDisplayFunc$func` 
+while Ubuntu will generate `glutDisplayFunc$callback`.
+
 #### Windows 10
 
 Generating wrapper will crash with `Build 17-panama+3-167 (2021/5/18)`! Wait for next JDK release fixing [this](https://github.com/openjdk/jdk17/pull/35). 
