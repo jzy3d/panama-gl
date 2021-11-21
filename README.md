@@ -103,8 +103,8 @@ it is just a helper for adding wrappers for new platforms.
 ```
 jextract -d {OUTPUT_DIR} --source -t {PACKAGE_NAME} \
 -lGL \
--l{GLUT_LIB_DIR} \
--I {GL_ANDGLUT_INCLUDE_DIR} \
+-l{GLUT_LIB} \
+-I {GL_AND_GLUT_INCLUDE_DIR} \
 -C{ARGS_FOR_CLANG} \
 {GLUT_HEADER_FILE}
 ```
@@ -145,6 +145,7 @@ You need to run [Ubuntu setup script](setup/setup_ubuntu.md) before running the 
 /usr/lib/jvm/jdk-17-panama/bin/jextract  -d ./src/main/java/ --source -t opengl.ubuntu.v20 \
 -lGL \
 -l/usr/lib/x86_64-linux-gnu/libglut.so.3.9.0 \
+-l/usr/lib/x86_64-linux-gnu/libGLU.so.1.3.1 \
 -I  /usr/include/GL \
 -C-F/usr/include/GL \
 /usr/include/GL/glut.h
@@ -174,5 +175,18 @@ C:\Program" "Files\Java\openjdk-17-panama+3-167_windows-x64_bin\jdk-17\bin\jextr
 
 ## Help
 
-* Modules https://openjdk.java.net/projects/jigsaw/quick-start
-* Modules https://github.com/tfesenko/Java-Modules-JPMS-CheatSheet
+* [Panama Foreign Memory](https://github.com/openjdk/panama-foreign/blob/foreign-jextract/doc/panama_memaccess.md)
+* [Panama Foreign Function](https://github.com/openjdk/panama-foreign/blob/foreign-jextract/doc/panama_ffi.md)
+* [Modules Quickstart](https://openjdk.java.net/projects/jigsaw/quick-start)
+* [JExtract doc](https://github.com/openjdk/panama-foreign/blob/foreign-jextract/doc/panama_jextract.md)
+* [Modules Cheatsheet](https://github.com/tfesenko/Java-Modules-JPMS-CheatSheet)
+
+## Troubleshooting
+
+An `UnsatisfiedLinkError` is thrown while invoking a bounded function.
+
+Cause : the underlying method handle is null because the native library has not been loaded explicitely by the generated code. 
+This may occur if jextract is given a header file and an incomplete list of libraries.
+
+
+

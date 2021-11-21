@@ -47,8 +47,8 @@ public class SurfaceDemoPanamaGL {
     chart.add(surface());
 
     // Manual HiDPI setting
-    float[] pixelScale = {2f,2f};
-    chart.getCanvas().setPixelScale(pixelScale);
+    //float[] pixelScale = {2f,2f};
+    //chart.getCanvas().setPixelScale(pixelScale);
 
     chart.open(800,600);
     // with GLUT, can't do anything after open until main loop ends

@@ -25,7 +25,6 @@ public class PanamaGLRenderer {
     PanamaGLPainter painter = (PanamaGLPainter)view.getPainter();
 
     painter.glutSwapBuffers();
-
   }
 
   public void reshape(int width, int height) {

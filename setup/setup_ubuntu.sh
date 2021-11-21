@@ -7,3 +7,8 @@ sudo apt-get install mesa-utils
 
 # Check where the are installed
 dpkg -L freeglut3
+
+
+# For debugging
+
+ldd --verbose /usr/lib/x86_64-linux-gnu/libGLU.so
