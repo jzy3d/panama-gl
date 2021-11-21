@@ -39,15 +39,16 @@ public class SurfaceDemoPanamaGL {
      * @see https://github.com/jzy3d/jzy3d-api/blob/master/jzy3d-tutorials/src/main/java/org/jzy3d/demos/surface/SurfaceDemoEmulGL.java
      */
     //ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
-    ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_11_4());
+    //ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_11_4());
+    ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_Ubuntu_20_04());
 
     Quality q = Quality.Advanced();
     Chart chart = factory.newChart(q);
     chart.add(surface());
 
     // Manual HiDPI setting
-    float[] pixelScale = {2f,2f};
-    chart.getCanvas().setPixelScale(pixelScale);
+    //float[] pixelScale = {2f,2f};
+    //chart.getCanvas().setPixelScale(pixelScale);
 
     chart.open(800,600);
     // with GLUT, can't do anything after open until main loop ends

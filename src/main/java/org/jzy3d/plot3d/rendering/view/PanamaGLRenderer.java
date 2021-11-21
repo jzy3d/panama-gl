@@ -1,5 +1,7 @@
 package org.jzy3d.plot3d.rendering.view;
 
+import org.jzy3d.painters.PanamaGLPainter;
+
 import static opengl.macos.v10_15_3.glut_h.glutSwapBuffers;
 import static opengl.macos.v10_15_3.glut_h.glutPostRedisplay;
 
@@ -20,8 +22,9 @@ public class PanamaGLRenderer {
     view.clear();
     view.render();
 
-    glutSwapBuffers();
+    PanamaGLPainter painter = (PanamaGLPainter)view.getPainter();
 
+    painter.glutSwapBuffers();
   }
 
   public void reshape(int width, int height) {
@@ -29,7 +32,8 @@ public class PanamaGLRenderer {
   }
 
   public void onIdle() {
-    glutPostRedisplay();
+    PanamaGLPainter painter = (PanamaGLPainter)view.getPainter();
+    painter.glutPostRedisplay();
   }
 
 }
