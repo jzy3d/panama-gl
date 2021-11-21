@@ -31,7 +31,7 @@ public class PanamaGLViewAndColorbarsLayout extends ViewAndColorbarsLayout {
 
     view.renderScene(sceneViewport);
 
-    renderLegends(painter, chart);
+    //renderLegends(painter, chart);
 
     // fix overlay on top of chart
     view.renderOverlay(view.getCamera().getLastViewPort());

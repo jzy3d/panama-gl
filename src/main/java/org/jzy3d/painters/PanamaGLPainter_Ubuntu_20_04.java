@@ -23,6 +23,7 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
+import org.jzy3d.plot3d.rendering.view.View;
 
 import javax.swing.*;
 import java.awt.*;
@@ -855,6 +856,11 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
   }
 
   // GL VIEWPOINT
+
+  @Override
+  public View getView() {
+    return super.getView();
+  }
 
   @Override
   public void glOrtho(double left, double right, double bottom, double top, double near_val, double far_val) {

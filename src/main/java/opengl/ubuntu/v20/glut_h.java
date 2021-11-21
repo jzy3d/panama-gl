@@ -12,6 +12,7 @@ public class glut_h extends glut_h_6 {
     static {
         System.loadLibrary("GL");
         System.load("/usr/lib/x86_64-linux-gnu/libglut.so.3.9.0");
+        System.load("/usr/lib/x86_64-linux-gnu/libGLU.so.1.3.1");
     }
 
     static final SymbolLookup LIBRARIES = RuntimeHelper.lookup();    /* package-private */ glut_h() {}
