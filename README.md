@@ -55,8 +55,6 @@ https://stackoverflow.com/questions/65802625/develop-using-opengl-4-x-on-osx-big
 
 #### Ubuntu 20
 
-Need to resolve [how to start with foreign on Ubuntu from IntelliJ](https://stackoverflow.com/questions/65861700/java-package-jdk-incubator-foreign-is-not-visible-error-in-java-15). 
-
 ```
 --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
 ```
@@ -188,5 +186,8 @@ An `UnsatisfiedLinkError` is thrown while invoking a bounded function.
 Cause : the underlying method handle is null because the native library has not been loaded explicitely by the generated code. 
 This may occur if jextract is given a header file and an incomplete list of libraries.
 
+`java: package jdk.incubator.foreign is not visible` message when running from IntelliJ.
 
+Solution : in addition to setting VM parameters in the Run Configuration, one also need to add --add-modules jdk.incubator.foreign 
+under Preferences -> Build, Execution, Development -> Compiler -> Java Compiler -> Additional command line parameters and setting the target bycode version to the VM version we run on.
 
