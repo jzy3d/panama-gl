@@ -883,28 +883,7 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
 
   @Override
   public void glClipPlane(int plane, double[] equation) {
-    switch (plane) {
-    case 0:
-      glut_h.glClipPlane(glut_h.GL_CLIP_PLANE0(), alloc(equation));
-      break;
-    case 1:
-      glut_h.glClipPlane(glut_h.GL_CLIP_PLANE1(), alloc(equation));
-      break;
-    case 2:
-      glut_h.glClipPlane(glut_h.GL_CLIP_PLANE2(), alloc(equation));
-      break;
-    case 3:
-      glut_h.glClipPlane(glut_h.GL_CLIP_PLANE3(), alloc(equation));
-      break;
-    case 4:
-      glut_h.glClipPlane(glut_h.GL_CLIP_PLANE4(), alloc(equation));
-      break;
-    case 5:
-      glut_h.glClipPlane(glut_h.GL_CLIP_PLANE5(), alloc(equation));
-      break;
-    default:
-      throw new IllegalArgumentException("Expect a plane ID in [0;5]");
-    }
+    glut_h.glClipPlane(clipPlaneId(plane), alloc(equation));
   }
 
   @Override
