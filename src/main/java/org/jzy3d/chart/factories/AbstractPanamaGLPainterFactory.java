@@ -11,6 +11,7 @@ import org.jzy3d.chart.controllers.mouse.camera.ICameraMouseController;
 import org.jzy3d.chart.controllers.mouse.picking.IMousePickingController;
 import org.jzy3d.maths.Dimension;
 import org.jzy3d.maths.Rectangle;
+import org.jzy3d.plot3d.pipelines.NotImplementedException;
 import org.jzy3d.plot3d.primitives.symbols.SymbolHandler;
 import org.jzy3d.plot3d.rendering.canvas.ICanvas;
 import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
@@ -26,6 +27,8 @@ public abstract class AbstractPanamaGLPainterFactory implements IPainterFactory 
     protected boolean offscreen = false;
     protected int width;
     protected int height;
+    
+
 
     @Override
     public IViewOverlay newViewOverlay() {
@@ -123,4 +126,17 @@ public abstract class AbstractPanamaGLPainterFactory implements IPainterFactory 
     public Dimension getOffscreenDimension() {
         return new Dimension(width, height);
     }
+    
+
+    @Override
+    public boolean isDebugGL() {
+      return false;
+    }
+
+    /** If true, will let GL trigger {@link GLException} if an error occur in OpenGL which ease debugging. Default is false. */
+    @Override
+    public void setDebugGL(boolean debugGL) {
+      throw new NotImplementedException();
+    }
+
 }

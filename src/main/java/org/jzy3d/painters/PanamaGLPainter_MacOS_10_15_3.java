@@ -35,7 +35,7 @@ import jdk.incubator.foreign.SegmentAllocator;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
-
+import com.jogamp.opengl.GL2;
 import javax.swing.*;
 
 public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements PanamaGLPainter {
@@ -899,55 +899,35 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
 
   @Override
   public void glEnable_ClipPlane(int plane) {
-    switch (plane) {
-    case 0:
-      glut_h.glEnable(glut_h.GL_CLIP_PLANE0());
-      break;
-    case 1:
-      glut_h.glEnable(glut_h.GL_CLIP_PLANE1());
-      break;
-    case 2:
-      glut_h.glEnable(glut_h.GL_CLIP_PLANE2());
-      break;
-    case 3:
-      glut_h.glEnable(glut_h.GL_CLIP_PLANE3());
-      break;
-    case 4:
-      glut_h.glEnable(glut_h.GL_CLIP_PLANE4());
-      break;
-    case 5:
-      glut_h.glEnable(glut_h.GL_CLIP_PLANE5());
-      break;
-    default:
-      throw new IllegalArgumentException("Expect a plane ID in [0;5]");
-    }
+    glut_h.glEnable(clipPlaneId(plane));
   }
 
   @Override
   public void glDisable_ClipPlane(int plane) {
-    switch (plane) {
-    case 0:
-      glut_h.glEnable(glut_h.GL_CLIP_PLANE0());
-      break;
-    case 1:
-      glut_h.glEnable(glut_h.GL_CLIP_PLANE1());
-      break;
-    case 2:
-      glut_h.glEnable(glut_h.GL_CLIP_PLANE2());
-      break;
-    case 3:
-      glut_h.glEnable(glut_h.GL_CLIP_PLANE3());
-      break;
-    case 4:
-      glut_h.glEnable(glut_h.GL_CLIP_PLANE4());
-      break;
-    case 5:
-      glut_h.glEnable(glut_h.GL_CLIP_PLANE5());
-      break;
-    default:
-      throw new IllegalArgumentException("Expect a plane ID in [0;5]");
+    glut_h.glDisable(clipPlaneId(plane));
+  }
+  
+  /** Return the GL clip plane ID according to an ID in [0;5]*/
+  @Override
+  public int clipPlaneId(int id) {
+    switch (id) {
+      case 0:
+        return glut_h.GL_CLIP_PLANE0();
+      case 1:
+        return glut_h.GL_CLIP_PLANE1();
+      case 2:
+        return glut_h.GL_CLIP_PLANE2();
+      case 3:
+        return glut_h.GL_CLIP_PLANE3();
+      case 4:
+        return glut_h.GL_CLIP_PLANE4();
+      case 5:
+        return glut_h.GL_CLIP_PLANE5();
+      default:
+        throw new IllegalArgumentException("Expect a plane ID in [0;5]");
     }
   }
+
 
   @Override
   public boolean gluUnProject(float winX, float winY, float winZ, float[] model, int model_offset, float[] proj,
