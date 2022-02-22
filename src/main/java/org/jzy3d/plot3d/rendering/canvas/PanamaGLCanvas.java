@@ -111,6 +111,12 @@ public class PanamaGLCanvas implements IScreenCanvas{
   }
 
   @Override
+  public Coord2d getPixelScaleJVM() {
+    logger.warn("not implemented");
+    return getPixelScale();
+  }
+
+  @Override
   public double getLastRenderingTimeMs() {
     // TODO Auto-generated method stub
     return -1;
@@ -141,4 +147,6 @@ public class PanamaGLCanvas implements IScreenCanvas{
   public IAnimator getAnimation() {
     return animator;
   }
+
+
 }
