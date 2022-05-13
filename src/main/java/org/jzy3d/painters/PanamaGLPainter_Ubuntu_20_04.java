@@ -4,6 +4,7 @@ import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.MemorySegment;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
+import opengl.macos.v10_15_3.glut_h;
 import opengl.ubuntu.v20.*;
 import org.apache.log4j.Logger;
 import org.jzy3d.chart.Chart;
@@ -864,6 +865,11 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
   @Override
   public void glOrtho(double left, double right, double bottom, double top, double near_val, double far_val) {
     glut_h.glOrtho(left, right, bottom, top, near_val, far_val);
+  }
+  
+  @Override
+  public void gluOrtho2D(double left, double right, double bottom, double top) {
+    glut_h.gluOrtho2D(left, right, bottom, top);
   }
 
   @Override

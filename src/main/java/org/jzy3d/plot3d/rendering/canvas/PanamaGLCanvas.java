@@ -148,5 +148,8 @@ public class PanamaGLCanvas implements IScreenCanvas{
     return animator;
   }
 
-
+  @Override
+  public boolean isNative() {
+    return true;
+  }
 }

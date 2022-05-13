@@ -866,6 +866,11 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
   }
 
   @Override
+  public void gluOrtho2D(double left, double right, double bottom, double top) {
+    glut_h.gluOrtho2D(left, right, bottom, top);
+  }
+
+  @Override
   public void gluPerspective(double fovy, double aspect, double zNear, double zFar) {
     glut_h.gluPerspective(fovy, aspect, zNear, zFar);
   }
