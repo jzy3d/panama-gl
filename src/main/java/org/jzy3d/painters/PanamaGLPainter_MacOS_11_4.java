@@ -4,7 +4,7 @@ import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.MemorySegment;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
-import opengl.macos.v10_15_3.glut_h;
+import opengl.macos.v11_4.glut_h;
 import opengl.macos.v11_4.*;
 import org.apache.log4j.Logger;
 import org.jzy3d.chart.Chart;

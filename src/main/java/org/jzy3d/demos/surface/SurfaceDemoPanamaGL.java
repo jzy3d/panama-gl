@@ -39,8 +39,8 @@ public class SurfaceDemoPanamaGL {
      * @see https://github.com/jzy3d/jzy3d-api/blob/master/jzy3d-tutorials/src/main/java/org/jzy3d/demos/surface/SurfaceDemoEmulGL.java
      */
     //ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
-    //ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_11_4());
-    ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_Ubuntu_20_04());
+    ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_11_4());
+    //ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_Ubuntu_20_04());
 
     Quality q = Quality.Advanced();
     Chart chart = factory.newChart(q);
