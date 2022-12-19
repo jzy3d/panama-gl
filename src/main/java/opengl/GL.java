@@ -1,9 +1,6 @@
 package opengl;
 
-import jdk.incubator.foreign.CLinker;
-import jdk.incubator.foreign.MemorySegment;
-import jdk.incubator.foreign.ResourceScope;
-import jdk.incubator.foreign.SegmentAllocator;
+import jdk.incubator.foreign.*;
 import opengl.macos.v10_15_3.glut_h;
 
 public interface GL {
@@ -15,6 +12,8 @@ public interface GL {
     MemorySegment alloc(String value);
     String glGetString(int stringID);
 
+    void glutInit(Addressable argcp, Addressable argv);
+    // TODO : review this impl, not working
     void glutInit(int i, int j);
     void glutInitDisplayMode(int mode);
     void glutInitWindowSize(int width, int height);
@@ -31,7 +30,7 @@ public interface GL {
     // FBO ------------------------------
 
     void glGenTextures(int size, MemorySegment ids);
-    // TODO : how to generate this convenient wrapper in interface AND implementations
+    // TODO : how to generate this convenient wrapper in interface AND implementations?
     int[] glGenTextures(int size);
 
     void glBindTexture(int textureType, int textureId);
@@ -47,7 +46,8 @@ public interface GL {
     int glCheckFramebufferStatusEXT(int frameBufferExt);
     void glReadPixels(int x, int y, int width, int height, int format, int type, MemorySegment pixelsRead);
 
-    // TODO : how to generate this convenient wrapper in interface AND implementations
+    // TODO : how to generate this convenient wrapper in interface AND implementations?
+    // TODO : how to load them as constants instead of methods?
     int GL_TEXTURE_2D();
     int GL_TEXTURE_WRAP_S();
     int GL_REPEAT();
@@ -66,4 +66,5 @@ public interface GL {
     int GL_COLOR_BUFFER_BIT();
     int GL_DEPTH_BUFFER_BIT();
     int GL_BYTE();
+    int GL_FRAMEBUFFER_COMPLETE();
 }

@@ -2,6 +2,7 @@ package opengl.fbo;
 
 import jdk.incubator.foreign.MemoryHandles;
 import jdk.incubator.foreign.MemorySegment;
+import opengl.ByteUtils;
 import opengl.GL;
 import opengl.macos.v10_15_3.glut_h;
 
@@ -13,78 +14,101 @@ import java.nio.ByteOrder;
 
 import static jdk.incubator.foreign.ResourceScope.newImplicitScope;
 
+/**
+ * A frame buffer object, or {@link FBO}, can render OpenGL into an offscreen buffer
+ * that can later be converted to a {@link BufferedImage}.
+ *
+ * Example from :
+ * https://www.khronos.org/opengl/wiki/Framebuffer_Object_Extension_Examples#Quick_example,_render_to_texture_(2D)
+ */
 public class FBO {
     // default
     int level = 0;
     int width = 256;
     int height = 256;
     int border = 0;
+    int channels = 4; // RGBA
 
-    // undefined
+    // undefined yes
     int format = -1;
+    int internalFormat = -1;
+    int textureFormat = -1;
+
+    boolean debug = true;
 
     public void prepare(GL gl){
         format = gl.GL_BGRA();
+        internalFormat = gl.GL_RGBA8();
+        textureFormat = gl.GL_UNSIGNED_BYTE();
 
-        int[] texIds = gl.glGenTextures(1);
+        // ------------------------
+        // Generate TEXTURE
+        int colorTexId = gl.glGenTextures(1)[0];
 
-        int colorTexId = texIds[0];
-        System.out.println("Got texture ID : " + colorTexId);
+        if(debug)
+            System.out.println("Got texture ID : " + colorTexId);
 
+        // Bind texture and set parameters
         gl.glBindTexture(glut_h.GL_TEXTURE_2D(), colorTexId);
-
         gl.glTexParameteri(gl.GL_TEXTURE_2D(), gl.GL_TEXTURE_WRAP_S(), gl.GL_REPEAT());
         gl.glTexParameteri(gl.GL_TEXTURE_2D(), gl.GL_TEXTURE_WRAP_T(), gl.GL_REPEAT());
         gl.glTexParameteri(gl.GL_TEXTURE_2D(), gl.GL_TEXTURE_MIN_FILTER(), gl.GL_NEAREST());
         gl.glTexParameteri(gl.GL_TEXTURE_2D(), gl.GL_TEXTURE_MAG_FILTER(), gl.GL_NEAREST());
 
+        // Create a texture to write to
+        int byteSize = width * height * channels;
+        MemorySegment pixels = MemorySegment.allocateNative(byteSize, newImplicitScope());
 
-        MemorySegment pixels = MemorySegment.allocateNative(width*height*4, newImplicitScope());
-
-        gl.glTexImage2D(gl.GL_TEXTURE_2D(), 0, gl.GL_RGBA8(), width, height, border, gl.GL_BGRA(), gl.GL_UNSIGNED_BYTE(), pixels);
+        gl.glTexImage2D(gl.GL_TEXTURE_2D(), level, internalFormat, width, height, border, format, textureFormat, pixels);
 
         //-------------------------
+        // Generate FRAME buffer
+
         MemorySegment fb = MemorySegment.allocateNative(4, newImplicitScope());
         gl.glGenFramebuffersEXT(1, fb);
         VarHandle intHandle = MemoryHandles.varHandle(int.class, ByteOrder.nativeOrder());
-
         int fbId = (int)intHandle.get(fb, /* offset */ 0);
-        System.out.println("Got FB ID : " + fbId);
+
+        if(debug)
+            System.out.println("Got FB ID : " + fbId);
+
+        // Bind frame buffer
         gl.glBindFramebufferEXT(gl.GL_FRAMEBUFFER_EXT(), fbId);
 
         //Attach 2D texture to this FBO
         gl.glFramebufferTexture2DEXT(gl.GL_FRAMEBUFFER_EXT(), gl.GL_COLOR_ATTACHMENT0_EXT(), gl.GL_TEXTURE_2D(), colorTexId, 0);
 
         //-------------------------
+        // Generate RENDER buffer
+
         MemorySegment depthRb = MemorySegment.allocateNative(4, newImplicitScope());
         gl.glGenRenderbuffersEXT(1, depthRb);
         int depthRbId = (int)intHandle.get(depthRb, /* offset */ 0);
-        System.out.println("Got RenderBuffer ID : " + depthRbId);
 
+        if(debug)
+            System.out.println("Got RenderBuffer ID : " + depthRbId);
+
+        // Bind render buffer
         gl.glBindRenderbufferEXT(gl.GL_RENDERBUFFER_EXT(), depthRbId);
         gl.glRenderbufferStorageEXT(gl.GL_RENDERBUFFER_EXT(), gl.GL_DEPTH_COMPONENT24(), width, height);
 
         //-------------------------
         //Attach depth buffer to FBO
+
         gl.glFramebufferRenderbufferEXT(gl.GL_FRAMEBUFFER_EXT(), gl.GL_DEPTH_ATTACHMENT_EXT(), gl.GL_RENDERBUFFER_EXT(), depthRbId);
 
         //-------------------------
         //Does the GPU support current FBO configuration?
-        int status;
-        status = gl.glCheckFramebufferStatusEXT(gl.GL_FRAMEBUFFER_EXT());
 
-        int GL_FRAMEBUFFER_COMPLETE = 36053; // From GL3 spec
-        //GL_FRAMEBUFFER_COMPLETE_EXT():
+        int status = gl.glCheckFramebufferStatusEXT(gl.GL_FRAMEBUFFER_EXT());
 
-        if(status ==GL_FRAMEBUFFER_COMPLETE){
-            System.out.println("good framebuffer status!!!");
-        }
-        else{
-            System.err.println("error with framebuffer : " + status);
+        if(status!=gl.GL_FRAMEBUFFER_COMPLETE()){
+            throw new RuntimeException("Incomplete framebuffer, not supporting current FBO config : " + status);
         }
 
         //-------------------------
         //and now you can render to GL_TEXTURE_2D
+
         gl.glBindFramebufferEXT(gl.GL_FRAMEBUFFER_EXT(), fbId);
         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         gl.glClearDepth(1.0f);
@@ -94,9 +118,7 @@ public class FBO {
     public BufferedImage getImage(GL gl) {
         BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
-        //int type = GL_UNSIGNED_BYTE();
         int type = gl.GL_BYTE(); // signed byte for reading pixels
-        int channels = 4; // RGBA
         int nPixels = width * height;
         int nBytes = nPixels * channels;
 
@@ -115,6 +137,15 @@ public class FBO {
         return out;
     }
 
+    /**
+     * Read a BGRA pixel buffer and export its content to a BufferedImage.
+     *
+     * @param width width of the pixel buffer
+     * @param height
+     * @param channels number of color components (4 with alpha, 3 with only RGB)
+     * @param pixelsBuffer
+     * @param out
+     */
     protected void fromBGRABufferToImage(int width, int height, int channels, MemorySegment pixelsBuffer, BufferedImage out) {
         int nPixels = width * height;
         int k = 0;
@@ -129,7 +160,7 @@ public class FBO {
             byte byA = (byte) byteHandle.get(pixelsBuffer, i+3);
             byte non = 0;
             byte one = (byte)0xff;
-            int rgba = RGBAtoI(byR, byG, byB, one);
+            int rgba = ByteUtils.RGBAtoI(byR, byG, byB, one);
             //int rgba = RGBAtoI(non, non, byB, yes);
 
             // Pixel position
@@ -142,52 +173,20 @@ public class FBO {
             boolean console = false;
 
             if(console) {
-                int intB = BtoI(byB);
-                int intG = BtoI(byG);
-                int intR = BtoI(byR);
-                int intA = BtoI(byA);
+                int intB = ByteUtils.BtoI(byB);
+                int intG = ByteUtils.BtoI(byG);
+                int intR = ByteUtils.BtoI(byR);
+                int intA = ByteUtils.BtoI(byA);
 
-                int red = ItoR(intR);
-                int green = ItoG(intG);
-                int blue = ItoB(intB);
-                int alpha = ItoA(intA);
+                int red = ByteUtils.ItoR(intR);
+                int green = ByteUtils.ItoG(intG);
+                int blue = ByteUtils.ItoB(intB);
+                int alpha = ByteUtils.ItoA(intA);
 
                 org.jzy3d.colors.Color c = new org.jzy3d.colors.Color(red, green, blue, 255);
                 System.out.println(w + "," + h + " : " + c);
             }
             k++;
         }
-    }
-
-    public static int BtoI(byte x) {
-        return (x & 0xff);
-    }
-
-    public static int FtoI(float x) {
-        return (int) (x * 255.0f);
-    }
-
-    public static int ItoR(int x) {
-        return ((x & 0x00ff0000) >> 16);
-    }
-
-    public static int ItoG(int x) {
-        return ((x & 0x0000ff00) >> 8);
-    }
-
-    public static int ItoB(int x) {
-        return (x & 0x000000ff);
-    }
-
-    public static int ItoA(int x) {
-        return (((x & 0xff000000) >> 24) & 0x000000ff);
-    }
-
-    public static int RGBAtoI(byte r, byte g, byte b, byte a) {
-        return (((a & 0xff) << 24) | ((r & 0xff) << 16) | ((g & 0xff) << 8) | b);
-    }
-
-    public static int RGBAtoI(int r, int g, int b, int a) {
-        return ((a << 24) | (r << 16) | (g << 8) | b);
     }
 }

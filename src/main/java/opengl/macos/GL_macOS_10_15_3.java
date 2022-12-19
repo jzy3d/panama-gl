@@ -1,23 +1,14 @@
 package opengl.macos;
 
+import jdk.incubator.foreign.Addressable;
 import jdk.incubator.foreign.CLinker;
-import jdk.incubator.foreign.MemoryHandles;
 import jdk.incubator.foreign.MemorySegment;
 import opengl.AbstractGL;
 import opengl.GL;
+import opengl.macos.v10_15_3.glut_h;
 
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
-
-/**
- * This import ensure we use macOS 10.15.3 generated binding.
- *
- * If you want to add a new platform, you should be able to SIMPLY
- * modify the package name to reference the appropriate glut_h generated
- * implementation.
- */
-import static opengl.macos.v10_15_3.glut_h.*; // for constants
-import opengl.macos.v10_15_3.glut_h; // for glut
+import static jdk.incubator.foreign.CLinker.C_INT;
+import static opengl.macos.v10_15_3.glut_h.*;
 
 /**
  * Look above ^^ this is how you link to platform binding.
@@ -26,12 +17,27 @@ public class GL_macOS_10_15_3 extends AbstractGL implements GL  {
 
     public GL_macOS_10_15_3(){
         super();
+        init();
+    }
 
+    protected void init(){
+        var argc = getAllocator().allocate(C_INT, 0);
+
+        glutInit(argc, argc);
+        glutInitDisplayMode(0);
+        glutInitWindowSize(1, 1);
+        glutInitWindowPosition(-1, -1);
+        glutCreateWindow("InvisiblePanamaGLWindowForGLContext");
     }
 
     @Override
     public void glutInit(int i, int j) {
         glut_h.glutInit(getAllocator().allocate(i), getAllocator().allocate(j));
+    }
+
+    @Override
+    public void glutInit(Addressable argcp, Addressable argv) {
+        glut_h.glutInit(argcp, argv);
     }
 
     @Override
@@ -163,5 +169,7 @@ public class GL_macOS_10_15_3 extends AbstractGL implements GL  {
     public int GL_BYTE(){return glut_h.GL_BYTE();}
     @Override
     public int GL_UNSIGNED_BYTE(){return glut_h.GL_UNSIGNED_BYTE();}
+    @Override
+    public int GL_FRAMEBUFFER_COMPLETE(){return glut_h.GL_FRAMEBUFFER_COMPLETE();}
 
 }
