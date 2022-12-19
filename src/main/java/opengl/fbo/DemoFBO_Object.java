@@ -1,7 +1,9 @@
 package opengl.fbo;
 
 import jdk.incubator.foreign.*;
-import opengl.macos.v10_15_3.*;
+import opengl.GL;
+import opengl.macos.GL_macOS_10_15_3;
+import opengl.macos.v10_15_3.glut_h;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -17,43 +19,32 @@ import static opengl.macos.v10_15_3.glut_h.*;
  * https://github.com/jzy3d/panama-gl/issues/5
  */
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class DemoFBO {
+public class DemoFBO_Object {
 
   public static void main(String[] args) {
-    var scope = ResourceScope.newConfinedScope();
-    var allocator = SegmentAllocator.ofScope(scope);
-    var argc = allocator.allocate(C_INT, 0);
+    GL gl = new GL_macOS_10_15_3();
 
     // We need to open an invisible window for OpenGL to have a context
-    glutInit(argc, argc);
-    glutInitDisplayMode(GLUT_DOUBLE() | GLUT_RGB() | GLUT_DEPTH());
-    glutInitWindowSize(1, 1);
-    glutInitWindowPosition(-1, -1);
-    glutCreateWindow(CLinker.toCString("Hello Panama!", scope));
+    gl.glutInit(0, 0);
+    gl.glutInitDisplayMode(0);
+    gl.glutInitWindowSize(1, 1);
+    gl.glutInitWindowPosition(-1, -1);
+    gl.glutCreateWindow("InvisiblePanamaGLWindowForGLContext");
 
     //https://openjdk.org/jeps/412
-    VarHandle intHandle = MemoryHandles.varHandle(int.class, ByteOrder.nativeOrder());
-    VarHandle byteHandle = MemoryHandles.varHandle(byte.class, ByteOrder.nativeOrder());
-
-    MemorySegment colorTex = MemorySegment.allocateNative(4*3, newImplicitScope());
-
-
 
     //RGBA8 2D texture, 24 bit depth texture, 256x256
 
-    glut_h.glGenTextures(1, colorTex);
-
-    int colorTexId = (int)intHandle.get(colorTex, /* offset */ 0);
+    int[] texIds = gl.glGenTextures(1);
+    int colorTexId = texIds[0];
     System.out.println("Got texture ID : " + colorTexId);
 
-    glut_h.glBindTexture(glut_h.GL_TEXTURE_2D(), colorTexId);
+    gl.glBindTexture(glut_h.GL_TEXTURE_2D(), colorTexId);
 
-
-
-    glut_h.glTexParameteri(glut_h.GL_TEXTURE_2D(), GL_TEXTURE_WRAP_S(), GL_REPEAT());
-    glut_h.glTexParameteri(glut_h.GL_TEXTURE_2D(), GL_TEXTURE_WRAP_T(), GL_REPEAT());
-    glut_h.glTexParameteri(glut_h.GL_TEXTURE_2D(), GL_TEXTURE_MIN_FILTER(), GL_NEAREST());
-    glut_h.glTexParameteri(glut_h.GL_TEXTURE_2D(), GL_TEXTURE_MAG_FILTER(), GL_NEAREST());
+    gl.glTexParameteri(gl.GL_TEXTURE_2D(), gl.GL_TEXTURE_WRAP_S(), gl.GL_REPEAT());
+    gl.glTexParameteri(gl.GL_TEXTURE_2D(), gl.GL_TEXTURE_WRAP_T(), gl.GL_REPEAT());
+    gl.glTexParameteri(gl.GL_TEXTURE_2D(), gl.GL_TEXTURE_MIN_FILTER(), gl.GL_NEAREST());
+    gl.glTexParameteri(gl.GL_TEXTURE_2D(), gl.GL_TEXTURE_MAG_FILTER(), gl.GL_NEAREST());
 
     //NULL means reserve texture memory, but texels are undefined
     int level = 0;
@@ -63,41 +54,38 @@ public class DemoFBO {
     int format = GL_BGRA();
 
     MemorySegment pixels = MemorySegment.allocateNative(width*height*4, newImplicitScope());
-    //Addressable pixels = null;
 
-    glut_h.glTexImage2D(GL_TEXTURE_2D(), 0, GL_RGBA8(), width, height, border, GL_BGRA(), GL_UNSIGNED_BYTE(), pixels);
-
+    gl.glTexImage2D(gl.GL_TEXTURE_2D(), 0, gl.GL_RGBA8(), width, height, border, gl.GL_BGRA(), gl.GL_UNSIGNED_BYTE(), pixels);
 
     //-------------------------
     MemorySegment fb = MemorySegment.allocateNative(4, newImplicitScope());
+    gl.glGenFramebuffersEXT(1, fb);
+    VarHandle intHandle = MemoryHandles.varHandle(int.class, ByteOrder.nativeOrder());
 
-    glut_h.glGenFramebuffersEXT(1, fb);
     int fbId = (int)intHandle.get(fb, /* offset */ 0);
     System.out.println("Got FB ID : " + fbId);
+    gl.glBindFramebufferEXT(gl.GL_FRAMEBUFFER_EXT(), fbId);
 
-    glut_h.glBindFramebufferEXT(GL_FRAMEBUFFER_EXT(), fbId);
     //Attach 2D texture to this FBO
-    glut_h.glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT(), GL_COLOR_ATTACHMENT0_EXT(), GL_TEXTURE_2D(), colorTexId, 0);
-
+    gl.glFramebufferTexture2DEXT(gl.GL_FRAMEBUFFER_EXT(), gl.GL_COLOR_ATTACHMENT0_EXT(), gl.GL_TEXTURE_2D(), colorTexId, 0);
 
     //-------------------------
     MemorySegment depthRb = MemorySegment.allocateNative(4, newImplicitScope());
-
-    glut_h.glGenRenderbuffersEXT(1, depthRb);
+    gl.glGenRenderbuffersEXT(1, depthRb);
     int depthRbId = (int)intHandle.get(depthRb, /* offset */ 0);
     System.out.println("Got RenderBuffer ID : " + depthRbId);
 
-    glut_h.glBindRenderbufferEXT(GL_RENDERBUFFER_EXT(), depthRbId);
-    glut_h.glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT(), GL_DEPTH_COMPONENT24(), width, height);
+    gl.glBindRenderbufferEXT(gl.GL_RENDERBUFFER_EXT(), depthRbId);
+    gl.glRenderbufferStorageEXT(gl.GL_RENDERBUFFER_EXT(), gl.GL_DEPTH_COMPONENT24(), width, height);
 
     //-------------------------
     //Attach depth buffer to FBO
-    glut_h.glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT(), GL_DEPTH_ATTACHMENT_EXT(), GL_RENDERBUFFER_EXT(), depthRbId);
+    gl.glFramebufferRenderbufferEXT(gl.GL_FRAMEBUFFER_EXT(), gl.GL_DEPTH_ATTACHMENT_EXT(), gl.GL_RENDERBUFFER_EXT(), depthRbId);
 
     //-------------------------
     //Does the GPU support current FBO configuration?
     int status;
-    status = glut_h.glCheckFramebufferStatusEXT(glut_h.GL_FRAMEBUFFER_EXT());
+    status = gl.glCheckFramebufferStatusEXT(gl.GL_FRAMEBUFFER_EXT());
 
     int GL_FRAMEBUFFER_COMPLETE = 36053; // From GL3 spec
     //GL_FRAMEBUFFER_COMPLETE_EXT():
@@ -111,10 +99,10 @@ public class DemoFBO {
 
     //-------------------------
     //and now you can render to GL_TEXTURE_2D
-    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT(), fbId);
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glClearDepth(1.0f);
-    glClear(GL_COLOR_BUFFER_BIT() | GL_DEPTH_BUFFER_BIT());
+    gl.glBindFramebufferEXT(gl.GL_FRAMEBUFFER_EXT(), fbId);
+    gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    gl.glClearDepth(1.0f);
+    gl.glClear(GL_COLOR_BUFFER_BIT() | GL_DEPTH_BUFFER_BIT());
 
     //-------------------------
     sceneDemo();
@@ -124,14 +112,14 @@ public class DemoFBO {
     BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
     //int type = GL_UNSIGNED_BYTE();
-    int type = GL_BYTE(); // signed byte for reading pixels
+    int type = gl.GL_BYTE(); // signed byte for reading pixels
     int channels = 4; // RGBA
     int nPixels = width * height;
     int nBytes = nPixels * channels;
 
     MemorySegment pixelsRead = MemorySegment.allocateNative(nBytes, newImplicitScope());
 
-    glReadPixels(0, 0, width, height, format, type, pixelsRead);
+    gl.glReadPixels(0, 0, width, height, format, type, pixelsRead);
     //pixels 0, 1, 2 should be white
     //pixel 4 should be black
 

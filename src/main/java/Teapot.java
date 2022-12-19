@@ -37,8 +37,8 @@ import opengl.macos.v10_15_3.glutDisplayFunc$func;
 import opengl.macos.v10_15_3.glutIdleFunc$func;
 
 import static jdk.incubator.foreign.CLinker.*;
-//import static opengl.macos.v10_15_3.glut_h.*;
-import static opengl.ubuntu.v20.glut_h.*;
+import static opengl.macos.v10_15_3.glut_h.*;
+//import static opengl.ubuntu.v20.glut_h.*;
 
 /**
  * This is the original demonstration program provided at https://github.com/sundararajana/panama-jextract-samples/tree/master/opengl.

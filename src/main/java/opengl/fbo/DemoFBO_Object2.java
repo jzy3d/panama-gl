@@ -1,7 +1,9 @@
 package opengl.fbo;
 
 import jdk.incubator.foreign.*;
-import opengl.macos.v10_15_3.*;
+import opengl.GL;
+import opengl.macos.GL_macOS_10_15_3;
+import opengl.macos.v10_15_3.glut_h;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -17,9 +19,17 @@ import static opengl.macos.v10_15_3.glut_h.*;
  * https://github.com/jzy3d/panama-gl/issues/5
  */
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class DemoFBO {
+public class DemoFBO_Object2 {
 
   public static void main(String[] args) {
+    GL gl = new GL_macOS_10_15_3();
+
+    // We need to open an invisible window for OpenGL to have a context
+    /*gl.glutInit(0, 0);
+    gl.glutInitDisplayMode(0);
+    gl.glutInitWindowSize(1, 1);
+    gl.glutInitWindowPosition(-1, -1);
+    gl.glutCreateWindow("InvisiblePanamaGLWindowForGLContext");*/
     var scope = ResourceScope.newConfinedScope();
     var allocator = SegmentAllocator.ofScope(scope);
     var argc = allocator.allocate(C_INT, 0);
@@ -31,121 +41,30 @@ public class DemoFBO {
     glutInitWindowPosition(-1, -1);
     glutCreateWindow(CLinker.toCString("Hello Panama!", scope));
 
-    //https://openjdk.org/jeps/412
-    VarHandle intHandle = MemoryHandles.varHandle(int.class, ByteOrder.nativeOrder());
-    VarHandle byteHandle = MemoryHandles.varHandle(byte.class, ByteOrder.nativeOrder());
-
-    MemorySegment colorTex = MemorySegment.allocateNative(4*3, newImplicitScope());
-
-
-
-    //RGBA8 2D texture, 24 bit depth texture, 256x256
-
-    glut_h.glGenTextures(1, colorTex);
-
-    int colorTexId = (int)intHandle.get(colorTex, /* offset */ 0);
-    System.out.println("Got texture ID : " + colorTexId);
-
-    glut_h.glBindTexture(glut_h.GL_TEXTURE_2D(), colorTexId);
-
-
-
-    glut_h.glTexParameteri(glut_h.GL_TEXTURE_2D(), GL_TEXTURE_WRAP_S(), GL_REPEAT());
-    glut_h.glTexParameteri(glut_h.GL_TEXTURE_2D(), GL_TEXTURE_WRAP_T(), GL_REPEAT());
-    glut_h.glTexParameteri(glut_h.GL_TEXTURE_2D(), GL_TEXTURE_MIN_FILTER(), GL_NEAREST());
-    glut_h.glTexParameteri(glut_h.GL_TEXTURE_2D(), GL_TEXTURE_MAG_FILTER(), GL_NEAREST());
-
-    //NULL means reserve texture memory, but texels are undefined
-    int level = 0;
-    int width = 256;
-    int height = 256;
-    int border = 0;
-    int format = GL_BGRA();
-
-    MemorySegment pixels = MemorySegment.allocateNative(width*height*4, newImplicitScope());
-    //Addressable pixels = null;
-
-    glut_h.glTexImage2D(GL_TEXTURE_2D(), 0, GL_RGBA8(), width, height, border, GL_BGRA(), GL_UNSIGNED_BYTE(), pixels);
-
+    //-------------------------
+    // Prepare VBO
+    FBO fbo = new FBO();
+    fbo.prepare(gl);
 
     //-------------------------
-    MemorySegment fb = MemorySegment.allocateNative(4, newImplicitScope());
-
-    glut_h.glGenFramebuffersEXT(1, fb);
-    int fbId = (int)intHandle.get(fb, /* offset */ 0);
-    System.out.println("Got FB ID : " + fbId);
-
-    glut_h.glBindFramebufferEXT(GL_FRAMEBUFFER_EXT(), fbId);
-    //Attach 2D texture to this FBO
-    glut_h.glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT(), GL_COLOR_ATTACHMENT0_EXT(), GL_TEXTURE_2D(), colorTexId, 0);
-
-
-    //-------------------------
-    MemorySegment depthRb = MemorySegment.allocateNative(4, newImplicitScope());
-
-    glut_h.glGenRenderbuffersEXT(1, depthRb);
-    int depthRbId = (int)intHandle.get(depthRb, /* offset */ 0);
-    System.out.println("Got RenderBuffer ID : " + depthRbId);
-
-    glut_h.glBindRenderbufferEXT(GL_RENDERBUFFER_EXT(), depthRbId);
-    glut_h.glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT(), GL_DEPTH_COMPONENT24(), width, height);
-
-    //-------------------------
-    //Attach depth buffer to FBO
-    glut_h.glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT(), GL_DEPTH_ATTACHMENT_EXT(), GL_RENDERBUFFER_EXT(), depthRbId);
-
-    //-------------------------
-    //Does the GPU support current FBO configuration?
-    int status;
-    status = glut_h.glCheckFramebufferStatusEXT(glut_h.GL_FRAMEBUFFER_EXT());
-
-    int GL_FRAMEBUFFER_COMPLETE = 36053; // From GL3 spec
-    //GL_FRAMEBUFFER_COMPLETE_EXT():
-
-    if(status ==GL_FRAMEBUFFER_COMPLETE){
-        System.out.println("good framebuffer status!!!");
-    }
-    else{
-      System.err.println("error with framebuffer : " + status);
-    }
-
-    //-------------------------
-    //and now you can render to GL_TEXTURE_2D
-    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT(), fbId);
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glClearDepth(1.0f);
-    glClear(GL_COLOR_BUFFER_BIT() | GL_DEPTH_BUFFER_BIT());
-
-    //-------------------------
+    // Render something
     sceneDemo();
 
     //-------------------------
-
-    BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
-    //int type = GL_UNSIGNED_BYTE();
-    int type = GL_BYTE(); // signed byte for reading pixels
-    int channels = 4; // RGBA
-    int nPixels = width * height;
-    int nBytes = nPixels * channels;
-
-    MemorySegment pixelsRead = MemorySegment.allocateNative(nBytes, newImplicitScope());
-
-    glReadPixels(0, 0, width, height, format, type, pixelsRead);
-    //pixels 0, 1, 2 should be white
-    //pixel 4 should be black
-
-    fromBGRABufferToImage(width, height, channels, pixelsRead, out);
+    // Get image
+    BufferedImage out = fbo.getImage(gl);
 
     //pixelsRead.
     try {
-      ImageIO.write(out, "png", new File("target/out.png"));
+      ImageIO.write(out, "png", new File("target/outFBO.png"));
 
-    }catch(Exception e){e.printStackTrace();}
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
 
-    //----------------
-    //Bind 0, which means render to back buffer
-    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT(), 0);
+
+
+
   }
 
   private static void sceneDemo() {

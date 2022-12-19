@@ -84,8 +84,10 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
   }
 
   /////////////////////////////////////////////
-
+static int k = 0;
   public void glutStart(Chart chart, Rectangle bounds, String title, String message) {
+    System.out.println("Painter : glutStart " + (k++));
+
     var painter = (PanamaGLPainter) chart.getPainter();
     var canvas = (PanamaGLCanvas) chart.getCanvas();
     var renderer = canvas.getRenderer();
@@ -93,10 +95,15 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
     var allocator = painter.getAllocator();
     var argc = allocator.allocate(C_INT, 0);
 
+
     // GLUT Init window
-    glut_h.glutInit(argc, argc);
+    // https://github.com/jzy3d/panama-gl/issues/16
+    // glut_h.glutInit(argc, argc);
+
+System.out.println("post init");
     glut_h.glutInitDisplayMode(glut_h.GLUT_DOUBLE() | glut_h.GLUT_RGB() | glut_h.GLUT_DEPTH());
     glut_h.glutInitWindowSize(bounds.width, bounds.height);
+    //glut_h.glutInitWindowPosition(bounds.x, bounds.y);
     glut_h.glutCreateWindow(CLinker.toCString(title + "/" + message, scope));
 
     // GLUT Display/Idle callback
@@ -147,7 +154,7 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
     // -----------------------------------------------------
     // Version - GLUT need to be initialized
 
-    System.out.println(version(painter));
+    System.out.println(version(painter, false));
 
     // -----------------------------------------------------
     // Warn : this will block execution
@@ -181,7 +188,11 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
   }
   static Component dummy = new JPanel();
 
-  protected StringBuffer version(PanamaGLPainter painter){
+  protected StringBuffer version(PanamaGLPainter painter) {
+    return version(painter, true);
+  }
+
+  protected StringBuffer version(PanamaGLPainter painter, boolean showExtensions){
     StringBuffer sb = new StringBuffer();
     sb.append("GL_VENDOR     : " + painter.glGetString(glut_h.GL_VENDOR()) + "\n");
     sb.append("GL_RENDERER   : " + painter.glGetString(glut_h.GL_RENDERER()) + "\n");
@@ -191,8 +202,13 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
 
     if(ext!=null) {
       sb.append("GL_EXTENSIONS : " + "\n");
-      for(String e: ext.split(" ")) {
-        sb.append("\t" + e + "\n");
+      if(showExtensions) {
+        for (String e : ext.split(" ")) {
+          sb.append("\t" + e + "\n");
+        }
+      }
+      else{
+        sb.append(ext.split(" ").length);
       }
     }
     else {
@@ -635,7 +651,7 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
 
   @Override
   public void glutBitmapString(int font, String string) {
-    logger.error("not available in generated code");
+    //logger.error("glutBitmapString : not available in generated code");
     //opengl.glut_h.glutBitmapString(font, alloc(string));
 
     // Use freeglut
