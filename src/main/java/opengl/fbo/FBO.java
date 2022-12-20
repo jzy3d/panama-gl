@@ -28,6 +28,10 @@ public class FBO {
     int border = 0;
     int channels = 4; // RGBA
 
+    // indicates dimensions have changed
+    // and FBO must reprepared
+    boolean prepared = false;
+
     // undefined yes
     int format = -1;
     int internalFormat = -1;
@@ -40,6 +44,18 @@ public class FBO {
     // which is useful for debugging
     boolean arrayExport = true;
 
+    int idTexture = -1;
+    int idFrameBuffer = -1;
+    int idRenderBuffer = -1;
+
+    MemorySegment frameBufferIds;
+    MemorySegment renderBufferIds;
+    MemorySegment textureBufferIds;
+    MemorySegment pixelBuffer;
+    MemorySegment pixelsRead;
+
+    VarHandle intHandle = MemoryHandles.varHandle(int.class, ByteOrder.nativeOrder());
+
     public FBO(){}
 
     public FBO(int width, int height) {
@@ -48,7 +64,8 @@ public class FBO {
     }
 
     public void prepare(GL gl){
-
+        if(prepared)
+            release(gl);
         // ---------------------------
         // Transfert pixel Format
         // ---------------------------
@@ -79,14 +96,17 @@ public class FBO {
         }
 
         // ------------------------
-        // Generate TEXTURE
-        int colorTexId = gl.glGenTextures(1)[0];
+        // Generate TEXTURE buffer
+
+        textureBufferIds = MemorySegment.allocateNative(1*4*3, newImplicitScope());
+        gl.glGenTextures(1, textureBufferIds);
+        idTexture = (int) intHandle.get(textureBufferIds, 0);
 
         if(debug)
-            System.out.println("FBO: Got texture ID : " + colorTexId);
+            System.out.println("FBO: Got texture ID : " + idTexture);
 
         // Bind texture and set parameters
-        gl.glBindTexture(glut_h.GL_TEXTURE_2D(), colorTexId);
+        gl.glBindTexture(glut_h.GL_TEXTURE_2D(), idTexture);
         gl.glTexParameteri(gl.GL_TEXTURE_2D(), gl.GL_TEXTURE_WRAP_S(), gl.GL_REPEAT());
         gl.glTexParameteri(gl.GL_TEXTURE_2D(), gl.GL_TEXTURE_WRAP_T(), gl.GL_REPEAT());
         gl.glTexParameteri(gl.GL_TEXTURE_2D(), gl.GL_TEXTURE_MIN_FILTER(), gl.GL_NEAREST());
@@ -94,45 +114,43 @@ public class FBO {
 
         // Create a texture to write to
         int byteSize = width * height * channels;
-        MemorySegment pixels = MemorySegment.allocateNative(byteSize, newImplicitScope());
-
-        gl.glTexImage2D(gl.GL_TEXTURE_2D(), level, internalFormat, width, height, border, format, textureType, pixels);
+        pixelBuffer = MemorySegment.allocateNative(byteSize, newImplicitScope());
+        gl.glTexImage2D(gl.GL_TEXTURE_2D(), level, internalFormat, width, height, border, format, textureType, pixelBuffer);
 
         //-------------------------
         // Generate FRAME buffer
 
-        MemorySegment fb = MemorySegment.allocateNative(4, newImplicitScope());
-        gl.glGenFramebuffersEXT(1, fb);
-        VarHandle intHandle = MemoryHandles.varHandle(int.class, ByteOrder.nativeOrder());
-        int fbId = (int)intHandle.get(fb, /* offset */ 0);
+        frameBufferIds = MemorySegment.allocateNative(4, newImplicitScope());
+        gl.glGenFramebuffersEXT(1, frameBufferIds);
+        idFrameBuffer = (int) intHandle.get(frameBufferIds, 0);
 
         if(debug)
-            System.out.println("FBO: Got FB ID : " + fbId);
+            System.out.println("FBO: Got FB ID : " + idFrameBuffer);
 
         // Bind frame buffer
-        gl.glBindFramebufferEXT(gl.GL_FRAMEBUFFER_EXT(), fbId);
+        gl.glBindFramebufferEXT(gl.GL_FRAMEBUFFER_EXT(), idFrameBuffer);
 
         //Attach 2D texture to this FBO
-        gl.glFramebufferTexture2DEXT(gl.GL_FRAMEBUFFER_EXT(), gl.GL_COLOR_ATTACHMENT0_EXT(), gl.GL_TEXTURE_2D(), colorTexId, 0);
+        gl.glFramebufferTexture2DEXT(gl.GL_FRAMEBUFFER_EXT(), gl.GL_COLOR_ATTACHMENT0_EXT(), gl.GL_TEXTURE_2D(), idTexture, 0);
 
         //-------------------------
         // Generate RENDER buffer
 
-        MemorySegment depthRb = MemorySegment.allocateNative(4, newImplicitScope());
-        gl.glGenRenderbuffersEXT(1, depthRb);
-        int depthRbId = (int)intHandle.get(depthRb, /* offset */ 0);
+        renderBufferIds = MemorySegment.allocateNative(4, newImplicitScope());
+        gl.glGenRenderbuffersEXT(1, renderBufferIds);
+        idRenderBuffer = (int) intHandle.get(renderBufferIds, 0);
 
         if(debug)
-            System.out.println("FBO: Got RenderBuffer ID : " + depthRbId);
+            System.out.println("FBO: Got RenderBuffer ID : " + idRenderBuffer);
 
         // Bind render buffer
-        gl.glBindRenderbufferEXT(gl.GL_RENDERBUFFER_EXT(), depthRbId);
+        gl.glBindRenderbufferEXT(gl.GL_RENDERBUFFER_EXT(), idRenderBuffer);
         gl.glRenderbufferStorageEXT(gl.GL_RENDERBUFFER_EXT(), gl.GL_DEPTH_COMPONENT24(), width, height);
 
         //-------------------------
         //Attach depth buffer to FBO
 
-        gl.glFramebufferRenderbufferEXT(gl.GL_FRAMEBUFFER_EXT(), gl.GL_DEPTH_ATTACHMENT_EXT(), gl.GL_RENDERBUFFER_EXT(), depthRbId);
+        gl.glFramebufferRenderbufferEXT(gl.GL_FRAMEBUFFER_EXT(), gl.GL_DEPTH_ATTACHMENT_EXT(), gl.GL_RENDERBUFFER_EXT(), idRenderBuffer);
 
         //-------------------------
         //Does the GPU support current FBO configuration?
@@ -146,18 +164,50 @@ public class FBO {
         //-------------------------
         //and now you can render to GL_TEXTURE_2D
 
-        gl.glBindFramebufferEXT(gl.GL_FRAMEBUFFER_EXT(), fbId);
+        gl.glBindFramebufferEXT(gl.GL_FRAMEBUFFER_EXT(), idFrameBuffer);
         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         gl.glClearDepth(1.0f);
         gl.glClear(gl.GL_COLOR_BUFFER_BIT() | gl.GL_DEPTH_BUFFER_BIT());
+
+        // Mark as prepared
+        prepared = true;
+    }
+
+    /**
+     * Release resources held by this FBO utility.
+     *
+     * @param gl
+     */
+    public void release(GL gl){
+        //Delete resources
+        gl.glDeleteTextures(1, textureBufferIds);
+        gl.glDeleteRenderbuffersEXT(1, renderBufferIds);
+        //Bind 0, which means render to back buffer, as a result, fb is unbound
+        gl.glBindFramebufferEXT(gl.GL_FRAMEBUFFER_EXT(), 0);
+        gl.glDeleteFramebuffersEXT(1, frameBufferIds);
+
+        // FIXME : Not mapped exception is not relevant
+        // FIXME : See if later versions of Panama do not throw exception
+        /*textureBufferIds.unload();
+        renderBufferIds.unload();
+        frameBufferIds.unload();
+        pixelBuffer.unload();*/
+
+        prepared = false;
     }
 
     public BufferedImage getImage(GL gl) {
+
+        // Initialize buffers if they are not ready or if their expected size changed
+        if(!prepared)
+            prepare(gl);
+
+        // Init output image with the buffer size and color encoding
         BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
         // Reading pixels
         int nBytes = width * height * channels;
-        MemorySegment pixelsRead = MemorySegment.allocateNative(nBytes, newImplicitScope());
+        pixelsRead = MemorySegment.allocateNative(nBytes, newImplicitScope());
         gl.glReadPixels(0, 0, width, height, format, textureType, pixelsRead);
 
         // Copy pixels to buffered image
@@ -165,6 +215,10 @@ public class FBO {
             fromBGRABufferToImageArray(pixelsRead, out);
         else
             fromBGRABufferToImage(pixelsRead, out);
+
+        // FIXME : Not mapped exception is not relevant
+        // FIXME : See if later versions of Panama do not throw exception
+        //pixelsRead.unload();
 
         //Bind 0, which means render to back buffer
         gl.glBindFramebufferEXT(gl.GL_FRAMEBUFFER_EXT(), 0);
@@ -192,8 +246,6 @@ public class FBO {
     protected void fromBGRABufferToImage(MemorySegment pixelsBuffer, BufferedImage out) {
         int nPixels = width * height;
         int k = 0;
-
-        //VarHandle intHandle = MemoryHandles.varHandle(int.class, ByteOrder.nativeOrder());
 
         // TODO : Use pixelsRead.toByteArray / toIntArray instead
         // TODO : evaluate advantage of image.setRGB(pixel:int[])
@@ -237,5 +289,20 @@ public class FBO {
             }
             k++;
         }
+    }
+
+    public void resize(int width, int height) {
+        this.width = width;
+        this.height = height;
+
+        this.prepared = false;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

@@ -4,6 +4,10 @@ import opengl.GL;
 import opengl.macos.GL_macOS_10_15_3;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -11,9 +15,16 @@ import java.io.File;
  * https://github.com/jzy3d/panama-gl/issues/5
  */
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class DemoFBO_Object2 {
+public class DemoFBO_Onscreen {
 
   public static void main(String[] args) {
+    JFrame frame = new JFrame("Rendering offscreen with Panama GL");
+    frame.getContentPane().setLayout(new BorderLayout());
+    frame.pack();
+    frame.setBounds(0,0, 800, 600);
+    frame.setVisible(true);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     GL gl = new GL_macOS_10_15_3();
 
     //-------------------------
@@ -38,5 +49,29 @@ public class DemoFBO_Object2 {
     } catch (Exception e) {
       e.printStackTrace();
     }
+
+    //-------------------------
+    // Show in a JPanel
+
+    JPanel panel = new JPanel(){
+      @Override
+      public void paintComponent(Graphics g) {
+        g.drawImage(out, 0, 0, null);
+      }
+    };
+    panel.addComponentListener(new ComponentAdapter() {
+      @Override
+      public void componentResized(ComponentEvent e) {
+        super.componentResized(e);
+
+        Dimension size = e.getComponent().getSize();
+        fbo.resize((int)Math.round(size.getWidth()), (int)Math.round(size.getHeight()));
+      }
+    });
+
+
+    frame.add(panel, BorderLayout.CENTER);
+
+
   }
 }

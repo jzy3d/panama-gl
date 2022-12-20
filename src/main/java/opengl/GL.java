@@ -30,9 +30,6 @@ public interface GL {
     // FBO ------------------------------
 
     void glGenTextures(int size, MemorySegment ids);
-    // TODO : how to generate this convenient wrapper in interface AND implementations?
-    int[] glGenTextures(int size);
-
     void glBindTexture(int textureType, int textureId);
     void glTexParameteri(int target, int pname, int param);
 
@@ -56,8 +53,12 @@ public interface GL {
     void glBindRenderbufferEXT(int renderBufferExt, int depthRbId);
     void glRenderbufferStorageEXT(int renderBufferExt, int depthComponent, int width, int height);
     void glFramebufferRenderbufferEXT(int frameBufferExt, int depthAttachmentExt, int renderBufferExt, int depthRbId);
-    int glCheckFramebufferStatusEXT(int frameBufferExt);
     void glReadPixels(int x, int y, int width, int height, int format, int type, MemorySegment pixelsRead);
+    int glCheckFramebufferStatusEXT(int frameBufferExt);
+
+    void glDeleteTextures(int size, Addressable textureBuffers);
+    void glDeleteRenderbuffersEXT(int size, Addressable renderBuffers);
+    void glDeleteFramebuffersEXT(int size, Addressable frameBuffers);
 
     // TODO : how to generate this convenient wrapper in interface AND implementations?
     // TODO : how to load them as constants instead of methods?
@@ -80,4 +81,5 @@ public interface GL {
     int GL_DEPTH_BUFFER_BIT();
     int GL_BYTE();
     int GL_FRAMEBUFFER_COMPLETE();
+
 }

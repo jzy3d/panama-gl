@@ -23,17 +23,6 @@ public abstract class AbstractGL implements GL {
     }
 
     @Override
-    public int[] glGenTextures(int size){
-        MemorySegment colorTex = MemorySegment.allocateNative(size*4*3, newImplicitScope());
-
-        //RGBA8 2D texture, 24 bit depth texture, 256x256
-        glGenTextures(size, colorTex);
-        //int colorTexId = (int)intHandle.get(colorTex, /* offset */ 0);
-        //System.out.println("Got texture ID : " + colorTexId);
-        return colorTex.toIntArray();
-    }
-
-    @Override
     public void glTexImage2D(int texture, int level, int internalFormat, int width, int height, int border, int format, int type, MemorySegment pixels){
         glut_h.glTexImage2D(texture, level, internalFormat, width, height, border, format, type, pixels);
     }

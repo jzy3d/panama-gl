@@ -14,8 +14,11 @@ import static opengl.macos.v10_15_3.glut_h.*;
  * Look above ^^ this is how you link to platform binding.
  */
 public class GL_macOS_10_15_3 extends AbstractGL implements GL  {
+    public GL_macOS_10_15_3() {
+        this(false);
+    }
 
-    public GL_macOS_10_15_3(){
+    public GL_macOS_10_15_3(boolean forceLoadGlut){
         super();
         init();
     }
@@ -108,6 +111,23 @@ public class GL_macOS_10_15_3 extends AbstractGL implements GL  {
     @Override
     public int glCheckFramebufferStatusEXT(int frameBufferExt){
         return glut_h.glCheckFramebufferStatusEXT(frameBufferExt);
+    }
+
+    @Override
+    public void glDeleteTextures(int size, Addressable textureBuffers) {
+        glut_h.glDeleteTextures(size, textureBuffers);
+
+    }
+
+    @Override
+    public void glDeleteRenderbuffersEXT(int size, Addressable renderBuffers) {
+        glut_h.glDeleteRenderbuffersEXT(size, renderBuffers);
+
+    }
+
+    @Override
+    public void glDeleteFramebuffersEXT(int size, Addressable frameBuffers) {
+        glut_h.glDeleteFramebuffersEXT(size, frameBuffers);
     }
 
     @Override
