@@ -26,9 +26,9 @@ public class DemoFBO {
 
     // We need to open an invisible window for OpenGL to have a context
     glutInit(argc, argc);
-    glutInitDisplayMode(GLUT_DOUBLE() | GLUT_RGB() | GLUT_DEPTH());
+    glutInitDisplayMode(0/*GLUT_DOUBLE() | GLUT_RGB() | GLUT_DEPTH()*/);
     glutInitWindowSize(1, 1);
-    glutInitWindowPosition(-1, -1);
+    glutInitWindowPosition(-100, -100);
     glutCreateWindow(CLinker.toCString("Hello Panama!", scope));
 
     //https://openjdk.org/jeps/412

@@ -35,6 +35,19 @@ public interface GL {
 
     void glBindTexture(int textureType, int textureId);
     void glTexParameteri(int target, int pname, int param);
+
+    /**
+     * https://registry.khronos.org/OpenGL-Refpages/gl4/html/glTexImage2D.xhtml
+     * @param texture
+     * @param level
+     * @param internalFormat
+     * @param width
+     * @param height
+     * @param border
+     * @param format
+     * @param type
+     * @param pixels
+     */
     void glTexImage2D(int texture, int level, int internalFormat, int width, int height, int border, int format, int type, MemorySegment pixels);
     void glGenFramebuffersEXT(int id, MemorySegment frameBuffer);
     void glBindFramebufferEXT(int frameExt, int frameBufferId);

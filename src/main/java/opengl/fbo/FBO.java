@@ -6,9 +6,7 @@ import opengl.ByteUtils;
 import opengl.GL;
 import opengl.macos.v10_15_3.glut_h;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 
@@ -20,6 +18,7 @@ import static jdk.incubator.foreign.ResourceScope.newImplicitScope;
  *
  * Example from :
  * https://www.khronos.org/opengl/wiki/Framebuffer_Object_Extension_Examples#Quick_example,_render_to_texture_(2D)
+ * https://www.khronos.org/opengl/wiki/Common_Mistakes
  */
 public class FBO {
     // default
@@ -32,21 +31,59 @@ public class FBO {
     // undefined yes
     int format = -1;
     int internalFormat = -1;
-    int textureFormat = -1;
+    int textureType = -1;
 
     boolean debug = true;
 
+    // supposed to copy to BufferedImage faster when true
+    // using false allows to make copy by tweaking bytes
+    // which is useful for debugging
+    boolean arrayExport = true;
+
+    public FBO(){}
+
+    public FBO(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
     public void prepare(GL gl){
+
+        // ---------------------------
+        // Transfert pixel Format
+        // ---------------------------
+        // Most GPU support BGRA
+        // If you supply GL_RGBA, then the driver may have to do the swapping for you which is slow.
+        // If you do use GL_BGRA, the call to pixel transfer will be much faster.
+        // Note that GL_BGRA pixel transfer format is only preferred when uploading to GL_RGBA8 images.
+        // When dealing with other formats, like GL_RGBA16, GL_RGBA8UI or even GL_RGBA8_SNORM, then the regular GL_RGBA
+        // ordering may be preferred.
+        //
+        // On which platforms is GL_BGRA preferred? Making a list would be too long but one example is Microsoft Windows.
+        // Note that with GL 4.3 or ARB_internalformat_query2, you can simply ask the implementation what is the
+        // preferred format with glGetInternalFormativ(GL_TEXTURE_2D, GL_RGBA8, GL_TEXTURE_IMAGE_FORMAT, 1, &preferred_format).
         format = gl.GL_BGRA();
-        internalFormat = gl.GL_RGBA8();
-        textureFormat = gl.GL_UNSIGNED_BYTE();
+        //format = glut_h.GL_RGBA8UI_EXT();// GL_ARGBA();
+        //format = glut_h.GL_ABGR_EXT();
+        //internalFormat = gl.GL_RGBA8();
+        //internalFormat = gl.GL_RGBA();
+        internalFormat = glut_h.GL_RGBA8();//gl.GL_BGRA();
+        textureType = gl.GL_UNSIGNED_BYTE();
+
+
+
+        if(debug){
+            System.out.println("FBO: " + internalFormat);
+            System.out.println("FBO: " + format);
+            System.out.println("FBO: " + glut_h.GL_RGBA8());
+        }
 
         // ------------------------
         // Generate TEXTURE
         int colorTexId = gl.glGenTextures(1)[0];
 
         if(debug)
-            System.out.println("Got texture ID : " + colorTexId);
+            System.out.println("FBO: Got texture ID : " + colorTexId);
 
         // Bind texture and set parameters
         gl.glBindTexture(glut_h.GL_TEXTURE_2D(), colorTexId);
@@ -59,7 +96,7 @@ public class FBO {
         int byteSize = width * height * channels;
         MemorySegment pixels = MemorySegment.allocateNative(byteSize, newImplicitScope());
 
-        gl.glTexImage2D(gl.GL_TEXTURE_2D(), level, internalFormat, width, height, border, format, textureFormat, pixels);
+        gl.glTexImage2D(gl.GL_TEXTURE_2D(), level, internalFormat, width, height, border, format, textureType, pixels);
 
         //-------------------------
         // Generate FRAME buffer
@@ -70,7 +107,7 @@ public class FBO {
         int fbId = (int)intHandle.get(fb, /* offset */ 0);
 
         if(debug)
-            System.out.println("Got FB ID : " + fbId);
+            System.out.println("FBO: Got FB ID : " + fbId);
 
         // Bind frame buffer
         gl.glBindFramebufferEXT(gl.GL_FRAMEBUFFER_EXT(), fbId);
@@ -86,7 +123,7 @@ public class FBO {
         int depthRbId = (int)intHandle.get(depthRb, /* offset */ 0);
 
         if(debug)
-            System.out.println("Got RenderBuffer ID : " + depthRbId);
+            System.out.println("FBO: Got RenderBuffer ID : " + depthRbId);
 
         // Bind render buffer
         gl.glBindRenderbufferEXT(gl.GL_RENDERBUFFER_EXT(), depthRbId);
@@ -103,7 +140,7 @@ public class FBO {
         int status = gl.glCheckFramebufferStatusEXT(gl.GL_FRAMEBUFFER_EXT());
 
         if(status!=gl.GL_FRAMEBUFFER_COMPLETE()){
-            throw new RuntimeException("Incomplete framebuffer, not supporting current FBO config : " + status);
+            throw new RuntimeException("Incomplete framebuffer, not supporting current FBO config : " + status + " != GL_FRAMEBUFFER_COMPLETE (" + gl.GL_FRAMEBUFFER_COMPLETE() + ")");
         }
 
         //-------------------------
@@ -118,19 +155,17 @@ public class FBO {
     public BufferedImage getImage(GL gl) {
         BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
-        int type = gl.GL_BYTE(); // signed byte for reading pixels
-        int nPixels = width * height;
-        int nBytes = nPixels * channels;
-
+        // Reading pixels
+        int nBytes = width * height * channels;
         MemorySegment pixelsRead = MemorySegment.allocateNative(nBytes, newImplicitScope());
+        gl.glReadPixels(0, 0, width, height, format, textureType, pixelsRead);
 
-        gl.glReadPixels(0, 0, width, height, format, type, pixelsRead);
-        //pixels 0, 1, 2 should be white
-        //pixel 4 should be black
+        // Copy pixels to buffered image
+        if(arrayExport)
+            fromBGRABufferToImageArray(pixelsRead, out);
+        else
+            fromBGRABufferToImage(pixelsRead, out);
 
-        fromBGRABufferToImage(width, height, channels, pixelsRead, out);
-
-        //----------------
         //Bind 0, which means render to back buffer
         gl.glBindFramebufferEXT(gl.GL_FRAMEBUFFER_EXT(), 0);
 
@@ -138,30 +173,44 @@ public class FBO {
     }
 
     /**
-     * Read a BGRA pixel buffer and export its content to a BufferedImage.
+     * Faster? to be evaluated
+     * Read a BGRA (GL.GL_BGRA()) pixel buffer and export its content to a {@link BufferedImage}.
      *
-     * @param width width of the pixel buffer
-     * @param height
-     * @param channels number of color components (4 with alpha, 3 with only RGB)
+     * Warning : flipped
+     */
+    protected void fromBGRABufferToImageArray(MemorySegment pixelsBuffer, BufferedImage out) {
+        int[] px = pixelsBuffer.toIntArray();
+        out.setRGB(0, 0, width, height, px, 0, width);
+    }
+
+    /**
+     * Read a BGRA (GL.GL_BGRA()) pixel buffer and export its content to a {@link BufferedImage}.
+     *
      * @param pixelsBuffer
      * @param out
      */
-    protected void fromBGRABufferToImage(int width, int height, int channels, MemorySegment pixelsBuffer, BufferedImage out) {
+    protected void fromBGRABufferToImage(MemorySegment pixelsBuffer, BufferedImage out) {
         int nPixels = width * height;
         int k = 0;
 
+        //VarHandle intHandle = MemoryHandles.varHandle(int.class, ByteOrder.nativeOrder());
+
         // TODO : Use pixelsRead.toByteArray / toIntArray instead
+        // TODO : evaluate advantage of image.setRGB(pixel:int[])
         VarHandle byteHandle = MemoryHandles.varHandle(byte.class, ByteOrder.nativeOrder());
 
-        for(int i = 0; i< nPixels*channels; i+= channels){
+        for(int i = 0; i< nPixels * channels; i+= channels){
+            // BGRA as specified by "format" field
             byte byB = (byte) byteHandle.get(pixelsBuffer, i);
             byte byG = (byte) byteHandle.get(pixelsBuffer, i+1);
             byte byR = (byte) byteHandle.get(pixelsBuffer, i+2);
             byte byA = (byte) byteHandle.get(pixelsBuffer, i+3);
             byte non = 0;
             byte one = (byte)0xff;
-            int rgba = ByteUtils.RGBAtoI(byR, byG, byB, one);
-            //int rgba = RGBAtoI(non, non, byB, yes);
+            int rgba = ByteUtils.RGBAtoIntARGB(byR, byG, byB, byA); // ARGB
+            //rgba = ByteUtils.RGBAtoIntARGB(byR, non, non, one);
+            //rgba = ByteUtils.RGBAtoIntARGB(non, byG, non, one);
+            //rgba = ByteUtils.RGBAtoIntARGB(non, non, byB, one);
 
             // Pixel position
             int h = k % width;

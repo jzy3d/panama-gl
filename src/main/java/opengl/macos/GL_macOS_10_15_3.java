@@ -24,9 +24,9 @@ public class GL_macOS_10_15_3 extends AbstractGL implements GL  {
         var argc = getAllocator().allocate(C_INT, 0);
 
         glutInit(argc, argc);
-        glutInitDisplayMode(0);
+        glutInitDisplayMode(0/*GLUT_DOUBLE() | GLUT_RGBA() | GLUT_DEPTH()*/);
         glutInitWindowSize(1, 1);
-        glutInitWindowPosition(-1, -1);
+        glutInitWindowPosition(-100, -100);
         glutCreateWindow("InvisiblePanamaGLWindowForGLContext");
     }
 
