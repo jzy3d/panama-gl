@@ -3,6 +3,8 @@
 This project explore Native OpenGL capabilities of Panama Early-Access Release.
 JDK 17 incubation comes with [JEP-412 : Foreign Function & Memory API](https://openjdk.java.net/jeps/412) which offers a brand new way of accessing native libraries.
 
+YOU WILL NEED PANAMA ON JDK, it requires a [special download here](https://jdk.java.net/panama/)
+
 We here show how to use Panama to generate an OpenGL wrapper for Jzy3D, which already uses JOGL for GPU rendering and EmulGL for CPU rendering.
 
 ## Demos
@@ -158,6 +160,8 @@ Generating wrapper will crash with `Build 17-panama+3-167 (2021/5/18)`! Wait for
 
 You need to follow [Windows Setup instructions](setup/setup_windows.md) before running the below command.
 
+##### On JDK 17
+
 ```
 C:\Program" "Files\Java\openjdk-17-panama+3-167_windows-x64_bin\jdk-17\bin\jextract.exe -d ./src/main/java/ --source -t opengl.windows.v10 `
 -I "C:\Users\Martin\Dev\jzy3d\external\freeglut\include" `
@@ -169,6 +173,16 @@ C:\Program" "Files\Java\openjdk-17-panama+3-167_windows-x64_bin\jdk-17\bin\jextr
 "C:\Users\Martin\Dev\jzy3d\external\freeglut\include\GL\freeglut.h"
 ```
 
+##### On JDK 19
+```
+C:\Program" "Files\Java\openjdk-19-panama_windows-x64_bin\jdk-19\bin\jextract.exe -d ./src/main/java/ --source -t opengl.windows.v10 `
+-I "C:\Users\Martin\Dev\jzy3d\external\freeglut\include" `
+"-l" opengl32 `
+"-l" glu32 `
+"-l" freeglut `
+"--" `
+"C:\Users\Martin\Dev\jzy3d\external\freeglut\include\GL\freeglut.h"
+```
 
 
 ## Help
