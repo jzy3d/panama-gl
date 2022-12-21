@@ -3,6 +3,8 @@
 This project explore Native OpenGL capabilities of Panama Early-Access Release.
 JDK 17 incubation comes with [JEP-412 : Foreign Function & Memory API](https://openjdk.java.net/jeps/412) which offers a brand new way of accessing native libraries.
 
+YOU WILL NEED PANAMA ON JDK, it requires a [special download here](https://jdk.java.net/panama/)
+
 We here show how to use Panama to generate an OpenGL wrapper for Jzy3D, which already uses JOGL for GPU rendering and EmulGL for CPU rendering.
 
 ## Demos
@@ -93,7 +95,7 @@ See the OpenGL example in [JExtract samples]([https://github.com/sundararajana/p
 
 ### Generate OpenGL Java wrappers with JExtract
 
-This allows generating OpenGL Java Wrapper. The generated packages are already in `src/main/java` so you don't need to do it, 
+This allows generating OpenGL Java Wrapper. The generated packages are already in `src/main/java` so you don't need to do it,
 it is just a helper for adding wrappers for new platforms.
 
 #### General pattern
@@ -107,7 +109,7 @@ jextract -d {OUTPUT_DIR} --source -t {PACKAGE_NAME} \
 {GLUT_HEADER_FILE}
 ```
 
-#### MacOS 10.15 
+#### MacOS 10.15
 ```
 /Library/Java/JavaVirtualMachines/jdk-17.jdk-panama/Contents/Home/bin/jextract -d ./src/main/java/ --source -t opengl.macos.v10_15_3 \
   -lGL \
@@ -149,14 +151,16 @@ You need to run [Ubuntu setup script](setup/setup_ubuntu.md) before running the 
 /usr/include/GL/glut.h
 ```
 
-You may note that the generated code won't be exactly similar to MacOSX : MacOS X will generate `glutDisplayFunc$func` 
+You may note that the generated code won't be exactly similar to MacOSX : MacOS X will generate `glutDisplayFunc$func`
 while Ubuntu will generate `glutDisplayFunc$callback`.
 
 #### Windows 10
 
-Generating wrapper will crash with `Build 17-panama+3-167 (2021/5/18)`! Wait for next JDK release fixing [this](https://github.com/openjdk/jdk17/pull/35). 
+Generating wrapper will crash with `Build 17-panama+3-167 (2021/5/18)`! Wait for next JDK release fixing [this](https://github.com/openjdk/jdk17/pull/35).
 
 You need to follow [Windows Setup instructions](setup/setup_windows.md) before running the below command.
+
+##### On JDK 17
 
 ```
 C:\Program" "Files\Java\openjdk-17-panama+3-167_windows-x64_bin\jdk-17\bin\jextract.exe -d ./src/main/java/ --source -t opengl.windows.v10 `
@@ -169,6 +173,16 @@ C:\Program" "Files\Java\openjdk-17-panama+3-167_windows-x64_bin\jdk-17\bin\jextr
 "C:\Users\Martin\Dev\jzy3d\external\freeglut\include\GL\freeglut.h"
 ```
 
+##### On JDK 19
+```
+C:\Program" "Files\Java\openjdk-19-panama_windows-x64_bin\jdk-19\bin\jextract.exe -d ./src/main/java/ --source -t opengl.windows.v10 `
+-I "C:\Users\Martin\Dev\jzy3d\external\freeglut\include" `
+"-l" opengl32 `
+"-l" glu32 `
+"-l" freeglut `
+"--" `
+"C:\Users\Martin\Dev\jzy3d\external\freeglut\include\GL\freeglut.h"
+```
 
 
 ## Help
@@ -183,11 +197,12 @@ C:\Program" "Files\Java\openjdk-17-panama+3-167_windows-x64_bin\jdk-17\bin\jextr
 
 An `UnsatisfiedLinkError` is thrown while invoking a bounded function.
 
-Cause : the underlying method handle is null because the native library has not been loaded explicitely by the generated code. 
+Cause : the underlying method handle is null because the native library has not been loaded explicitely by the generated code.
 This may occur if jextract is given a header file and an incomplete list of libraries.
 
 `java: package jdk.incubator.foreign is not visible` message when running from IntelliJ.
 
-Solution : in addition to setting VM parameters in the Run Configuration, one also need to add --add-modules jdk.incubator.foreign 
-under Preferences -> Build, Execution, Development -> Compiler -> Java Compiler -> Additional command line parameters and setting the target bycode version to the VM version we run on.
-
+Solution : ensure these 3 settings
+- in addition to setting VM parameters in the Run Configuration
+- add --add-modules jdk.incubator.foreign under Preferences -> Build, Execution, Development -> Compiler -> Java Compiler -> Additional command line parameters
+- in the same window, set the target bycode version to the VM version we run on (here 17).

@@ -84,6 +84,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
 
   /////////////////////////////////////////////
 
+  @Override
   public void glutStart(Chart chart, Rectangle bounds, String title, String message) {
     var painter = (PanamaGLPainter) chart.getPainter();
     var canvas = (PanamaGLCanvas) chart.getCanvas();
@@ -156,17 +157,22 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
     // glut is OS specific
   }
 
+  @Override
   public void glutSwapBuffers(){
     glut_h.glutSwapBuffers();
   }
 
+  @Override
   public void glutPostRedisplay(){
     glut_h.glutPostRedisplay();
   }
 
+  @Override
   public int glutGetWindowWidth(){
     return glut_h.glutGet(glut_h.GLUT_WINDOW_WIDTH());
   }
+  
+  @Override
   public int glutGetWindowHeight(){
     return glut_h.glutGet(glut_h.GLUT_WINDOW_HEIGHT());
   }

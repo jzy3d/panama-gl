@@ -7,6 +7,7 @@ import org.jzy3d.maths.Rectangle;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This is not a real frame, but just a simple class calling the appropriate painter method to open a native frame.
@@ -48,7 +49,10 @@ public class PanamaGLFrame implements IFrame {
     private void getPixelScaleWithShortFrame(Chart chart) {
         CountDownLatch latch = new CountDownLatch(1);
         Canvas canvas = new Canvas(){
+            @Override
             public void paint(Graphics g){
+                System.out.println("PanamaGLFrame : Start painting dummy canvas to retrieve pixel scale");
+
                 Graphics2D g2d = (Graphics2D)g;
                 AffineTransform globalTransform = g2d.getTransform();
                 float[] pixelScale = new float[2];
@@ -67,7 +71,7 @@ public class PanamaGLFrame implements IFrame {
         f.setBounds(-10,-10,1,1);
         f.setVisible(true);
         try {
-            latch.await();
+            latch.await(500, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

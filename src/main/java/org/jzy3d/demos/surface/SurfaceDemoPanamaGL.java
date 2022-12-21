@@ -1,5 +1,8 @@
 package org.jzy3d.demos.surface;
 
+import jdk.incubator.foreign.ResourceScope;
+import jdk.incubator.foreign.SegmentAllocator;
+import opengl.macos.v10_15_3.glut_h;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.EmulGLSkin;
 import org.jzy3d.chart.factories.*;
@@ -16,6 +19,8 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 import java.io.File;
 import java.io.IOException;
 
+import static jdk.incubator.foreign.CLinker.C_INT;
+
 
 /**
  * Demo an surface chart made with Panama (JEP-412).
@@ -28,6 +33,13 @@ public class SurfaceDemoPanamaGL {
   static final float ALPHA_FACTOR = 0.55f;// .61f;
 
   public static void main(String[] args) {
+    // https://github.com/jzy3d/panama-gl/issues/16
+    var scope = ResourceScope.newConfinedScope();
+    var allocator = SegmentAllocator.ofScope(scope);
+    var argc = allocator.allocate(C_INT, 0);
+    glut_h.glutInit(argc, argc);
+    // ------------------------
+
     Shape surface = surface();
 
     /**
@@ -38,9 +50,9 @@ public class SurfaceDemoPanamaGL {
      *
      * @see https://github.com/jzy3d/jzy3d-api/blob/master/jzy3d-tutorials/src/main/java/org/jzy3d/demos/surface/SurfaceDemoEmulGL.java
      */
-    //ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
+    ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
     //ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_11_4());
-    ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_Ubuntu_20_04());
+    //ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_Ubuntu_20_04());
 
     Quality q = Quality.Advanced();
     Chart chart = factory.newChart(q);
