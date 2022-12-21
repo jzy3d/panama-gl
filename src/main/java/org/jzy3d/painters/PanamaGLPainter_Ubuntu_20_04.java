@@ -4,7 +4,7 @@ import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.MemorySegment;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
-import opengl.macos.v10_15_3.glut_h;
+import opengl.ubuntu.v20.glut_h;
 import opengl.ubuntu.v20.*;
 import org.apache.log4j.Logger;
 import org.jzy3d.chart.Chart;
@@ -637,7 +637,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
 
   @Override
   public void glutBitmapString(int font, String string) {
-    logger.error("not available in generated code");
+    //logger.error("not available in generated code");
     //opengl.glut_h.glutBitmapString(font, alloc(string));
 
     // Use freeglut

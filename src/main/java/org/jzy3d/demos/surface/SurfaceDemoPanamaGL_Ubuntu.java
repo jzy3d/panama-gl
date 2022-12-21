@@ -28,16 +28,11 @@ import static jdk.incubator.foreign.CLinker.C_INT;
  * @author Martin Pernollet
  *
  */
-public class SurfaceDemoPanamaGL {
+public class SurfaceDemoPanamaGL_Ubuntu {
 
   static final float ALPHA_FACTOR = 0.55f;// .61f;
 
   public static void main(String[] args) {
-    // https://github.com/jzy3d/panama-gl/issues/16
-    var scope = ResourceScope.newConfinedScope();
-    var allocator = SegmentAllocator.ofScope(scope);
-    var argc = allocator.allocate(C_INT, 0);
-    glut_h.glutInit(argc, argc);
     
     // ------------------------
 

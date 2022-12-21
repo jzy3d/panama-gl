@@ -16,10 +16,7 @@ import java.io.File;
  */
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class DemoFBO_Offscreen {
-
-  public static void main(String[] args) {
-    GL gl = new GL_macOS_10_15_3(true);
-
+  public static void fbo_offscreen(GL gl) {
     //-------------------------
     // Prepare VBO
     int width = 256;
