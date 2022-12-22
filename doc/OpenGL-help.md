@@ -5,6 +5,7 @@ OpenGL is more than just single library and it is worth mentionning existing var
 
 * GL (.h) is the core openGL at version 1.1, allowing to send instructions to the GPU
 * GLU (.h) is a utility library providing additional functions to GL
+* GLEXT exposes openGL after version 1.1 (see the [registry]([url](https://registry.khronos.org/OpenGL/index_gl.php#headers) for more details)
 
 # Libraries linking windows to drawing
 
@@ -33,5 +34,6 @@ either remained extensions (think as plugin) that some GPU manufacturers impleme
 
 As such, part of the drawing capabilities are known at runtime. Discovering these is helped through
 
+* the GLEXT library
 * the GLEW library
 * the GL_VENDOR, GL_VERSION, GL_EXTENSIONS commands offered by the GL library. 
