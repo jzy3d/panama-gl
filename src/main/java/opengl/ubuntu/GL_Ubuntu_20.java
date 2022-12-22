@@ -36,6 +36,7 @@ public class GL_Ubuntu_20 extends AbstractGL implements GL  {
     @Override
     public void glutInit(int i, int j) {
         glut_h.glutInit(getAllocator().allocate(i), getAllocator().allocate(j));
+        
     }
 
     @Override
@@ -76,46 +77,49 @@ public class GL_Ubuntu_20 extends AbstractGL implements GL  {
     @Override
     public void glTexParameteri(int target, int pname, int param) {
         glut_h.glTexParameteri(target, pname, param);
+        
     }
 
     @Override
     public void glGenFramebuffers(int id, MemorySegment frameBuffer){
-        glut_h.glGenFramebuffers(1, frameBuffer);
+     // glut_h.glGenFramebuffers(1, frameBuffer);
+        
     }
     
     @Override
     public void glBindFramebuffer(int frameExt, int frameBufferId){
-        glut_h.glBindFramebuffer(frameExt, frameBufferId);
+      //glut_h.glBindFramebuffer(frameExt, frameBufferId);
     }
 
     @Override
     public void glFramebufferTexture2D(int frameBufferExt, int colorAttachement, int texture, int textureId, int level){
-        glut_h.glFramebufferTexture2D(frameBufferExt, colorAttachement, texture, textureId, level);
+        //glut_h.glFramebufferTexture2D(frameBufferExt, colorAttachement, texture, textureId, level);
     }
 
     @Override
     public void glGenRenderbuffers(int n, MemorySegment depthRb){
-        glut_h.glGenRenderbuffers(1, depthRb);
+        //glut_h.glGenRenderbuffers(1, depthRb);
     }
 
     @Override
     public void glBindRenderbuffer(int renderBufferExt, int depthRbId){
-        glut_h.glBindRenderbuffer(renderBufferExt, depthRbId);
+        //glut_h.glBindRenderbuffer(renderBufferExt, depthRbId);
     }
 
     @Override
     public void glRenderbufferStorage(int renderBufferExt, int depthComponent, int width, int height){
-        glut_h.glRenderbufferStorage(renderBufferExt, depthComponent, width, height);
+        //glut_h.glRenderbufferStorage(renderBufferExt, depthComponent, width, height);
     }
 
     @Override
     public void glFramebufferRenderbuffer(int frameBufferExt, int depthAttachmentExt, int renderBufferExt, int depthRbId){
-        glut_h.glFramebufferRenderbuffer(frameBufferExt, depthAttachmentExt, renderBufferExt, depthRbId);
+        //glut_h.glFramebufferRenderbuffer(frameBufferExt, depthAttachmentExt, renderBufferExt, depthRbId);
     }
 
     @Override
     public int glCheckFramebufferStatus(int frameBufferExt){
-        return glut_h.glCheckFramebufferStatus(frameBufferExt);
+      return -1;
+        //return glut_h.glCheckFramebufferStatus(frameBufferExt);
     }
 
     @Override
@@ -126,13 +130,13 @@ public class GL_Ubuntu_20 extends AbstractGL implements GL  {
 
     @Override
     public void glDeleteRenderbuffers(int size, Addressable renderBuffers) {
-        glut_h.glDeleteRenderbuffers(size, renderBuffers);
+        //glut_h.glDeleteRenderbuffers(size, renderBuffers);
 
     }
 
     @Override
     public void glDeleteFramebuffers(int size, Addressable frameBuffers) {
-        glut_h.glDeleteFramebuffers(size, frameBuffers);
+        //glut_h.glDeleteFramebuffers(size, frameBuffers);
     }
 
     @Override

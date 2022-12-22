@@ -2,6 +2,7 @@ package opengl.fbo;
 
 import opengl.ByteUtils;
 import opengl.GL;
+import opengl.demos.SampleTriangle;
 import opengl.macos.GL_macOS_10_15_3;
 import org.junit.Assert;
 import org.junit.Test;
