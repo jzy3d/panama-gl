@@ -79,38 +79,38 @@ public class GL_windows_10 extends AbstractGL implements GL  {
     }
 
     @Override
-    public void glGenFramebuffersEXT(int id, MemorySegment frameBuffer){
-        freeglut_h.glGenFramebuffersEXT(1, frameBuffer);
+    public void glGenFramebuffers(int id, MemorySegment frameBuffer){
+        freeglut_h.glGenFramebuffers(1, frameBuffer);
     }
 
     @Override
-    public void glFramebufferTexture2DEXT(int frameBufferExt, int colorAttachement, int texture, int textureId, int level){
-        freeglut_h.glFramebufferTexture2DEXT(frameBufferExt, colorAttachement, texture, textureId, level);
+    public void glFramebufferTexture2D(int frameBufferExt, int colorAttachement, int texture, int textureId, int level){
+        freeglut_h.glFramebufferTexture2D(frameBufferExt, colorAttachement, texture, textureId, level);
     }
 
     @Override
-    public void glGenRenderbuffersEXT(int n, MemorySegment depthRb){
-        freeglut_h.glGenRenderbuffersEXT(1, depthRb);
+    public void glGenRenderbuffers(int n, MemorySegment depthRb){
+        freeglut_h.glGenRenderbuffers(1, depthRb);
     }
 
     @Override
-    public void glBindRenderbufferEXT(int renderBufferExt, int depthRbId){
-        freeglut_h.glBindRenderbufferEXT(renderBufferExt, depthRbId);
+    public void glBindRenderbuffer(int renderBufferExt, int depthRbId){
+        freeglut_h.glBindRenderbuffer(renderBufferExt, depthRbId);
     }
 
     @Override
-    public void glRenderbufferStorageEXT(int renderBufferExt, int depthComponent, int width, int height){
-        freeglut_h.glRenderbufferStorageEXT(renderBufferExt, depthComponent, width, height);
+    public void glRenderbufferStorage(int renderBufferExt, int depthComponent, int width, int height){
+        freeglut_h.glRenderbufferStorage(renderBufferExt, depthComponent, width, height);
     }
 
     @Override
-    public void glFramebufferRenderbufferEXT(int frameBufferExt, int depthAttachmentExt, int renderBufferExt, int depthRbId){
-        freeglut_h.glFramebufferRenderbufferEXT(frameBufferExt, depthAttachmentExt, renderBufferExt, depthRbId);
+    public void glFramebufferRenderbuffer(int frameBufferExt, int depthAttachmentExt, int renderBufferExt, int depthRbId){
+        freeglut_h.glFramebufferRenderbuffer(frameBufferExt, depthAttachmentExt, renderBufferExt, depthRbId);
     }
 
     @Override
-    public int glCheckFramebufferStatusEXT(int frameBufferExt){
-        return freeglut_h.glCheckFramebufferStatusEXT(frameBufferExt);
+    public int glCheckFramebufferStatus(int frameBufferExt){
+        return freeglut_h.glCheckFramebufferStatus(frameBufferExt);
     }
 
     @Override
@@ -120,14 +120,14 @@ public class GL_windows_10 extends AbstractGL implements GL  {
     }
 
     @Override
-    public void glDeleteRenderbuffersEXT(int size, Addressable renderBuffers) {
-        freeglut_h.glDeleteRenderbuffersEXT(size, renderBuffers);
+    public void glDeleteRenderbuffers(int size, Addressable renderBuffers) {
+        freeglut_h.glDeleteRenderbuffers(size, renderBuffers);
 
     }
 
     @Override
-    public void glDeleteFramebuffersEXT(int size, Addressable frameBuffers) {
-        freeglut_h.glDeleteFramebuffersEXT(size, frameBuffers);
+    public void glDeleteFramebuffers(int size, Addressable frameBuffers) {
+        freeglut_h.glDeleteFramebuffers(size, frameBuffers);
     }
 
     @Override
@@ -172,15 +172,15 @@ public class GL_windows_10 extends AbstractGL implements GL  {
     @Override
     public int GL_BGRA(){return freeglut_h.GL_BGRA();}
     @Override
-    public int GL_FRAMEBUFFER_EXT(){return freeglut_h.GL_FRAMEBUFFER_EXT();}
+    public int GL_FRAMEBUFFER(){return freeglut_h.GL_FRAMEBUFFER();}
     @Override
-    public int GL_COLOR_ATTACHMENT0_EXT(){return freeglut_h.GL_COLOR_ATTACHMENT0_EXT();}
+    public int GL_COLOR_ATTACHMENT0(){return freeglut_h.GL_COLOR_ATTACHMENT0();}
     @Override
-    public int GL_RENDERBUFFER_EXT(){return freeglut_h.GL_RENDERBUFFER_EXT();}
+    public int GL_RENDERBUFFER(){return freeglut_h.GL_RENDERBUFFER();}
     @Override
     public int GL_DEPTH_COMPONENT24(){return freeglut_h.GL_DEPTH_COMPONENT24();}
     @Override
-    public int GL_DEPTH_ATTACHMENT_EXT(){return freeglut_h.GL_DEPTH_ATTACHMENT_EXT();}
+    public int GL_DEPTH_ATTACHMENT(){return freeglut_h.GL_DEPTH_ATTACHMENT();}
     @Override
     public int GL_COLOR_BUFFER_BIT(){return freeglut_h.GL_COLOR_BUFFER_BIT();}
     @Override
