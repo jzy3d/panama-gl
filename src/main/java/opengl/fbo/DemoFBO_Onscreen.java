@@ -17,7 +17,7 @@ import java.io.File;
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class DemoFBO_Onscreen {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception{
     JFrame frame = new JFrame("Rendering offscreen with Panama GL");
     frame.getContentPane().setLayout(new BorderLayout());
     frame.pack();
@@ -25,7 +25,10 @@ public class DemoFBO_Onscreen {
     frame.setVisible(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    GL gl = new GL_macOS_10_15_3();
+    //Thread.join();
+    //Thread.sleep(1000);
+
+    GL gl = new GL_macOS_10_15_3(false);
 
     //-------------------------
     // Prepare VBO
@@ -44,7 +47,7 @@ public class DemoFBO_Onscreen {
 
     //pixelsRead.
     try {
-      ImageIO.write(out, "png", new File("target/outFBO.png"));
+      ImageIO.write(out, "png", new File("target/DemoFBO-Onscreen.png"));
 
     } catch (Exception e) {
       e.printStackTrace();

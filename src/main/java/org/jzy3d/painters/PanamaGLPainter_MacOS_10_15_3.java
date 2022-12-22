@@ -154,7 +154,7 @@ System.out.println("post init");
     // -----------------------------------------------------
     // Version - GLUT need to be initialized
 
-    System.out.println(version(painter, false));
+    System.out.println(version(painter, true));
 
     // -----------------------------------------------------
     // Warn : this will block execution
