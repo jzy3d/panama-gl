@@ -79,7 +79,7 @@
 	         <directory>src/generated/java</directory>
 	       </resource>
 	     </resources>-->
-     
+
 		<plugins>
 			<plugin>
 		        <groupId>org.codehaus.mojo</groupId>
@@ -100,8 +100,8 @@
 		          </execution>
 		        </executions>
 		      </plugin>
-		
-		
+
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -143,13 +143,13 @@
 
 					<!-- Configure Panama -->
 					<argLine>
-						-XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-					</argLine>
-					<argLine>
 						-XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
 					</argLine>
+					<argLine>
+						-XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+					</argLine>
 					
-					
+
 				</configuration>
 			</plugin>
 
