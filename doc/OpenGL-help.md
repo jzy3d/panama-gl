@@ -7,7 +7,7 @@ OpenGL is more than just single library and it is worth mentionning existing var
 * GLU (.h) is a utility library providing additional functions to GL
 * GLEXT exposes openGL after version 1.1 (see the [registry](https://registry.khronos.org/OpenGL/index_gl.php#headers) for more details)
 
-? what is [GLFW](https://www.glfw.org/)?
+
 
 # Libraries linking windows to drawing
 
@@ -39,3 +39,10 @@ As such, part of the drawing capabilities are known at runtime. Discovering thes
 * the GLEXT library
 * the GLEW library
 * the GL_VENDOR, GL_VERSION, GL_EXTENSIONS commands offered by the GL library. 
+
+
+
+# To clarify
+
+? what is [GLFW](https://www.glfw.org/)?
+? what is GLDispatch?
