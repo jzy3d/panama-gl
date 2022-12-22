@@ -46,19 +46,19 @@ public interface GL {
      * @param pixels
      */
     void glTexImage2D(int texture, int level, int internalFormat, int width, int height, int border, int format, int type, MemorySegment pixels);
-    void glGenFramebuffersEXT(int id, MemorySegment frameBuffer);
-    void glBindFramebufferEXT(int frameExt, int frameBufferId);
-    void glFramebufferTexture2DEXT(int frameBufferExt, int colorAttachement, int texture, int textureId, int level);
-    void glGenRenderbuffersEXT(int n, MemorySegment depthRb);
-    void glBindRenderbufferEXT(int renderBufferExt, int depthRbId);
-    void glRenderbufferStorageEXT(int renderBufferExt, int depthComponent, int width, int height);
-    void glFramebufferRenderbufferEXT(int frameBufferExt, int depthAttachmentExt, int renderBufferExt, int depthRbId);
+    void glGenFramebuffers(int id, MemorySegment frameBuffer);
+    void glBindFramebuffer(int frameExt, int frameBufferId);
+    void glFramebufferTexture2D(int frameBufferExt, int colorAttachement, int texture, int textureId, int level);
+    void glGenRenderbuffers(int n, MemorySegment depthRb);
+    void glBindRenderbuffer(int renderBufferExt, int depthRbId);
+    void glRenderbufferStorage(int renderBufferExt, int depthComponent, int width, int height);
+    void glFramebufferRenderbuffer(int frameBufferExt, int depthAttachmentExt, int renderBufferExt, int depthRbId);
     void glReadPixels(int x, int y, int width, int height, int format, int type, MemorySegment pixelsRead);
-    int glCheckFramebufferStatusEXT(int frameBufferExt);
+    int glCheckFramebufferStatus(int frameBufferExt);
 
     void glDeleteTextures(int size, Addressable textureBuffers);
-    void glDeleteRenderbuffersEXT(int size, Addressable renderBuffers);
-    void glDeleteFramebuffersEXT(int size, Addressable frameBuffers);
+    void glDeleteRenderbuffers(int size, Addressable renderBuffers);
+    void glDeleteFramebuffers(int size, Addressable frameBuffers);
 
     // TODO : how to generate this convenient wrapper in interface AND implementations?
     // TODO : how to load them as constants instead of methods?
@@ -72,11 +72,11 @@ public interface GL {
     int GL_RGBA8();
     int GL_BGRA();
     int GL_UNSIGNED_BYTE();
-    int GL_FRAMEBUFFER_EXT();
-    int GL_COLOR_ATTACHMENT0_EXT();
-    int GL_RENDERBUFFER_EXT();
+    int GL_FRAMEBUFFER();
+    int GL_COLOR_ATTACHMENT0();
+    int GL_RENDERBUFFER();
     int GL_DEPTH_COMPONENT24();
-    int GL_DEPTH_ATTACHMENT_EXT();
+    int GL_DEPTH_ATTACHMENT();
     int GL_COLOR_BUFFER_BIT();
     int GL_DEPTH_BUFFER_BIT();
     int GL_BYTE();

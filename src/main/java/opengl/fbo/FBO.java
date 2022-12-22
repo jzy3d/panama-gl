@@ -16,9 +16,10 @@ import static jdk.incubator.foreign.ResourceScope.newImplicitScope;
  * A frame buffer object, or {@link FBO}, can render OpenGL into an offscreen buffer
  * that can later be converted to a {@link BufferedImage}.
  *
- * Example from :
- * https://www.khronos.org/opengl/wiki/Framebuffer_Object_Extension_Examples#Quick_example,_render_to_texture_(2D)
+ * See :
+ * https://www.khronos.org/opengl/wiki/Framebuffer_Object
  * https://www.khronos.org/opengl/wiki/Common_Mistakes
+ * https://www.khronos.org/opengl/wiki/Framebuffer_Object_Extension_Examples#Quick_example,_render_to_texture_(2D)
  */
 public class FBO {
     // default
@@ -80,14 +81,8 @@ public class FBO {
         // Note that with GL 4.3 or ARB_internalformat_query2, you can simply ask the implementation what is the
         // preferred format with glGetInternalFormativ(GL_TEXTURE_2D, GL_RGBA8, GL_TEXTURE_IMAGE_FORMAT, 1, &preferred_format).
         format = gl.GL_BGRA();
-        //format = glut_h.GL_RGBA8UI_EXT();// GL_ARGBA();
-        //format = glut_h.GL_ABGR_EXT();
-        //internalFormat = gl.GL_RGBA8();
-        //internalFormat = gl.GL_RGBA();
         internalFormat = glut_h.GL_RGBA8();//gl.GL_BGRA();
         textureType = gl.GL_UNSIGNED_BYTE();
-
-
 
         if(debug){
             System.out.println("FBO: " + internalFormat);
@@ -121,41 +116,41 @@ public class FBO {
         // Generate FRAME buffer
 
         frameBufferIds = MemorySegment.allocateNative(4, newImplicitScope());
-        gl.glGenFramebuffersEXT(1, frameBufferIds);
+        gl.glGenFramebuffers(1, frameBufferIds);
         idFrameBuffer = (int) intHandle.get(frameBufferIds, 0);
 
         if(debug)
             System.out.println("FBO: Got FB ID : " + idFrameBuffer);
 
         // Bind frame buffer
-        gl.glBindFramebufferEXT(gl.GL_FRAMEBUFFER_EXT(), idFrameBuffer);
+        gl.glBindFramebuffer(gl.GL_FRAMEBUFFER(), idFrameBuffer);
 
         //Attach 2D texture to this FBO
-        gl.glFramebufferTexture2DEXT(gl.GL_FRAMEBUFFER_EXT(), gl.GL_COLOR_ATTACHMENT0_EXT(), gl.GL_TEXTURE_2D(), idTexture, 0);
+        gl.glFramebufferTexture2D(gl.GL_FRAMEBUFFER(), gl.GL_COLOR_ATTACHMENT0(), gl.GL_TEXTURE_2D(), idTexture, 0);
 
         //-------------------------
         // Generate RENDER buffer
 
         renderBufferIds = MemorySegment.allocateNative(4, newImplicitScope());
-        gl.glGenRenderbuffersEXT(1, renderBufferIds);
+        gl.glGenRenderbuffers(1, renderBufferIds);
         idRenderBuffer = (int) intHandle.get(renderBufferIds, 0);
 
         if(debug)
             System.out.println("FBO: Got RenderBuffer ID : " + idRenderBuffer);
 
         // Bind render buffer
-        gl.glBindRenderbufferEXT(gl.GL_RENDERBUFFER_EXT(), idRenderBuffer);
-        gl.glRenderbufferStorageEXT(gl.GL_RENDERBUFFER_EXT(), gl.GL_DEPTH_COMPONENT24(), width, height);
+        gl.glBindRenderbuffer(gl.GL_RENDERBUFFER(), idRenderBuffer);
+        gl.glRenderbufferStorage(gl.GL_RENDERBUFFER(), gl.GL_DEPTH_COMPONENT24(), width, height);
 
         //-------------------------
         //Attach depth buffer to FBO
 
-        gl.glFramebufferRenderbufferEXT(gl.GL_FRAMEBUFFER_EXT(), gl.GL_DEPTH_ATTACHMENT_EXT(), gl.GL_RENDERBUFFER_EXT(), idRenderBuffer);
+        gl.glFramebufferRenderbuffer(gl.GL_FRAMEBUFFER(), gl.GL_DEPTH_ATTACHMENT(), gl.GL_RENDERBUFFER(), idRenderBuffer);
 
         //-------------------------
         //Does the GPU support current FBO configuration?
 
-        int status = gl.glCheckFramebufferStatusEXT(gl.GL_FRAMEBUFFER_EXT());
+        int status = gl.glCheckFramebufferStatus(gl.GL_FRAMEBUFFER());
 
         if(status!=gl.GL_FRAMEBUFFER_COMPLETE()){
             throw new RuntimeException("Incomplete framebuffer, not supporting current FBO config : " + status + " != GL_FRAMEBUFFER_COMPLETE (" + gl.GL_FRAMEBUFFER_COMPLETE() + ")");
@@ -164,7 +159,7 @@ public class FBO {
         //-------------------------
         //and now you can render to GL_TEXTURE_2D
 
-        gl.glBindFramebufferEXT(gl.GL_FRAMEBUFFER_EXT(), idFrameBuffer);
+        gl.glBindFramebuffer(gl.GL_FRAMEBUFFER(), idFrameBuffer);
         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         gl.glClearDepth(1.0f);
         gl.glClear(gl.GL_COLOR_BUFFER_BIT() | gl.GL_DEPTH_BUFFER_BIT());
@@ -181,10 +176,10 @@ public class FBO {
     public void release(GL gl){
         //Delete resources
         gl.glDeleteTextures(1, textureBufferIds);
-        gl.glDeleteRenderbuffersEXT(1, renderBufferIds);
+        gl.glDeleteRenderbuffers(1, renderBufferIds);
         //Bind 0, which means render to back buffer, as a result, fb is unbound
-        gl.glBindFramebufferEXT(gl.GL_FRAMEBUFFER_EXT(), 0);
-        gl.glDeleteFramebuffersEXT(1, frameBufferIds);
+        gl.glBindFramebuffer(gl.GL_FRAMEBUFFER(), 0);
+        gl.glDeleteFramebuffers(1, frameBufferIds);
 
         // FIXME : Not mapped exception is not relevant
         // FIXME : See if later versions of Panama do not throw exception
@@ -194,6 +189,10 @@ public class FBO {
         pixelBuffer.unload();*/
 
         prepared = false;
+
+        if(debug)
+            System.out.println("FBO: Resources released !");
+
     }
 
     public BufferedImage getImage(GL gl) {
@@ -216,12 +215,16 @@ public class FBO {
         else
             fromBGRABufferToImage(pixelsRead, out);
 
+        if(debug)
+            System.out.println("FBO: Image created !");
+
+
         // FIXME : Not mapped exception is not relevant
         // FIXME : See if later versions of Panama do not throw exception
         //pixelsRead.unload();
 
         //Bind 0, which means render to back buffer
-        gl.glBindFramebufferEXT(gl.GL_FRAMEBUFFER_EXT(), 0);
+        gl.glBindFramebuffer(gl.GL_FRAMEBUFFER(), 0);
 
         return out;
     }
