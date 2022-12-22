@@ -5,7 +5,7 @@ OpenGL is more than just single library and it is worth mentionning existing var
 
 * GL (.h) is the core openGL at version 1.1, allowing to send instructions to the GPU
 * GLU (.h) is a utility library providing additional functions to GL
-* GLEXT exposes openGL after version 1.1 (see the [registry]([url](https://registry.khronos.org/OpenGL/index_gl.php#headers) for more details)
+* GLEXT exposes openGL after version 1.1 (see the [registry](https://registry.khronos.org/OpenGL/index_gl.php#headers) for more details)
 
 # Libraries linking windows to drawing
 
