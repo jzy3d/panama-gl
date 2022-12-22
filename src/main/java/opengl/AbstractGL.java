@@ -27,11 +27,6 @@ public abstract class AbstractGL implements GL {
         glut_h.glTexImage2D(texture, level, internalFormat, width, height, border, format, type, pixels);
     }
 
-    @Override
-    public void glBindFramebufferEXT(int frameExt, int frameBufferId){
-        glut_h.glBindFramebufferEXT(frameExt, frameBufferId);
-    }
-
     /////////////////////////////////////////////
 
     @Override

@@ -20,16 +20,19 @@ public class GL_macOS_10_15_3 extends AbstractGL implements GL  {
 
     public GL_macOS_10_15_3(boolean forceLoadGlut){
         super();
-        init();
+        init(forceLoadGlut);
     }
 
-    protected void init(){
-        var argc = getAllocator().allocate(C_INT, 0);
+    protected void init(boolean forceLoadGlut){
 
-        glutInit(argc, argc);
-        glutInitDisplayMode(0/*GLUT_DOUBLE() | GLUT_RGBA() | GLUT_DEPTH()*/);
-        glutInitWindowSize(1, 1);
-        glutInitWindowPosition(-100, -100);
+        if(forceLoadGlut) {
+            var argc = getAllocator().allocate(C_INT, 0);
+
+            glutInit(argc, argc);
+            glutInitDisplayMode(0/*GLUT_DOUBLE() | GLUT_RGBA() | GLUT_DEPTH()*/);
+            glutInitWindowSize(1, 1);
+            glutInitWindowPosition(-100, -100);
+        }
         glutCreateWindow("InvisiblePanamaGLWindowForGLContext");
     }
 
@@ -79,38 +82,43 @@ public class GL_macOS_10_15_3 extends AbstractGL implements GL  {
     }
 
     @Override
-    public void glGenFramebuffersEXT(int id, MemorySegment frameBuffer){
-        glut_h.glGenFramebuffersEXT(1, frameBuffer);
+    public void glGenFramebuffers(int id, MemorySegment frameBuffer){
+        glut_h.glGenFramebuffers(1, frameBuffer);
     }
 
     @Override
-    public void glFramebufferTexture2DEXT(int frameBufferExt, int colorAttachement, int texture, int textureId, int level){
-        glut_h.glFramebufferTexture2DEXT(frameBufferExt, colorAttachement, texture, textureId, level);
+    public void glBindFramebuffer(int frameExt, int frameBufferId){
+        glut_h.glBindFramebuffer(frameExt, frameBufferId);
     }
 
     @Override
-    public void glGenRenderbuffersEXT(int n, MemorySegment depthRb){
-        glut_h.glGenRenderbuffersEXT(1, depthRb);
+    public void glFramebufferTexture2D(int frameBufferExt, int colorAttachement, int texture, int textureId, int level){
+        glut_h.glFramebufferTexture2D(frameBufferExt, colorAttachement, texture, textureId, level);
     }
 
     @Override
-    public void glBindRenderbufferEXT(int renderBufferExt, int depthRbId){
-        glut_h.glBindRenderbufferEXT(renderBufferExt, depthRbId);
+    public void glGenRenderbuffers(int n, MemorySegment depthRb){
+        glut_h.glGenRenderbuffers(1, depthRb);
     }
 
     @Override
-    public void glRenderbufferStorageEXT(int renderBufferExt, int depthComponent, int width, int height){
-        glut_h.glRenderbufferStorageEXT(renderBufferExt, depthComponent, width, height);
+    public void glBindRenderbuffer(int renderBufferExt, int depthRbId){
+        glut_h.glBindRenderbuffer(renderBufferExt, depthRbId);
     }
 
     @Override
-    public void glFramebufferRenderbufferEXT(int frameBufferExt, int depthAttachmentExt, int renderBufferExt, int depthRbId){
-        glut_h.glFramebufferRenderbufferEXT(frameBufferExt, depthAttachmentExt, renderBufferExt, depthRbId);
+    public void glRenderbufferStorage(int renderBufferExt, int depthComponent, int width, int height){
+        glut_h.glRenderbufferStorage(renderBufferExt, depthComponent, width, height);
     }
 
     @Override
-    public int glCheckFramebufferStatusEXT(int frameBufferExt){
-        return glut_h.glCheckFramebufferStatusEXT(frameBufferExt);
+    public void glFramebufferRenderbuffer(int frameBufferExt, int depthAttachmentExt, int renderBufferExt, int depthRbId){
+        glut_h.glFramebufferRenderbuffer(frameBufferExt, depthAttachmentExt, renderBufferExt, depthRbId);
+    }
+
+    @Override
+    public int glCheckFramebufferStatus(int frameBufferExt){
+        return glut_h.glCheckFramebufferStatus(frameBufferExt);
     }
 
     @Override
@@ -120,14 +128,14 @@ public class GL_macOS_10_15_3 extends AbstractGL implements GL  {
     }
 
     @Override
-    public void glDeleteRenderbuffersEXT(int size, Addressable renderBuffers) {
-        glut_h.glDeleteRenderbuffersEXT(size, renderBuffers);
+    public void glDeleteRenderbuffers(int size, Addressable renderBuffers) {
+        glut_h.glDeleteRenderbuffers(size, renderBuffers);
 
     }
 
     @Override
-    public void glDeleteFramebuffersEXT(int size, Addressable frameBuffers) {
-        glut_h.glDeleteFramebuffersEXT(size, frameBuffers);
+    public void glDeleteFramebuffers(int size, Addressable frameBuffers) {
+        glut_h.glDeleteFramebuffers(size, frameBuffers);
     }
 
     @Override
@@ -172,15 +180,15 @@ public class GL_macOS_10_15_3 extends AbstractGL implements GL  {
     @Override
     public int GL_BGRA(){return glut_h.GL_BGRA();}
     @Override
-    public int GL_FRAMEBUFFER_EXT(){return glut_h.GL_FRAMEBUFFER_EXT();}
+    public int GL_FRAMEBUFFER(){return glut_h.GL_FRAMEBUFFER();}
     @Override
-    public int GL_COLOR_ATTACHMENT0_EXT(){return glut_h.GL_COLOR_ATTACHMENT0_EXT();}
+    public int GL_COLOR_ATTACHMENT0(){return glut_h.GL_COLOR_ATTACHMENT0();}
     @Override
-    public int GL_RENDERBUFFER_EXT(){return glut_h.GL_RENDERBUFFER_EXT();}
+    public int GL_RENDERBUFFER(){return glut_h.GL_RENDERBUFFER();}
     @Override
     public int GL_DEPTH_COMPONENT24(){return glut_h.GL_DEPTH_COMPONENT24();}
     @Override
-    public int GL_DEPTH_ATTACHMENT_EXT(){return glut_h.GL_DEPTH_ATTACHMENT_EXT();}
+    public int GL_DEPTH_ATTACHMENT(){return glut_h.GL_DEPTH_ATTACHMENT();}
     @Override
     public int GL_COLOR_BUFFER_BIT(){return glut_h.GL_COLOR_BUFFER_BIT();}
     @Override
