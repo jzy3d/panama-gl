@@ -2,10 +2,9 @@
 
 package opengl.macos.v10_15_3;
 
+import static jdk.incubator.foreign.CLinker.C_INT;
 import java.lang.invoke.MethodHandle;
-
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import jdk.incubator.foreign.FunctionDescriptor;
 class constants$179 {
 
     static final FunctionDescriptor glutPositionWindow$FUNC = FunctionDescriptor.ofVoid(

@@ -2,12 +2,7 @@
 
 package opengl.glx.ubuntu.v20;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
- class glx_h_7 extends glx_h_6 {
+class glx_h_7 extends glx_h_6 {
 
     public static int GL_QUERY_RESOURCE_BUFFEROBJECT_NV() {
         return (int)38215L;

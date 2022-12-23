@@ -1,5 +1,10 @@
 package opengl;
 
+/**
+ * A ByteBuffer helping to convert colors to byte, int, float representation.
+ * 
+ * @author Martin Pernollet
+ */
 public class ByteUtils {
     public static int BtoI(byte x) {
         return (x & 0xff);

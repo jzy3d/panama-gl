@@ -1,7 +1,4 @@
 package opengl.demos;
-import jdk.incubator.foreign.MemoryAddress;
-import jdk.incubator.foreign.SymbolLookup;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.invoke.MethodHandle;
@@ -12,6 +9,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
+import jdk.incubator.foreign.MemoryAddress;
+import jdk.incubator.foreign.SymbolLookup;
 
 /**
  * Allow verifying if all generated MethodHandle of the JExtract'ed libraries can be linked properly to native libraries.

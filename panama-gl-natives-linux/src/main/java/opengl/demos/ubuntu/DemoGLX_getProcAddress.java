@@ -1,11 +1,8 @@
 package opengl.demos.ubuntu;
 
-import java.lang.invoke.MethodHandle;
-import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.MemorySegment;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
-import opengl.glx.ubuntu.v20.glx_h;
 
 public class DemoGLX_getProcAddress {
   public static void main(String[] args) {

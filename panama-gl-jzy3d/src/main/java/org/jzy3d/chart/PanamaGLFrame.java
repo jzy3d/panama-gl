@@ -1,13 +1,15 @@
 package org.jzy3d.chart;
 
-import org.jzy3d.chart.factories.IFrame;
-import org.jzy3d.painters.PanamaGLPainter;
-import org.jzy3d.maths.Rectangle;
-
-import java.awt.*;
+import java.awt.Canvas;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import org.jzy3d.chart.factories.IFrame;
+import org.jzy3d.maths.Rectangle;
+import org.jzy3d.painters.PanamaGLPainter;
 
 /**
  * This is not a real frame, but just a simple class calling the appropriate painter method to open a native frame.

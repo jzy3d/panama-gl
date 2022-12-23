@@ -1,11 +1,9 @@
 package org.jzy3d.demos.surface;
 
-import jdk.incubator.foreign.ResourceScope;
-import jdk.incubator.foreign.SegmentAllocator;
-import opengl.macos.v10_15_3.glut_h;
 import org.jzy3d.chart.Chart;
-import org.jzy3d.chart.EmulGLSkin;
-import org.jzy3d.chart.factories.*;
+import org.jzy3d.chart.factories.ChartFactory;
+import org.jzy3d.chart.factories.PanamaGLChartFactory;
+import org.jzy3d.chart.factories.PanamaGLPainterFactory_Ubuntu_20_04;
 import org.jzy3d.colors.Color;
 import org.jzy3d.colors.ColorMapper;
 import org.jzy3d.colors.colormaps.ColorMapRainbow;
@@ -16,16 +14,13 @@ import org.jzy3d.plot3d.builder.concrete.OrthonormalGrid;
 import org.jzy3d.plot3d.primitives.Shape;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 
-import java.io.File;
-import java.io.IOException;
-
-import static jdk.incubator.foreign.CLinker.C_INT;
-
 
 /**
  * Demo an surface chart made with Panama (JEP-412).
  *
  * @author Martin Pernollet
+ * 
+ * --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
  *
  */
 public class SurfaceDemoPanamaGL_Ubuntu {

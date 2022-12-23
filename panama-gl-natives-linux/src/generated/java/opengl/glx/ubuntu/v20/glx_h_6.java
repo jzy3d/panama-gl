@@ -2,12 +2,7 @@
 
 package opengl.glx.ubuntu.v20;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
- class glx_h_6 extends glx_h_5 {
+class glx_h_6 extends glx_h_5 {
 
     public static int GL_EXT_texture_filter_minmax() {
         return (int)1L;

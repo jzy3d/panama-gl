@@ -2,11 +2,9 @@
 
 package opengl.glx.ubuntu.v20;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import jdk.incubator.foreign.CLinker;
+import jdk.incubator.foreign.MemorySegment;
+import jdk.incubator.foreign.ResourceScope;
 class constants$1090 {
 
     static final MemorySegment SCNiLEAST64$SEGMENT = CLinker.toCString("li", ResourceScope.newImplicitScope());

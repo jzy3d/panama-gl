@@ -1,5 +1,42 @@
 package opengl.demos.macos;
 
+import static jdk.incubator.foreign.CLinker.C_FLOAT;
+import static jdk.incubator.foreign.CLinker.C_INT;
+import static opengl.macos.v10_15_3.glut_h.GL_AMBIENT;
+import static opengl.macos.v10_15_3.glut_h.GL_COLOR_BUFFER_BIT;
+import static opengl.macos.v10_15_3.glut_h.GL_DEPTH_BUFFER_BIT;
+import static opengl.macos.v10_15_3.glut_h.GL_DEPTH_TEST;
+import static opengl.macos.v10_15_3.glut_h.GL_DIFFUSE;
+import static opengl.macos.v10_15_3.glut_h.GL_FRONT;
+import static opengl.macos.v10_15_3.glut_h.GL_LIGHT0;
+import static opengl.macos.v10_15_3.glut_h.GL_LIGHTING;
+import static opengl.macos.v10_15_3.glut_h.GL_POSITION;
+import static opengl.macos.v10_15_3.glut_h.GL_SHININESS;
+import static opengl.macos.v10_15_3.glut_h.GL_SMOOTH;
+import static opengl.macos.v10_15_3.glut_h.GL_SPECULAR;
+import static opengl.macos.v10_15_3.glut_h.GLUT_DEPTH;
+import static opengl.macos.v10_15_3.glut_h.GLUT_DOUBLE;
+import static opengl.macos.v10_15_3.glut_h.GLUT_RGB;
+import static opengl.macos.v10_15_3.glut_h.glClear;
+import static opengl.macos.v10_15_3.glut_h.glClearColor;
+import static opengl.macos.v10_15_3.glut_h.glEnable;
+import static opengl.macos.v10_15_3.glut_h.glLightfv;
+import static opengl.macos.v10_15_3.glut_h.glMaterialfv;
+import static opengl.macos.v10_15_3.glut_h.glPopMatrix;
+import static opengl.macos.v10_15_3.glut_h.glPushMatrix;
+import static opengl.macos.v10_15_3.glut_h.glRotatef;
+import static opengl.macos.v10_15_3.glut_h.glShadeModel;
+import static opengl.macos.v10_15_3.glut_h.glutCreateWindow;
+import static opengl.macos.v10_15_3.glut_h.glutDisplayFunc;
+import static opengl.macos.v10_15_3.glut_h.glutIdleFunc;
+import static opengl.macos.v10_15_3.glut_h.glutInit;
+import static opengl.macos.v10_15_3.glut_h.glutInitDisplayMode;
+import static opengl.macos.v10_15_3.glut_h.glutInitWindowSize;
+import static opengl.macos.v10_15_3.glut_h.glutMainLoop;
+import static opengl.macos.v10_15_3.glut_h.glutPostRedisplay;
+import static opengl.macos.v10_15_3.glut_h.glutSolidTeapot;
+import static opengl.macos.v10_15_3.glut_h.glutSwapBuffers;
+
 /*
  * Copyright (c) 2020, Oracle and/or its affiliates. All rights reserved.
  *
@@ -36,10 +73,6 @@ import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
 import opengl.macos.v10_15_3.glutDisplayFunc$func;
 import opengl.macos.v10_15_3.glutIdleFunc$func;
-
-import static jdk.incubator.foreign.CLinker.*;
-import static opengl.macos.v10_15_3.glut_h.*;
-//import static opengl.ubuntu.v20.glut_h.*;
 
 /**
  * This is the original demonstration program provided at https://github.com/sundararajana/panama-jextract-samples/tree/master/opengl.

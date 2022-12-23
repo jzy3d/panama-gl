@@ -2,11 +2,17 @@
 
 package opengl.macos.v10_15_3;
 
+import static jdk.incubator.foreign.CLinker.C_POINTER;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
-
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import jdk.incubator.foreign.Addressable;
+import jdk.incubator.foreign.FunctionDescriptor;
+import jdk.incubator.foreign.MemoryAddress;
+import jdk.incubator.foreign.MemoryHandles;
+import jdk.incubator.foreign.MemoryLayout;
+import jdk.incubator.foreign.MemorySegment;
+import jdk.incubator.foreign.ResourceScope;
+import jdk.incubator.foreign.SegmentAllocator;
 public class __darwin_pthread_handler_rec {
 
     static final MemoryLayout $struct$LAYOUT = MemoryLayout.structLayout(

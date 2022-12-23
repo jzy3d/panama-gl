@@ -2,11 +2,11 @@
 
 package opengl.macos.v11_4;
 
-import java.lang.invoke.MethodHandle;
+import static jdk.incubator.foreign.CLinker.C_POINTER;
 import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import jdk.incubator.foreign.MemoryHandles;
+import jdk.incubator.foreign.MemoryLayout;
+import jdk.incubator.foreign.MemorySegment;
 class constants$175 {
 
     static final MemoryLayout glutStrokeMonoRoman$LAYOUT = C_POINTER;

@@ -2,11 +2,10 @@
 
 package opengl.macos.v11_4;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import jdk.incubator.foreign.CLinker;
+import jdk.incubator.foreign.MemoryAddress;
+import jdk.incubator.foreign.MemorySegment;
+import jdk.incubator.foreign.ResourceScope;
 class constants$205 {
 
     static final MemorySegment __DARWIN_SUF_64_BIT_INO_T$SEGMENT = CLinker.toCString("$INODE64", ResourceScope.newImplicitScope());

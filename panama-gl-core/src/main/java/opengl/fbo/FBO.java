@@ -1,15 +1,13 @@
 package opengl.fbo;
 
+import static jdk.incubator.foreign.ResourceScope.newImplicitScope;
+import java.awt.image.BufferedImage;
+import java.lang.invoke.VarHandle;
+import java.nio.ByteOrder;
 import jdk.incubator.foreign.MemoryHandles;
 import jdk.incubator.foreign.MemorySegment;
 import opengl.ByteUtils;
 import opengl.GL;
-
-import java.awt.image.BufferedImage;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
-
-import static jdk.incubator.foreign.ResourceScope.newImplicitScope;
 
 /**
  * A frame buffer object, or {@link FBO}, can render OpenGL into an offscreen buffer
@@ -19,6 +17,8 @@ import static jdk.incubator.foreign.ResourceScope.newImplicitScope;
  * https://www.khronos.org/opengl/wiki/Framebuffer_Object
  * https://www.khronos.org/opengl/wiki/Common_Mistakes
  * https://www.khronos.org/opengl/wiki/Framebuffer_Object_Extension_Examples#Quick_example,_render_to_texture_(2D)
+ *
+ * @author Martin Pernollet
  */
 public class FBO {
     // default

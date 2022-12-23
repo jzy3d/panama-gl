@@ -2,10 +2,10 @@
 
 package opengl.macos.v10_15_3;
 
+import static jdk.incubator.foreign.CLinker.C_INT;
+import static jdk.incubator.foreign.CLinker.C_POINTER;
 import java.lang.invoke.MethodHandle;
-
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import jdk.incubator.foreign.FunctionDescriptor;
 class constants$189 {
 
     static final FunctionDescriptor glutIdleFunc$func$FUNC = FunctionDescriptor.ofVoid();

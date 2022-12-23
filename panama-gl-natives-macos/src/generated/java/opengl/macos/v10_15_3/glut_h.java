@@ -2,7 +2,7 @@
 
 package opengl.macos.v10_15_3;
 
-import jdk.incubator.foreign.*;
+import jdk.incubator.foreign.SymbolLookup;
 
 public class glut_h extends glut_h_3 {
 

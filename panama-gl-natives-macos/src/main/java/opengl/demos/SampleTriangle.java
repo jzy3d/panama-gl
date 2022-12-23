@@ -1,8 +1,17 @@
 package opengl.demos;
 
+import static opengl.macos.v10_15_3.glut_h.GL_BLEND;
+import static opengl.macos.v10_15_3.glut_h.GL_DEPTH_TEST;
+import static opengl.macos.v10_15_3.glut_h.GL_MODELVIEW;
+import static opengl.macos.v10_15_3.glut_h.GL_PROJECTION;
+import static opengl.macos.v10_15_3.glut_h.GL_TEXTURE_2D;
+import static opengl.macos.v10_15_3.glut_h.glDisable;
+import static opengl.macos.v10_15_3.glut_h.glEnable;
+import static opengl.macos.v10_15_3.glut_h.glLoadIdentity;
+import static opengl.macos.v10_15_3.glut_h.glMatrixMode;
+import static opengl.macos.v10_15_3.glut_h.glOrtho;
+import static opengl.macos.v10_15_3.glut_h.glViewport;
 import opengl.macos.v10_15_3.glut_h;
-
-import static opengl.macos.v10_15_3.glut_h.*;
 
 public class SampleTriangle {
     public static void rgbaTriangle2D(int width, int height) {

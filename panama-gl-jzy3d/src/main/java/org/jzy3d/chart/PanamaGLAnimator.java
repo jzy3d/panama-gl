@@ -1,6 +1,5 @@
 package org.jzy3d.chart;
 
-import org.jzy3d.plot3d.rendering.canvas.EmulGLCanvas;
 import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
 
 public class PanamaGLAnimator implements IAnimator {

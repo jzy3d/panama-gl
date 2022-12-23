@@ -1,18 +1,18 @@
 package org.jzy3d.painters;
 
-import static jdk.incubator.foreign.CLinker.*;
+import static jdk.incubator.foreign.CLinker.C_DOUBLE;
+import static jdk.incubator.foreign.CLinker.C_FLOAT;
 import static jdk.incubator.foreign.CLinker.C_INT;
-
-import java.awt.*;
+import java.awt.Component;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
-
-
-import opengl.macos.v10_15_3.*;
+import javax.swing.JPanel;
 import org.apache.log4j.Logger;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.controllers.mouse.camera.AWTCameraMouseController;
@@ -27,16 +27,19 @@ import org.jzy3d.plot3d.primitives.PolygonMode;
 import org.jzy3d.plot3d.rendering.canvas.EmulGLCanvas;
 import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
-
+import org.jzy3d.plot3d.rendering.lights.Attenuation;
+import org.jzy3d.plot3d.rendering.lights.LightModel;
+import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
 import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.MemorySegment;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
-import org.jzy3d.plot3d.rendering.lights.Attenuation;
-import org.jzy3d.plot3d.rendering.lights.LightModel;
-import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
-import com.jogamp.opengl.GL2;
-import javax.swing.*;
+import opengl.macos.v10_15_3.glutDisplayFunc$func;
+import opengl.macos.v10_15_3.glutIdleFunc$func;
+import opengl.macos.v10_15_3.glutMotionFunc$func;
+import opengl.macos.v10_15_3.glutMouseFunc$func;
+import opengl.macos.v10_15_3.glutReshapeFunc$func;
+import opengl.macos.v10_15_3.glut_h;
 
 public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements PanamaGLPainter {
   static Logger logger = Logger.getLogger(PanamaGLPainter_MacOS_10_15_3.class);

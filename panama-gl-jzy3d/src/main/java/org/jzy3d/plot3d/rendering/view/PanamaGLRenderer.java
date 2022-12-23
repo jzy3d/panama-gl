@@ -2,9 +2,6 @@ package org.jzy3d.plot3d.rendering.view;
 
 import org.jzy3d.painters.PanamaGLPainter;
 
-import static opengl.macos.v10_15_3.glut_h.glutSwapBuffers;
-import static opengl.macos.v10_15_3.glut_h.glutPostRedisplay;
-
 public class PanamaGLRenderer {
   protected View view;
   

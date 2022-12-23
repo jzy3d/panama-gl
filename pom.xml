@@ -153,12 +153,13 @@
 
 					<!-- Configure Panama -->
 					<argLine>
-						-XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
-					</argLine>
-					<argLine>
 						-XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 					</argLine>
 
+<argLine>
+						--enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
+					</argLine>
+					
 
 				</configuration>
 			</plugin>

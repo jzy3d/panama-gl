@@ -4,8 +4,10 @@ package opengl.macos.v10_15_3;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
-
-import jdk.incubator.foreign.*;
+import jdk.incubator.foreign.Addressable;
+import jdk.incubator.foreign.MemoryAddress;
+import jdk.incubator.foreign.MemoryLayout;
+import jdk.incubator.foreign.MemorySegment;
 
 class glut_h_3 extends glut_h_2 {
 

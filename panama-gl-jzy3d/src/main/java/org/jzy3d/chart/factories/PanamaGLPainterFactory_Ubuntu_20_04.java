@@ -1,7 +1,6 @@
 package org.jzy3d.chart.factories;
 
 import org.jzy3d.painters.IPainter;
-import org.jzy3d.painters.PanamaGLPainter_MacOS_11_4;
 import org.jzy3d.painters.PanamaGLPainter_Ubuntu_20_04;
 
 public class PanamaGLPainterFactory_Ubuntu_20_04 extends AbstractPanamaGLPainterFactory {

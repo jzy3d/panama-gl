@@ -1,13 +1,10 @@
 package opengl.demos;
 
-import jdk.incubator.foreign.MemoryHandles;
-import jdk.incubator.foreign.MemorySegment;
-
+import static jdk.incubator.foreign.ResourceScope.newImplicitScope;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import java.nio.IntBuffer;
-
-import static jdk.incubator.foreign.ResourceScope.newImplicitScope;
+import jdk.incubator.foreign.MemoryHandles;
+import jdk.incubator.foreign.MemorySegment;
 
 // -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
 public class DemoIntBuffer {

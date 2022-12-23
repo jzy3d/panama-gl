@@ -2,11 +2,9 @@
 
 package opengl.glx.ubuntu.v20;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import jdk.incubator.foreign.Addressable;
+import jdk.incubator.foreign.MemoryAddress;
+import jdk.incubator.foreign.ResourceScope;
 public interface PFNGLDRAWVKIMAGENVPROC {
 
     void apply(long x0, int x1, float x2, float x3, float x4, float x5, float x6, float x7, float x8, float x9, float x10);

@@ -2,11 +2,14 @@
 
 package opengl.macos.v10_15_3;
 
+import static jdk.incubator.foreign.CLinker.C_INT;
+import static jdk.incubator.foreign.CLinker.C_POINTER;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.VarHandle;
-
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import jdk.incubator.foreign.FunctionDescriptor;
+import jdk.incubator.foreign.MemoryHandles;
+import jdk.incubator.foreign.MemoryLayout;
+import jdk.incubator.foreign.MemorySegment;
 class constants$176 {
 
     static final MemoryLayout glutBitmapHelvetica12$LAYOUT = C_POINTER;

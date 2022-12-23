@@ -21,6 +21,7 @@ import org.jzy3d.plot3d.rendering.scene.Scene;
 import org.jzy3d.plot3d.rendering.view.IViewOverlay;
 import org.jzy3d.plot3d.rendering.view.layout.IViewportLayout;
 import org.jzy3d.plot3d.rendering.view.layout.PanamaGLViewAndColorbarsLayout;
+import com.jogamp.opengl.GLException;
 
 public abstract class AbstractPanamaGLPainterFactory implements IPainterFactory {
     protected IChartFactory chartFactory;

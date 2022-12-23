@@ -1,16 +1,18 @@
 package opengl.demos;
 
-import opengl.GL;
-import opengl.fbo.FBO;
-import opengl.macos.GL_macOS_10_15_3;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import opengl.GL;
+import opengl.fbo.FBO;
+import opengl.macos.GL_macOS_10_15_3;
 
 /**
  * https://github.com/jzy3d/panama-gl/issues/5

@@ -1,14 +1,15 @@
 package opengl.ubuntu;
 
+import static jdk.incubator.foreign.CLinker.C_INT;
+import static opengl.ubuntu.v20.glut_h.GLUT_DEPTH;
+import static opengl.ubuntu.v20.glut_h.GLUT_DOUBLE;
+import static opengl.ubuntu.v20.glut_h.GLUT_RGB;
 import jdk.incubator.foreign.Addressable;
 import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.MemorySegment;
 import opengl.AbstractGL;
 import opengl.GL;
 import opengl.ubuntu.v20.glut_h;
-
-import static jdk.incubator.foreign.CLinker.C_INT;
-import static opengl.ubuntu.v20.glut_h.*;
 
 /**
  * Look above ^^ this is how you link to platform binding.

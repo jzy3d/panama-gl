@@ -2,12 +2,7 @@
 
 package opengl.macos.v10_15_3;
 
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
- class glut_h_1 {
+class glut_h_1 {
 
     public static int GL_RGB9_E5_EXT() {
         return (int)35901L;

@@ -2,11 +2,9 @@
 
 package opengl.glx.ubuntu.v20;
 
+import static jdk.incubator.foreign.CLinker.C_INT;
 import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import jdk.incubator.foreign.FunctionDescriptor;
 class constants$691 {
 
     static final FunctionDescriptor PFNGLDISABLEVERTEXARRAYEXTPROC$FUNC = FunctionDescriptor.ofVoid(

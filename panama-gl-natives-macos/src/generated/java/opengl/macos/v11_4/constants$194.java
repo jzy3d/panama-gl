@@ -2,11 +2,10 @@
 
 package opengl.macos.v11_4;
 
+import static jdk.incubator.foreign.CLinker.C_INT;
+import static jdk.incubator.foreign.CLinker.C_POINTER;
 import java.lang.invoke.MethodHandle;
-import java.lang.invoke.VarHandle;
-import java.nio.ByteOrder;
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import jdk.incubator.foreign.FunctionDescriptor;
 class constants$194 {
 
     static final FunctionDescriptor glutTabletButtonFunc$func$FUNC = FunctionDescriptor.ofVoid(

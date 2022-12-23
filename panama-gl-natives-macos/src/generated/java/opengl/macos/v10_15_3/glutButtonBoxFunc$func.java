@@ -2,7 +2,9 @@
 
 package opengl.macos.v10_15_3;
 
-import jdk.incubator.foreign.*;
+import jdk.incubator.foreign.Addressable;
+import jdk.incubator.foreign.MemoryAddress;
+import jdk.incubator.foreign.ResourceScope;
 
 public interface glutButtonBoxFunc$func {
 

@@ -1,13 +1,18 @@
 package opengl;
 
+import static jdk.incubator.foreign.CLinker.C_DOUBLE;
+import static jdk.incubator.foreign.CLinker.C_FLOAT;
+import static jdk.incubator.foreign.CLinker.C_INT;
 import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.MemorySegment;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
 
-import static jdk.incubator.foreign.CLinker.*;
-import static jdk.incubator.foreign.ResourceScope.newImplicitScope;
-
+/**
+ * A base class for Panama based OpenGL binding, implementing part of {@lin GL}
+ * 
+ * @author Martin Pernollet
+ */
 public abstract class AbstractGL implements GL {
     ResourceScope scope;
     SegmentAllocator allocator;

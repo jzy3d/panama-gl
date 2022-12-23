@@ -2,10 +2,10 @@
 
 package opengl.macos.v10_15_3;
 
+import static jdk.incubator.foreign.CLinker.C_FLOAT;
+import static jdk.incubator.foreign.CLinker.C_POINTER;
 import java.lang.invoke.MethodHandle;
-
-import jdk.incubator.foreign.*;
-import static jdk.incubator.foreign.CLinker.*;
+import jdk.incubator.foreign.FunctionDescriptor;
 class constants$106 {
 
     static final FunctionDescriptor glPolygonOffset$FUNC = FunctionDescriptor.ofVoid(

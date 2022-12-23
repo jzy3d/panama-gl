@@ -1,14 +1,10 @@
 package org.jzy3d.painters;
 
-import jdk.incubator.foreign.CLinker;
+import org.jzy3d.chart.Chart;
+import org.jzy3d.maths.Rectangle;
 import jdk.incubator.foreign.MemorySegment;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
-import opengl.macos.v10_15_3.glut_h;
-import org.jzy3d.chart.Chart;
-import org.jzy3d.maths.Rectangle;
-
-import static jdk.incubator.foreign.CLinker.*;
 
 public interface PanamaGLPainter {
     public ResourceScope getScope();
