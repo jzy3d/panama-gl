@@ -40,6 +40,8 @@ As such, part of the drawing capabilities are known at runtime. Discovering thes
 * the GLEW library
 * the GL_VENDOR, GL_VERSION, GL_EXTENSIONS commands offered by the GL library. 
 
+List of GPU and supported OpenGL versions
+http://opengl.gpuinfo.org/
 
 
 # To clarify
