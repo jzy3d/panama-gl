@@ -7,6 +7,7 @@
 ### Documentation
 * [State of Foreign Function](https://github.com/openjdk/panama-foreign/blob/foreign-memaccess%2Babi/doc/panama_ffi.md)
 * [State of Foreign Memory](https://github.com/openjdk/panama-foreign/blob/foreign-memaccess%2Babi/doc/panama_memaccess.md)
+* [JExtract doc](https://github.com/openjdk/panama-foreign/blob/foreign-jextract/doc/panama_jextract.md)
 
 ### Samples
 * 

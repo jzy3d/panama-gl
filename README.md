@@ -8,12 +8,20 @@ We here show how to use Panama to generate an OpenGL wrapper for Jzy3D, which al
 
 ## Documentation
 
-* [Panama Foreign Help](doc/Panama-Foreign-help.md)
-* [OpenGL Help](doc/OpenGL-help.md)
-* [PanamaGL Design](doc/PanamaGL-Design.md)
+### Setup your computer
 * [Setup on Linux](doc/setup/setup_ubuntu.md)
 * [Setup on macOS](doc/setup/setup_macos.md)
 * [Setup on Windows](doc/setup/setup_windows.md)
+
+### Help on technologies used in this project
+* [Panama Foreign Help](doc/Panama-Foreign-help.md)
+* [OpenGL Help](doc/OpenGL-help.md)
+* [Modules Quickstart](https://openjdk.java.net/projects/jigsaw/quick-start)
+* [Modules Cheatsheet](https://github.com/tfesenko/Java-Modules-JPMS-CheatSheet)
+
+### Design of Panama GL
+* [PanamaGL Design](doc/PanamaGL-Design.md)
+
 
 ## Demos
 
@@ -27,11 +35,11 @@ These two demo open a native window. One can use the mouse to rotate the object,
 
 
 
-## Run
+### Run demos
 
 You need to install [Panama Early-Access build](https://jdk.java.net/panama/).
 
-### Run from IDE
+#### Run from IDE
 
 Then run from Intellij ([Eclipse won't work yet](https://github.com/jzy3d/panama-gl/issues/3)) one of these demos
 * SurfaceDemoPanamaGL
@@ -46,12 +54,12 @@ ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS
 
 Running the program will require extra VM arguments as shown below.
 
-#### MacOS 10.15.3
+##### MacOS 10.15.3
 ```
 -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 ```
 
-#### MacOS 11.4
+##### MacOS 11.4
 
 Not working yet! Despite code is generated and integrated, still have to locate OpenGL libs.
 
@@ -63,21 +71,21 @@ Not working yet! Despite code is generated and integrated, still have to locate 
 
 https://stackoverflow.com/questions/65802625/develop-using-opengl-4-x-on-osx-big-sur
 
-#### Ubuntu 20
+##### Ubuntu 20
 
 ```
 --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
 ```
 
-### Run from CLI
+#### Run from CLI
 
-#### Build
+##### Build
 
 ```
 mvn clean install package
 ```
 
-#### Run
+##### Run
 
 Check JRE is Panama
 ```
@@ -100,14 +108,6 @@ java -XstartOnFirstThread \
 ## How I built the OpenGL bindings
 
 See [the setup section](doc/setup) 
-
-## Help
-
-* [Panama Foreign Memory](https://github.com/openjdk/panama-foreign/blob/foreign-jextract/doc/panama_memaccess.md)
-* [Panama Foreign Function](https://github.com/openjdk/panama-foreign/blob/foreign-jextract/doc/panama_ffi.md)
-* [Modules Quickstart](https://openjdk.java.net/projects/jigsaw/quick-start)
-* [JExtract doc](https://github.com/openjdk/panama-foreign/blob/foreign-jextract/doc/panama_jextract.md)
-* [Modules Cheatsheet](https://github.com/tfesenko/Java-Modules-JPMS-CheatSheet)
 
 ## Troubleshooting
 
