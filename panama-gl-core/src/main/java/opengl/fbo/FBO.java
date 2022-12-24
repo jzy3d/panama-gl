@@ -286,8 +286,7 @@ public class FBO {
                 int blue = ByteUtils.ItoB(intB);
                 int alpha = ByteUtils.ItoA(intA);
 
-                org.jzy3d.colors.Color c = new org.jzy3d.colors.Color(red, green, blue, 255);
-                System.out.println(w + "," + h + " : " + c);
+                System.out.println(w + "," + h + " : \t r=" + red + " g=" + green + " b="+blue + " a=" + alpha);
             }
             k++;
         }

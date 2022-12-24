@@ -16,5 +16,27 @@
 			<artifactId>panama-gl-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
+				<!-- PUBLIC JZY3D MODULES -->
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>jzy3d-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!--<dependency> <groupId>org.jzy3d</groupId> <artifactId>jzy3d-native-jogl-awt</artifactId>
+			<version>${project.version}</version> </dependency> -->
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>jzy3d-tester-native</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>jzy3d-tests-java9</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
 	</dependencies>
 </project>

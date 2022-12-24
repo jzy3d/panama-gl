@@ -9,12 +9,10 @@
 	<name>Panama GL</name>
 	<packaging>pom</packaging>
 
-
 	<scm>
 		<connection>scm:git:https://github.com/jzy3d/panama-gl</connection>
 		<tag>panama-gl-2.0.1</tag>
 	</scm>
-
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,26 +27,6 @@
 	</modules>
 
 	<dependencies>
-
-		<!-- PUBLIC JZY3D MODULES -->
-		<dependency>
-			<groupId>org.jzy3d</groupId>
-			<artifactId>jzy3d-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<!--<dependency> <groupId>org.jzy3d</groupId> <artifactId>jzy3d-native-jogl-awt</artifactId>
-			<version>${project.version}</version> </dependency> -->
-		<dependency>
-			<groupId>org.jzy3d</groupId>
-			<artifactId>jzy3d-tester-native</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jzy3d</groupId>
-			<artifactId>jzy3d-tests-java9</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-
 
 		<!-- OTHER MODULES -->
 		<dependency>
@@ -84,13 +62,9 @@
 	</dependencies>
 
 	<build>
-	     <!-- <resources>
-	       <resource>
-	         <directory>src/generated/java</directory>
-	       </resource>
-	     </resources>-->
-
 		<plugins>
+		
+			<!-- Add generated folder to build path -->
 			<plugin>
 		        <groupId>org.codehaus.mojo</groupId>
 		        <artifactId>build-helper-maven-plugin</artifactId>
@@ -111,7 +85,7 @@
 		        </executions>
 		      </plugin>
 
-
+			<!-- Defines tests to include -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -125,6 +99,7 @@
 				</configuration>
 			</plugin>
 
+			<!-- Defines compiler flags and source/byte code version  -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
@@ -146,6 +121,7 @@
 				<version>3.8.1</version>
 			</plugin>
 
+			<!-- Ease single fat jar release, but slow regular builds -->
 			<!--<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
@@ -172,13 +148,13 @@
 		</plugins>
 	</build>
 
+	<!-- ============================================================== -->
+
+	<!-- This section defines the path to natives. Debug how the OS and CPU
+		names are detected by maven with mvn enforcer:display-info -->
+
 	<profiles>
-
-		<!-- This section defines the path to natives. Debug how the OS and CPU
-			names are detected by maven with mvn enforcer:display-info -->
-
 		<!-- Unix related settings -->
-
 		<profile>
 			<id>Unix</id>
 			<activation>
@@ -210,8 +186,6 @@
 							<argLine>
 								--enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
 							</argLine>
-
-
 						</configuration>
 					</plugin>
 				</plugins>
@@ -219,7 +193,6 @@
 		</profile>
 
 		<!-- Mac Intel related settings -->
-
 		<profile>
 			<id>MacOS x86_64</id>
 			<activation>
@@ -256,12 +229,9 @@
 					</plugin>
 				</plugins>
 			</build>
-
-
 		</profile>
 
 		<!-- Mac M1 related settings -->
-
 		<profile>
 			<id>MacOS Aarch64</id>
 			<activation>
@@ -298,11 +268,9 @@
 					</plugin>
 				</plugins>
 			</build>
-
 		</profile>
 
 		<!-- Windows related settings -->
-
 		<profile>
 			<id>Windows</id>
 			<activation>
@@ -353,6 +321,8 @@
 		</profile>
 
 	</profiles>
+	
+	<!-- Extra Maven Repositories to fetch artifacts from -->
 	<repositories>
 		<repository>
 			<id>jzy3d-snapshots</id>
