@@ -1,11 +1,9 @@
 
 # Install tools and librairies to work with OpenGL on macOS
 
-Get XCode as required by your macOS version : https://developer.apple.com/support/xcode/
+* Get [XCode as required by your macOS](https://developer.apple.com/support/xcode/) version (or use App Store but forces latest version for later OS not always supported by old MacBooks)
 
-(or use App Store but forces latest version for later OS not always supported by old MacBooks)
-
-After logging with an Apple ID, search the XCode version that fits your OS : https://developer.apple.com/download/all/?q=xcode%2012.4
+* After logging with an Apple ID, search the XCode version that fits your OS : https://developer.apple.com/download/all/?q=xcode%2012.4
 
 # How I built the OpenGL bindings
 
