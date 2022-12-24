@@ -19,13 +19,13 @@ public interface GL {
     MemorySegment alloc(String value);
     String glGetString(int stringID);
 
-    void glutInit(Addressable argcp, Addressable argv);
+    /*void glutInit(Addressable argcp, Addressable argv);
     // TODO : review this impl, not working
     void glutInit(int i, int j);
     void glutInitDisplayMode(int mode);
     void glutInitWindowSize(int width, int height);
     void glutInitWindowPosition(int x, int y);
-    void glutCreateWindow(String title);
+    void glutCreateWindow(String title);*/
 
     // General GL -----------------------
 

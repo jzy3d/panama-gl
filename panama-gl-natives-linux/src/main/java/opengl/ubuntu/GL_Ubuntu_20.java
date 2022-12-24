@@ -21,48 +21,6 @@ public class GL_Ubuntu_20 extends AbstractGL implements GL  {
 
     public GL_Ubuntu_20(boolean forceLoadGlut){
         super();
-        init();
-    }
-
-    protected void init(){
-        var argc = getAllocator().allocate(C_INT, 0);
-
-        glutInit(argc, argc);
-        glutInitDisplayMode(0/*GLUT_DOUBLE() | GLUT_RGBA() | GLUT_DEPTH()*/);
-        glutInitWindowSize(1, 1);
-        glutInitWindowPosition(-100, -100);
-        glutCreateWindow("InvisiblePanamaGLWindowForGLContext");
-    }
-
-    @Override
-    public void glutInit(int i, int j) {
-        glut_h.glutInit(getAllocator().allocate(i), getAllocator().allocate(j));
-
-    }
-
-    @Override
-    public void glutInit(Addressable argcp, Addressable argv) {
-        glut_h.glutInit(argcp, argv);
-    }
-
-    @Override
-    public void glutInitDisplayMode(int mode) {
-        glut_h.glutInitDisplayMode(GLUT_DOUBLE() | GLUT_RGB() | GLUT_DEPTH());
-    }
-
-    @Override
-    public void glutInitWindowSize(int width, int height) {
-        glut_h.glutInitWindowSize(width, height);
-    }
-
-    @Override
-    public void glutInitWindowPosition(int x, int y) {
-        glut_h.glutInitWindowPosition(x, y);
-    }
-
-    @Override
-    public void glutCreateWindow(String title) {
-        glut_h.glutCreateWindow(CLinker.toCString(title, getScope()));
     }
 
     @Override

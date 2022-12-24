@@ -11,8 +11,10 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import opengl.GL;
+import opengl.GLContext;
+import opengl.GLUTContext_macOS_10_15_7;
 import opengl.fbo.FBO;
-import opengl.macos.GL_macOS_10_15_3;
+import opengl.macos.GL_macOS_10_15_7;
 
 /**
  * https://github.com/jzy3d/panama-gl/issues/5
@@ -31,7 +33,10 @@ public class DemoFBO_Onscreen {
     //Thread.join();
     //Thread.sleep(1000);
 
-    GL gl = new GL_macOS_10_15_3(false);
+    GLContext context = new GLUTContext_macOS_10_15_7();
+    context.init();
+
+    GL gl = new GL_macOS_10_15_7();
 
     //-------------------------
     // Prepare VBO

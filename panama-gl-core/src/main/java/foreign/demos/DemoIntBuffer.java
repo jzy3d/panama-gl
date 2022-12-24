@@ -1,4 +1,4 @@
-package opengl.demos;
+package foreign.demos;
 
 import static jdk.incubator.foreign.ResourceScope.newImplicitScope;
 import java.lang.invoke.VarHandle;
