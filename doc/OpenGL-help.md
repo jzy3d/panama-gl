@@ -22,7 +22,7 @@ We hence use the following _generic_ (multi-os) libraries to establish a GL cont
  
 ## OS specific windowing libraries
 
-* CGL is one of the macOS library allowing to initialize an OpenGL context
+* [CGL](https://en.wikipedia.org/wiki/Core_OpenGL) is one of the macOS library allowing to initialize an OpenGL context
 * WGL is the Windows library allowing to initialize an OpenGL context
 * GLX is the Linux library allowing to initialize an OpenGL context
 
