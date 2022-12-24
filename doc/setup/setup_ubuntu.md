@@ -20,7 +20,7 @@ ldd --verbose /usr/lib/x86_64-linux-gnu/libGLU.so
 
 # How I built the OpenGL bindings
 
-See the OpenGL example in [JExtract samples]([https://github.com/sundararajana/panama-jextract-samples](https://github.com/openjdk/jextract/tree/master/samples).
+See the OpenGL example in [JExtract samples](https://github.com/openjdk/jextract/tree/master/samples).
 
 ## Generate OpenGL Java bindings with JExtract
 

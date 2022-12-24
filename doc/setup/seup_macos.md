@@ -1,4 +1,6 @@
 
+# Install tools and librairies to work with OpenGL on macOS
+
 Get XCode as required by your macOS version : https://developer.apple.com/support/xcode/
 
 (or use App Store but forces latest version for later OS not always supported by old MacBooks)
@@ -7,7 +9,7 @@ After logging with an Apple ID, search the XCode version that fits your OS : htt
 
 # How I built the OpenGL bindings
 
-See the OpenGL example in [JExtract samples]([https://github.com/sundararajana/panama-jextract-samples](https://github.com/openjdk/jextract/tree/master/samples).
+See the OpenGL example in [JExtract samples](https://github.com/openjdk/jextract/tree/master/samples).
 
 ## Generate OpenGL Java bindings with JExtract
 

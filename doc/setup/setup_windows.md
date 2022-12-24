@@ -4,7 +4,7 @@ Install
 
 ## How I built the OpenGL wrappers
 
-See the OpenGL example in [JExtract samples]([https://github.com/sundararajana/panama-jextract-samples](https://github.com/openjdk/jextract/tree/master/samples).
+See the OpenGL example in [JExtract samples](https://github.com/openjdk/jextract/tree/master/samples).
 
 ### Generate OpenGL Java wrappers with JExtract
 

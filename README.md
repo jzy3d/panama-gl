@@ -9,6 +9,7 @@ We here show how to use Panama to generate an OpenGL wrapper for Jzy3D, which al
 ## Documentation
 
 ### Setup your computer
+* [Setup base for everyone](doc/setup/setup_everyone.md)
 * [Setup on Linux](doc/setup/setup_ubuntu.md)
 * [Setup on macOS](doc/setup/setup_macos.md)
 * [Setup on Windows](doc/setup/setup_windows.md)
