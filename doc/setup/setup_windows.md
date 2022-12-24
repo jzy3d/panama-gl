@@ -21,3 +21,25 @@ jextract -d {OUTPUT_DIR} --source -t {PACKAGE_NAME} \
 -C{ARGS_FOR_CLANG} \
 {GLUT_HEADER_FILE}
 ```
+
+```
+C:\Program" "Files\Java\openjdk-19-panama_windows-x64_bin\jdk-19\bin\jextract.exe -d ./src/main/java/ --source -t opengl.windows.v10.jdk17 `
+-I "C:\Users\Martin\Dev\jzy3d\external\freeglut\include" `
+"-l" opengl32 `
+"-l" glu32 `
+"-l" freeglut `
+"--" `
+"C:\Users\Martin\Dev\jzy3d\external\freeglut\include\GL\freeglut.h"
+```
+
+Fails on Windows with JDK 17 
+
+```
+C:\Program" "Files\Java\openjdk-17-panama+3-167_windows-x64_bin\jdk-17\bin\jextract.exe -d ./src/main/java/ --source -t opengl.windows.v10.jdk17 `
+-I "C:\Users\Martin\Dev\jzy3d\external\freeglut\include" `
+"-l" opengl32 `
+"-l" glu32 `
+"-l" freeglut `
+"--" `
+"C:\Users\Martin\Dev\jzy3d\external\freeglut\include\GL\freeglut.h"
+```

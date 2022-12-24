@@ -1,6 +1,6 @@
 package opengl.fbo.macos;
 
-import opengl.macos.GL_macOS_10_15_3;
+import opengl.macos.GL_macOS_10_15_7;
 import org.junit.Test;
 
 import static org.mockito.Mockito.mock;
@@ -11,7 +11,7 @@ public class TestGL_macOS_10_15_3 {
     @Test
     public void whenInitDefault_ThenDoNotInvokeGlut(){
 
-        GL_macOS_10_15_3 gl = spy(GL_macOS_10_15_3.class);
+        GL_macOS_10_15_7 gl = spy(GL_macOS_10_15_7.class);
 
 
     }
