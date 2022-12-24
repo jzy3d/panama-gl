@@ -31,14 +31,6 @@ These two demo open a native window. One can use the mouse to rotate the object,
 |-|-|
 | <img src="doc/panama-gl-surface.png"/> | <img src="./doc/panama-gl-teapot.png"/> |
 
-### SurfaceDemoPanamaGL
-<img src="doc/panama-gl-surface.png"/>
-
-### TeapotDemoPanamaGL
-<img src="./doc/panama-gl-teapot.png"/>
-
-
-
 ### Run demos
 
 You need to install [Panama Early-Access build](https://jdk.java.net/panama/).
