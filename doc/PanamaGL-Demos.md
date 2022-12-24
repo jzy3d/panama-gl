@@ -9,7 +9,7 @@ These two demo open a *native* window with Jzy3D (hence not a Java window yet). 
 
 | `SurfaceDemoPanamaGL`| `TeapotDemoPanamaGL`|
 |-|-|
-| <img src="doc/panama-gl-surface.png"/> | <img src="./doc/panama-gl-teapot.png"/> |
+| <img src="./panama-gl-surface.png"/> | <img src="./panama-gl-teapot.png"/> |
 
 ### Run demos
 
