@@ -26,7 +26,12 @@ We here show how to use Panama to generate an OpenGL wrapper for Jzy3D, which al
 
 ## Demos
 
-These two demo open a native window. One can use the mouse to rotate the object, and double click to start an automatic rotation.
+### 3D offscreen GL demo
+
+* `TestFBO_macOS` and `DemoFBO_Offscreen_macOS`
+
+### 3D onscreen GL demos
+These two demo open a *native* window with Jzy3D (hence not a Java window yet). One can use the mouse to rotate the object, and double click to start an automatic rotation.
 
 | `SurfaceDemoPanamaGL`| `TeapotDemoPanamaGL`|
 |-|-|

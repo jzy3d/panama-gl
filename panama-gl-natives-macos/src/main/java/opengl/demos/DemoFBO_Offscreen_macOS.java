@@ -10,7 +10,7 @@ import opengl.fbo.FBO;
  * https://github.com/jzy3d/panama-gl/issues/5
  */
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class DemoFBO_Offscreen {
+public class DemoFBO_Offscreen_macOS {
   public static void fbo_offscreen(GL gl) {
     //-------------------------
     // Prepare VBO
