@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import opengl.GL;
 import opengl.GLContext;
-import opengl.GLUTContext_macOS_10_15_7;
+import opengl.glut.macos.GLUTContext_macOS_10_15_7;
 import opengl.fbo.FBO;
 import opengl.macos.GL_macOS_10_15_7;
 

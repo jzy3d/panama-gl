@@ -2,7 +2,7 @@ package opengl.demos.macos;
 
 import opengl.GL;
 import opengl.GLContext;
-import opengl.GLUTContext_macOS_10_15_7;
+import opengl.glut.macos.GLUTContext_macOS_10_15_7;
 import opengl.demos.DemoFBO_Offscreen;
 import opengl.macos.GL_macOS_10_15_7;
 

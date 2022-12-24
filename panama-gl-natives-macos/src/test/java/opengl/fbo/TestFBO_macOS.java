@@ -1,7 +1,7 @@
 package opengl.fbo;
 
 import opengl.GLContext;
-import opengl.GLUTContext_macOS_10_15_7;
+import opengl.glut.macos.GLUTContext_macOS_10_15_7;
 import org.junit.Test;
 import org.jzy3d.os.OperatingSystem;
 import opengl.GL;

@@ -1,12 +1,13 @@
-package opengl;
+package opengl.glut.macos;
 
 import jdk.incubator.foreign.*;
+import opengl.GLContext;
 import opengl.macos.v10_15_3.glut_h;
 
 import static jdk.incubator.foreign.CLinker.*;
 import static opengl.macos.v10_15_3.glut_h.*;
 
-public class GLUTContext_macOS_10_15_7 implements GLContext{
+public class GLUTContext_macOS_10_15_7 implements GLContext {
     public void init(){
         try {
             scope = ResourceScope.newConfinedScope();
