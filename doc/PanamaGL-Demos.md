@@ -1,23 +1,25 @@
-## Demos
+# Demos
 
-### 3D onscreen GL demos
+## 3D onscreen GL demos
 These two demo open a *native* window with Jzy3D (hence not a Java window yet). One can use the mouse to rotate the object, and double click to start an automatic rotation.
 
 | `SurfaceDemoPanamaGL`| `TeapotDemoPanamaGL`|
 |-|-|
 | <img src="./panama-gl-surface.png"/> | <img src="./panama-gl-teapot.png"/> |
 
-### 3D offscreen GL demo
+## 3D offscreen GL demo
+
+These two demo open an offscreen GL context to render into an image - for future onscreen usage.
 
 | `TestFBO_macOS`| `DemoFBO_Offscreen_macOS`|
 |-|-|
 | <img src="./TestFBO_macOS-1.png"/> | <img src="./TestFBO_macOS-1.png"/> |
 
-### Run demos
+## Run onscreen demos
 
-You need to install [Panama Early-Access build](https://jdk.java.net/panama/).
+You need to install Panama for JDK &7 [Panama Early-Access build](https://jdk.java.net/panama/).
 
-#### Run from IDE
+### Run onscreen demos from IDE
 
 Then run from Intellij ([Eclipse won't work yet](https://github.com/jzy3d/panama-gl/issues/3)) one of these demos
 * SurfaceDemoPanamaGL
@@ -55,7 +57,7 @@ https://stackoverflow.com/questions/65802625/develop-using-opengl-4-x-on-osx-big
 --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
 ```
 
-#### Run from CLI
+### Run onscreen demos from CLI
 
 ##### Build
 
@@ -71,6 +73,7 @@ Note that Maven autodetect platform to define the path to local OpenGL java libr
 See the main [pom.xml file](pom.xml) for more about these automatic settings if you encounter issues at this step.
 
 If test fail, you can skip them
+
 ```
 mvn install -DskipTests
 ```
