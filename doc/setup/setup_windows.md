@@ -22,6 +22,8 @@ jextract -d {OUTPUT_DIR} --source -t {PACKAGE_NAME} \
 {GLUT_HEADER_FILE}
 ```
 
+Fails should work JDK 19 when projected will be migrated to 
+
 ```
 C:\Program" "Files\Java\openjdk-19-panama_windows-x64_bin\jdk-19\bin\jextract.exe -d ./src/main/java/ --source -t opengl.windows.v10.jdk17 `
 -I "C:\Users\Martin\Dev\jzy3d\external\freeglut\include" `
