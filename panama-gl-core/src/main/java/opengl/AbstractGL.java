@@ -25,7 +25,7 @@ public abstract class AbstractGL implements GL {
             e.printStackTrace();
         }
     }
-
+    
     /////////////////////////////////////////////
 
     @Override
