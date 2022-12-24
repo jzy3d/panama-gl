@@ -1,15 +1,17 @@
 ## Demos
 
-### 3D offscreen GL demo
-
-* `TestFBO_macOS` and `DemoFBO_Offscreen_macOS`
-
 ### 3D onscreen GL demos
 These two demo open a *native* window with Jzy3D (hence not a Java window yet). One can use the mouse to rotate the object, and double click to start an automatic rotation.
 
 | `SurfaceDemoPanamaGL`| `TeapotDemoPanamaGL`|
 |-|-|
 | <img src="./panama-gl-surface.png"/> | <img src="./panama-gl-teapot.png"/> |
+
+### 3D offscreen GL demo
+
+| `TestFBO_macOS`| `DemoFBO_Offscreen_macOS`|
+|-|-|
+| <img src="./TestFBO_macOS-1.png"/> | <img src="./TestFBO_macOS-1.png"/> |
 
 ### Run demos
 
