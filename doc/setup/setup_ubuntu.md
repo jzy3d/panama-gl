@@ -18,11 +18,31 @@ dpkg -L freeglut3
 ldd --verbose /usr/lib/x86_64-linux-gnu/libGLU.so
 ```
 
+# How I built the OpenGL bindings
 
-# Generate bindings
+See the OpenGL example in [JExtract samples]([https://github.com/sundararajana/panama-jextract-samples](https://github.com/openjdk/jextract/tree/master/samples).
+
+## Generate OpenGL Java bindings with JExtract
+
+This allows generating OpenGL Java Wrapper. The generated packages are already in `src/main/java` so you don't need to do it,
+it is just a helper for adding wrappers for new platforms.
+
+### General pattern
+
+```
+jextract -d {OUTPUT_DIR} --source -t {PACKAGE_NAME} \
+-lGL \
+-l{GLUT_LIB} \
+-I {GL_AND_GLUT_INCLUDE_DIR} \
+-C{ARGS_FOR_CLANG} \
+{GLUT_HEADER_FILE}
+```
+
+## Generate bindings
 
 
-## GL/GLU/GLUT
+
+### GL/GLU/GLUT
 
 To generate Ubuntu 20 GLUT/GLU/GL binding
 
@@ -56,7 +76,7 @@ WARNING: skipping qfcvt_r because of unsupported type usage: long double
 
 /usr/include/GL/glext.h
 
-## GLEXT
+### GLEXT
 
 To generate Ubuntu 20 GLEXT binding
 
@@ -76,7 +96,7 @@ rm /src/main/java/opengl/glext/ubuntu/v20/*
 ```
 
 
-## GLX
+### GLX
 
 To generate Ubuntu 20 GLX binding
 
@@ -101,7 +121,7 @@ WARNING: Using incubator modules: jdk.incubator.jextract, jdk.incubator.foreign
 WARNING: skipping .__clang_max_align_nonce2 because of unsupported type usage: long double
 ```
 
-## GLEW
+### GLEW
 
 To generate Ubuntu 20 GLEW binding
 
