@@ -17,57 +17,12 @@ import opengl.macos.v10_15_3.glut_h;
 public class GL_macOS_10_15_7 extends AbstractGL implements GL  {
     public GL_macOS_10_15_7() {
         super();
-        //init(forceLoadGlut);
     }
-
-    /*protected void init(boolean forceLoadGlut){
-
-        if(forceLoadGlut) {
-            var argc = getAllocator().allocate(C_INT, 0);
-
-            glutInit(argc, argc);
-            glutInitDisplayMode(0);
-            glutInitWindowSize(1, 1);
-            glutInitWindowPosition(-100, -100);
-        }
-        glutCreateWindow("InvisiblePanamaGLWindowForGLContext");
-    }*/
 
     @Override
     public String glGetString(int stringID){
         return CLinker.toJavaString(glut_h.glGetString(stringID));
     }
-
-
-    /*@Override
-    public void glutInit(int i, int j) {
-        glut_h.glutInit(getAllocator().allocate(i), getAllocator().allocate(j));
-    }
-
-    @Override
-    public void glutInit(Addressable argcp, Addressable argv) {
-        glut_h.glutInit(argcp, argv);
-    }
-
-    @Override
-    public void glutInitDisplayMode(int mode) {
-        glut_h.glutInitDisplayMode(GLUT_DOUBLE() | GLUT_RGB() | GLUT_DEPTH());
-    }
-
-    @Override
-    public void glutInitWindowSize(int width, int height) {
-        glut_h.glutInitWindowSize(width, height);
-    }
-
-    @Override
-    public void glutInitWindowPosition(int x, int y) {
-        glut_h.glutInitWindowPosition(x, y);
-    }
-
-    @Override
-    public void glutCreateWindow(String title) {
-        glut_h.glutCreateWindow(CLinker.toCString(title, getScope()));
-    }*/
 
     @Override
     public void glGenTextures(int size, MemorySegment ids) {
