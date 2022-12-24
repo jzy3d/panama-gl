@@ -3,7 +3,6 @@ package opengl.demos.macos;
 import opengl.GL;
 import opengl.GLContext;
 import opengl.glut.macos.GLUTContext_macOS_10_15_7;
-import opengl.demos.DemoFBO_Offscreen;
 import opengl.macos.GL_macOS_10_15_7;
 
 /**
@@ -18,6 +17,6 @@ public class DemoFBO_Offscreen_macOS {
 
     GL gl = new GL_macOS_10_15_7();
 
-    DemoFBO_Offscreen.fbo_offscreen(gl);
+    opengl.demos.DemoFBO_Offscreen_macOS.fbo_offscreen(gl);
   }
 }
