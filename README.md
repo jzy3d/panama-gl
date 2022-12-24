@@ -140,9 +140,20 @@ The design of the library is defined [here](doc/PanamaGL-Design.md) but roughly 
 <img src="doc/PanamaGL-Design.png"/>
 
 
-## Building the OpenGL bindings
+## OpenGL bindings
 
 * You _should_ only have to do this if you use a computer OS and version for which binding exist already. 
 * You _may not_ have to regenerate bindings for your OS if its version is supported by existing OS bindings at other versions
+
+### Existing bindings
+
+| Binding | Platform | GPU | Branch |
+| ------- | -------- | --- | ------ |
+| Linux | Ubuntu 20 | Intel | https://github.com/jzy3d/panama-gl/tree/feature/fbo-ubuntu in progress |
+| Apple | macOS 10.15.7 | Intel | https://github.com/jzy3d/panama-gl/tree/feature/macosxM1 in progress |
+| Apple | macOS 11.4.0 M1 | M1 | main |
+| Microsoft | Windows 10 | Intel | https://github.com/jzy3d/panama-gl/tree/feature/windows in progress |
+
+### Building OpenGL bindings for your platform
 
 To generate new bindings for your platform, see [the setup section](doc/setup) 
