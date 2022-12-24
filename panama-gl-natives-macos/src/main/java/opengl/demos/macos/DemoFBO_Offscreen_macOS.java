@@ -1,8 +1,10 @@
 package opengl.demos.macos;
 
 import opengl.GL;
+import opengl.GLContext;
+import opengl.GLUTContext_macOS_10_15_7;
 import opengl.demos.DemoFBO_Offscreen;
-import opengl.macos.GL_macOS_10_15_3;
+import opengl.macos.GL_macOS_10_15_7;
 
 /**
  * https://github.com/jzy3d/panama-gl/issues/5
@@ -11,7 +13,10 @@ import opengl.macos.GL_macOS_10_15_3;
 public class DemoFBO_Offscreen_macOS {
 
   public static void main(String[] args) {
-    GL gl = new GL_macOS_10_15_3(true);
+    GLContext context = new GLUTContext_macOS_10_15_7();
+    context.init();
+
+    GL gl = new GL_macOS_10_15_7();
 
     DemoFBO_Offscreen.fbo_offscreen(gl);
   }
