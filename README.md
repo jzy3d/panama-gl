@@ -83,9 +83,22 @@ https://stackoverflow.com/questions/65802625/develop-using-opengl-4-x-on-osx-big
 
 ##### Build
 
+To build with Maven
 ```
-mvn clean install package
+mvn clean install
 ```
+
+Note that build may be slow on compiling generated binding files (+7000 on Linux!). This will later lead to Jar split to avoid having to rebuild these parts that never change (see Design doc).
+
+Note that Maven autodetect platform to define the path to local OpenGL java libraries.
+
+See the main [pom.xml file](pom.xml) for more about these automatic settings if you encounter issues at this step. 
+
+If test fail, you can skip them
+```
+mvn install -DskipTests
+```
+
 
 ##### Run
 
@@ -106,11 +119,6 @@ java -XstartOnFirstThread \
     Teapot
 ```
 
-
-## How I built the OpenGL bindings
-
-See [the setup section](doc/setup) 
-
 ## Troubleshooting
 
 An `UnsatisfiedLinkError` is thrown while invoking a bounded function.
@@ -125,9 +133,16 @@ Solution : ensure these 3 settings
 - add --add-modules jdk.incubator.foreign under Preferences -> Build, Execution, Development -> Compiler -> Java Compiler -> Additional command line parameters
 - in the same window, set the target bycode version to the VM version we run on (here 17).
 
-## Design
+## Panama GL Design
 
 The design of the library is defined [here](doc/PanamaGL-Design.md) but roughly described in the schema below.
 
 <img src="doc/PanamaGL-Design.png"/>
 
+
+## Building the OpenGL bindings
+
+* You _should_ only have to do this if you use a computer OS and version for which binding exist already. 
+* You _may not_ have to regenerate bindings for your OS if its version is supported by existing OS bindings at other versions
+
+To generate new bindings for your platform, see [the setup section](doc/setup) 
