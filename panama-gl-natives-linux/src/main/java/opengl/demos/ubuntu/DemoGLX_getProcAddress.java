@@ -14,8 +14,8 @@ public class DemoGLX_getProcAddress {
     
     MemorySegment glGenFramebuffersName = null;
     MemorySegment glGenFramebuffers = null;
-    /*
-    if(glGenFramebuffersName==null) {
+    
+   /* if(glGenFramebuffersName==null) {
       glGenFramebuffersName = CLinker.toCString("glGenFramebuffers", scope);  
       
       
