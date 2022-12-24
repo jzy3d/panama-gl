@@ -14,5 +14,5 @@ package opengl;
  * </ul>
  */
 public interface GLContext {
-    public void init();
+    void init();
 }

@@ -11,13 +11,13 @@ import jdk.incubator.foreign.SegmentAllocator;
  * @author Martin Pernollet
  */
 public interface GL {
-    /*ResourceScope getScope();
+    ResourceScope getScope();
     SegmentAllocator getAllocator();
     MemorySegment alloc(double[] value);
     MemorySegment alloc(float[] value);
     MemorySegment alloc(int[] value);
     MemorySegment alloc(String value);
-    */
+
 
     // General GL -----------------------
 
