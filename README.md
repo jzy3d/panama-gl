@@ -27,6 +27,10 @@ We here show how to use Panama to generate an OpenGL wrapper for Jzy3D, which al
 
 These two demo open a native window. One can use the mouse to rotate the object, and double click to start an automatic rotation.
 
+| `SurfaceDemoPanamaGL`| `TeapotDemoPanamaGL`|
+|-|-|
+| <img src="doc/panama-gl-surface.png"/> | <img src="./doc/panama-gl-teapot.png"/> |
+
 ### SurfaceDemoPanamaGL
 <img src="doc/panama-gl-surface.png"/>
 
