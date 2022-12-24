@@ -124,3 +124,10 @@ Solution : ensure these 3 settings
 - in addition to setting VM parameters in the Run Configuration
 - add --add-modules jdk.incubator.foreign under Preferences -> Build, Execution, Development -> Compiler -> Java Compiler -> Additional command line parameters
 - in the same window, set the target bycode version to the VM version we run on (here 17).
+
+## Design
+
+The design of the library is defined [here](doc/PanamaGL-Design.md) but roughly described in the schema below.
+
+<img src="PanamaGL-Design.png"/>
+
