@@ -17,7 +17,7 @@ These two demo open an offscreen GL context to render into an image - for future
 
 ## Run onscreen demos
 
-You need to install Panama for JDK &7 [Panama Early-Access build](https://jdk.java.net/panama/).
+You need to install Panama for JDK 17 [Panama Early-Access build](https://jdk.java.net/panama/).
 
 ### Run onscreen demos from IDE
 
