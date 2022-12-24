@@ -129,5 +129,5 @@ Solution : ensure these 3 settings
 
 The design of the library is defined [here](doc/PanamaGL-Design.md) but roughly described in the schema below.
 
-<img src="PanamaGL-Design.png"/>
+<img src="doc/PanamaGL-Design.png"/>
 
