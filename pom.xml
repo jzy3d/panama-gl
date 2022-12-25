@@ -19,7 +19,7 @@
 	</properties>
 
 	<modules>
-		<module>jextract-gl/jextract-gl-javassist</module>
+		<module>jextract-gl</module>
 
 		<module>panama-gl-core</module>
 		<module>panama-gl-natives-linux</module>
@@ -71,7 +71,7 @@
 
 	<build>
 		<plugins>
-		
+
 			<!-- Add generated folder to build path -->
 			<plugin>
 		        <groupId>org.codehaus.mojo</groupId>
@@ -329,7 +329,7 @@
 		</profile>
 
 	</profiles>
-	
+
 	<!-- Extra Maven Repositories to fetch artifacts from -->
 	<repositories>
 		<repository>
