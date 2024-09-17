@@ -19,6 +19,8 @@
 	</properties>
 
 	<modules>
+		<module>jextract-gl</module>
+
 		<module>panama-gl-core</module>
 		<module>panama-gl-natives-linux</module>
 		<module>panama-gl-natives-macos</module>
@@ -58,12 +60,18 @@
 			<version>4.10.0</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>RELEASE</version>
+			<scope>compile</scope>
+		</dependency>
 
 	</dependencies>
 
 	<build>
 		<plugins>
-		
+
 			<!-- Add generated folder to build path -->
 			<plugin>
 		        <groupId>org.codehaus.mojo</groupId>
@@ -321,7 +329,7 @@
 		</profile>
 
 	</profiles>
-	
+
 	<!-- Extra Maven Repositories to fetch artifacts from -->
 	<repositories>
 		<repository>

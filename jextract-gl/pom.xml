@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.jzy3d</groupId>
+		<artifactId>panama-gl</artifactId>
+		<version>2.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>jextract-gl</artifactId>
+	<name>JExtract GL</name>
+	<packaging>pom</packaging>
+
+
+
+	<scm>
+		<connection>scm:git:https://github.com/jzy3d/panama-gl</connection>
+		<tag>panama-gl-2.0.1</tag>
+	</scm>
+
+	<modules>
+		<module>jextract-gl-javassist</module>
+	</modules>
+
+	<dependencies>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- RELEASE PLUGIN TO HELP CREATE RELEASE BRANCHES -->
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>3.8.1</version>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>

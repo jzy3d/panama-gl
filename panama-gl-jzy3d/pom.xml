@@ -45,7 +45,14 @@
 			<artifactId>jzy3d-tests-java9</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.2</version>
+		</dependency>
+
+
 
 	</dependencies>
 </project>
