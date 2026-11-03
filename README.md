@@ -1,3 +1,3 @@
 # panama-gl
 
-This project is now hosted on gitLAB here : https://gitlab.com/jzy3d/panama-gl, please follow us there!
+This project is now hosted here : [https://gitlab.com/jzy3d/panama-gl](https://github.com/panama-gl/panama-gl), please follow us there!
